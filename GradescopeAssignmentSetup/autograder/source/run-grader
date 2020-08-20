@@ -1,0 +1,3 @@
+#! /bin/bash
+java  -cp .;comp401-grader-11.11-jar-with-dependencies.jar gradingTools.Driver --project-requirements  --project-name  Assignment1 --grader-controller AHeadlessGradingManager --headless-path autograder\source\Assignment1 --headless-start student --headless-end student --course-name COMP401F17 --logger feedback-txt+feedback-json+local-txt+local-json --no-framework-gui --clean-slate student
+java -jar GradescopeRunner.jar "autograder\source\Assignment1\grade, me(student)\Feedback Attachment(s)\results.json" "autograder\results\results.json"

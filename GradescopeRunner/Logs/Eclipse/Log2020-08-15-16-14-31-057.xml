@@ -1,0 +1,4 @@
+<Events startTimestamp="1597522471057" logVersion="1.0.0.202008151525">
+  <Command __id="18621" _type="ShellCommand" date="Thu Aug 20 16:35:09 EDT 2020" starttimestamp="1597522471057" timestamp="433238476" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="18622" _type="EclipseCommand" commandID="org.eclipse.ui.project.properties" date="Thu Aug 20 16:35:09 EDT 2020" starttimestamp="1597522471057" timestamp="433238504" />
+  <Command __id="18623" _type="ShellCommand" date="Thu Aug 20 16:35:31 EDT 2020" starttimestamp="1597522471057" timestamp="433260238" type="ECLIPSE_LOST_FOCUS" />
