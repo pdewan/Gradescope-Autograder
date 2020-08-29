@@ -1,0 +1,52 @@
+
+Grading result for: Test0, Student(tstudent0)
+
+Grading features...
+----------------------------------
+ParserSuiteA12                                         40.0 / 40.0
+BroadcastingClearanceManagerFactoryMethodTest          5.0 /  5.0
+CommandInterpreterSuiteA12                             65.0 / 65.0 (Extra credit)
+CommandObjectSuiteA12                                  65.0 / 65.0
+SwingTextFieldFactoryTestCase                          10.0 / 10.0 (Extra credit)
+LockstepAvatarsAnimationTestCase                       20.0 / 20.0 (Extra credit)
+ExceptionSuite                                         20.0 / 20.0 (Extra credit)
+UndoRedoTestCase                                       20.0 / 20.0 (Extra credit)
+WaitingAvatarsAnimationTestCase                        20.0 / 20.0
+Public methods are in implemented interfaces           10.0 / 10.0
+ABroadcastigClearanceManager used as a singleton       9.0 /  9.0
+Waiting animations created                             16.0 / 16.0
+Generics added to Table                                15.0 / 15.0
+Lockstep and coordinating methods created and used     14.0 / 14.0 (Extra credit)
+Methods and classes for extended grammar created       20.0 / 20.0 (Extra credit)
+Exceptions used                                        9.0 /  9.0 (Extra credit)
+Custom text field color                                5.0 /  5.0 (Extra credit)
+Undo and redo commands created                         6.0 /  6.0 (Extra credit)
+4 animations wait until press of proceedAll            0.0 / 10.0
+Lockstep animations work                               0.0 / 10.0 (Extra credit)
+Commands showcased (9 possible commands)               0.0 / 18.0 (Extra credit)
+----------------------------------
+  Points Awarded: 369.0
+
+Grading restrictions...
+----------------------------------
+Interactive Run                             -5.0 /  -5.0
+Illegal import or call                      -25.0 /  -25.0
+----------------------------------
+  Points Deducted: -30.0
+
+  Features Score: 339.0
+
+Notes from grading restrictions:
+----------------------------------
+Illegal import or call:
+  -- Illegal type or call in:
+illegalTypeImported: (Parser.java:3) Used disallowed class java.text.ParseException 
+illegalTypeImported: (Parser.java:4) Used disallowed class java.util.HashSet 
+illegalTypeImported: (Parser.java:5) Used disallowed class java.util.Set 
+illegalTypeImported: (ParsingException.java:4) Used disallowed class java.text.ParseException 
+
+
+Submission time: 2014-01-16T15:03:28.874-05:00
+
+Early benefit: 105.0%
+TOTAL SCORE: 356.0

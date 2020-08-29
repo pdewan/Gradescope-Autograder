@@ -1,0 +1,54 @@
+1512512257737,17:17:37,ProjectStepperStarted
+1512512257816,17:17:37,NavigationKindChange,Automatic
+1512512257838,17:17:37,NavigationStarted
+1512512257838,17:17:37,AutomaticNavigationStarted
+1512512257874,17:17:37,ProjectStepStarted,tstudent2,
+1512512272259,17:17:52,ProjectStepEnded,tstudent2,test2COMMMA student,105.0,105.0,0.0,1.0,,,0
+1512512272296,17:17:52,AutomaticNavigationEnded
+1512512272297,17:17:52,NavigationKindChange,Manual
+1512512272297,17:17:52,NavigationStarted
+1512512272298,17:17:52,ManualNavigationStarted
+1512512272299,17:17:52,ProjectStepStarted,tstudent2,test2COMMMA student
+1512512273221,17:17:53,ManualNavigationEnded
+1512512314256,17:18:34,ProjectStepperStarted
+1512512314295,17:18:34,NavigationKindChange,Automatic
+1512512314296,17:18:34,NavigationStarted
+1512512314296,17:18:34,AutomaticNavigationStarted
+1512512314305,17:18:34,ProjectStepStarted,tstudent2,
+1512512328938,17:18:48,ProjectStepEnded,tstudent2,test2COMMMA student,105.0,105.0,0.0,1.0,,,0
+1512512328962,17:18:48,AutomaticNavigationEnded
+1512512328963,17:18:48,NavigationKindChange,Manual
+1512512328963,17:18:48,NavigationStarted
+1512512328963,17:18:48,ManualNavigationStarted
+1512512328964,17:18:48,ProjectStepStarted,tstudent2,test2COMMMA student
+1512512330626,17:18:50,ManualNavigationEnded
+1512512353351,17:19:13,ProjectStepperStarted
+1512512353385,17:19:13,NavigationKindChange,Automatic
+1512512353385,17:19:13,NavigationStarted
+1512512353385,17:19:13,AutomaticNavigationStarted
+1512512353405,17:19:13,ProjectStepStarted,tstudent2,
+1512512366428,17:19:26,ProjectStepEnded,tstudent2,test2COMMMA student,105.0,105.0,0.0,1.0,,,0
+1512512366444,17:19:26,AutomaticNavigationEnded
+1512512366445,17:19:26,NavigationKindChange,Manual
+1512512366445,17:19:26,NavigationStarted
+1512512366446,17:19:26,ManualNavigationStarted
+1512512366447,17:19:26,ProjectStepStarted,tstudent2,test2COMMMA student
+1512512367382,17:19:27,ManualNavigationEnded
+1512512374948,17:19:34,ProceedWhenDoneChanged,tstudent2,test2COMMMA student
+1512512375975,17:19:35,ProjectStepEnded,tstudent2,test2COMMMA student,105.0,105.0,0.0,1.0,,,0
+1512512375976,17:19:35,ProjectStepperEnded
+1512512395766,17:19:55,ProjectStepperStarted
+1512512395801,17:19:55,NavigationKindChange,Automatic
+1512512395801,17:19:55,NavigationStarted
+1512512395801,17:19:55,AutomaticNavigationStarted
+1512512395824,17:19:55,ProjectStepStarted,tstudent2,
+1512512408132,17:20:08,ProjectStepEnded,tstudent2,test2COMMMA student,105.0,105.0,0.0,1.0,,,0
+1512512408154,17:20:08,AutomaticNavigationEnded
+1512512408155,17:20:08,NavigationKindChange,Manual
+1512512408155,17:20:08,NavigationStarted
+1512512408156,17:20:08,ManualNavigationStarted
+1512512408157,17:20:08,ProjectStepStarted,tstudent2,test2COMMMA student
+1512512409531,17:20:09,ManualNavigationEnded
+1512513567240,17:39:27,ProceedWhenDoneChanged,tstudent2,test2COMMMA student
+1512513568085,17:39:28,ProjectStepEnded,tstudent2,test2COMMMA student,105.0,105.0,0.0,1.0,,,0
+1512513568085,17:39:28,ProjectStepperEnded

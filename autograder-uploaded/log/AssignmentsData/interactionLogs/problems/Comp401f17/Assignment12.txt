@@ -1,0 +1,15 @@
+Auto Grading Time: Total: 0:2:55 Average: 0:0:35
+Manual Grading Time: Total: 0:21:13 Average: 0:4:14
+Number of Source Notes: Total: 5 Average: 1.0
+
+Comp401f17:Assignment12
+--------------------------------------------------------------------------------------------------
+previous, assignment(previous) TOTAL:5.3 FEATURES:5.0 MULTIPLIER:1.05 AUTO:0:0:45 MANUAL:0:1:43 SECTIONS:[feedback, source, source_open] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+correct, skeleton(skeleton) TOTAL:11.6 FEATURES:11.0 MULTIPLIER:1.05 AUTO:0:0:35 MANUAL:0:2:49 SECTIONS:[feedback, source, source_open] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+correct, stub(stubs) TOTAL:11.6 FEATURES:11.0 MULTIPLIER:1.05 AUTO:0:0:27 MANUAL:0:1:30 SECTIONS:[feedback, source, source_open] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+test0, student(tstudent0) TOTAL:356.0 FEATURES:339.0 MULTIPLIER:1.05 AUTO:0:1:7 MANUAL:0:13:13 SECTIONS:[feedback, source, source_open] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+test1, student(tstudent1) TOTAL:5.3 FEATURES:5.0 MULTIPLIER:1.05 MANUAL:0:1:57 SECTIONS:[feedback, source, source_open] GRADER:Andrew

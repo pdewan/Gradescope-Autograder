@@ -1,0 +1,8 @@
+#! /bin/bash
+export CLASSPATH=/autograder/source/classpath/checkstyle-6.5-all.jar:/autograder/source/classpath/oeall-22.jar:/autograder/source/classpath/UNCChecks_6.5.0.jar
+
+#java -cp ".:$CLASSPATH:./source/AssignmentSetup.jar" edu.unc.cs.AssignmentSetup Comp401f18 1
+java -cp ".:$CLASSPATH:./source/AssignmentSetup.jar" edu.unc.cs.AssignmentSetup Comp524f20 01
+
+chmod u+x ./source/run-grader
+./source/run-grader

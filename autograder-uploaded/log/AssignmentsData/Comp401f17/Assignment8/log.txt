@@ -1,0 +1,30 @@
+
+Grading result for: Test2, Student(tstudent2)
+
+Grading features...
+----------------------------------
+ConsoleSceneViewFactoryMethodTest                      10.0 / 10.0
+ConsoleSceneViewOutputTestCase                         50.0 / 50.0
+Public methods are in implemented interfaces           10.0 / 10.0
+Observables send events, observer registers and listens9.0 /  9.0
+ConsoleSceneView created and used with SingletonCreator9.0 /  9.0
+Proper interfaces implemented                          9.0 /  9.0
+Main calls proper methods                              10.0 / 10.0
+Rotate method called                                   3.0 /  3.0 (Extra credit)
+Console shows proper events being fired                0.0 / 15.0
+Animation shows correct behavior                       0.0 /  5.0
+----------------------------------
+  Points Awarded: 110.0
+
+Grading restrictions...
+----------------------------------
+Variables should have interface, not class, type0.0 /  -10.0
+No magic numbers                            0.0 /  -10.0
+Interactive Run                             -5.0 /  -5.0
+Illegal import or call                      0.0 /  -25.0
+----------------------------------
+  Points Deducted: -5.0
+
+  Features Score: 105.0
+Submission time: 2014-01-16T15:03:28.874-05:00
+TOTAL SCORE: 105.0

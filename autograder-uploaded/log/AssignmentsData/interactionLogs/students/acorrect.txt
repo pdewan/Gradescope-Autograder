@@ -1,0 +1,4 @@
+all, correct (acorrect)
+--------------------------------------------------------------------------------------------------
+Comp401f16:Assignment1 TOTAL:63.0 FEATURES:60.0 MULTIPLIER:1.05 AUTO:0:0:12 MANUAL:0:27:39 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------

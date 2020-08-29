@@ -1,0 +1,6 @@
+correct, skeleton(skeleton)
+--------------------------------------------------------------------------------------------------
+Comp401f17:Assignment5 TOTAL:22.1 FEATURES:21.0 MULTIPLIER:1.05 AUTO:0:0:13 MANUAL:0:0:12 GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+Comp401f17:Assignment12 TOTAL:11.6 FEATURES:11.0 MULTIPLIER:1.05 AUTO:0:0:35 MANUAL:0:2:49 SECTIONS:[feedback, source, source_open] GRADER:Andrew
+--------------------------------------------------------------------------------------------------

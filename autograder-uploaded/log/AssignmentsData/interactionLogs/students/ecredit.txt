@@ -1,0 +1,4 @@
+extra, credit (ecredit)
+--------------------------------------------------------------------------------------------------
+Comp401f16:Assignment1 TOTAL:49.35 FEATURES:46.7 MULTIPLIER:1.05 MANUAL:0:0:31 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------

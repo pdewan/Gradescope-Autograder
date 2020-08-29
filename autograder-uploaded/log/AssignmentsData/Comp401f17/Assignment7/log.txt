@@ -1,0 +1,210 @@
+
+Grading result for: Test1, Student(tstudent1)
+
+Grading features...
+----------------------------------
+CommandInterpreterMoveSuite                            0.0 / 40.0
+CommandInterpreterApproachedArthurSayTestCase          0.0 / 20.0
+CommandInterpreterMixedCaseSuite                       0.0 / 10.0
+StringTableTest                                        0.0 / 25.0
+CommandInterpreterErrorsSuite                          0.0 / 15.0 (Extra credit)
+CommandInterpreterSignedMoveSuite                      0.0 / 20.0 (Extra credit)
+FactoryMethodSuiteA7                                   0.0 / 20.0
+Public methods are in implemented interfaces           10.0 / 10.0
+Graphics supertypes defined                            16.0 / 16.0
+Locatable subtypes defined                             12.0 / 12.0
+BoundedShape subtypes defined                          4.0 /  4.0
+CommandInterpreter makes calls to move and say         6.0 /  6.0
+SingletonCreator created and used                      16.0 / 16.0
+Table used in SingetonsCreator, CommandInterpreter, and main 8.0 /  8.0
+Command interpreter has required property              6.0 /  6.0
+Command interpreter has errors property                2.0 /  2.0
+Animation shows function of command interpreter and correct output in all frames 0.0 / 15.0
+Table demonstrated in console, works correctly         0.0 /  8.0
+----------------------------------
+  Points Awarded: 80.0
+
+Grading restrictions...
+----------------------------------
+Variables should have interface, not class, type-10.0 /  -10.0
+No magic numbers                            -10.0 /  -10.0
+Interactive Run                             -5.0 /  -5.0
+Illegal import or call                      -25.0 /  -25.0
+----------------------------------
+  Points Deducted: -50.0
+
+  Features Score: 30.0
+
+Notes from grading features:
+----------------------------------
+CommandInterpreterMoveSuite:
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+
+CommandInterpreterApproachedArthurSayTestCase:
+  -- No compiled classes found in bin, see transcript for compile errors
+
+CommandInterpreterMixedCaseSuite:
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+
+StringTableTest:
+  -- No compiled classes found in bin, see transcript for compile errors
+
+CommandInterpreterErrorsSuite:
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+
+CommandInterpreterSignedMoveSuite:
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+
+FactoryMethodSuiteA7:
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+  -- No compiled classes found in bin, see transcript for compile errors
+
+
+Notes from grading restrictions:
+----------------------------------
+Variables should have interface, not class, type:
+  -- variableHasClassType: (Assignment7.java:18) Class BridgeScene rather than interface used as the type of variable/function bridge
+variableHasClassType: (BridgeScene.java:107) Class Avatar rather than interface used as the type of variable/function a
+variableHasClassType: (Avatar.java:31) Class MakeImage rather than interface used as the type of variable/function h
+variableHasClassType: (Avatar.java:51) Class MakeImage rather than interface used as the type of variable/function h
+variableHasClassType: (BridgeScene.java:59) Class MakeImage rather than interface used as the type of variable/function a
+variableHasClassType: (BridgeScene.java:61) Class MakeImage rather than interface used as the type of variable/function l
+variableHasClassType: (BridgeScene.java:63) Class MakeImage rather than interface used as the type of variable/function r
+variableHasClassType: (BridgeScene.java:65) Class MakeImage rather than interface used as the type of variable/function g
+variableHasClassType: (BridgeScene.java:67) Class MakeImage rather than interface used as the type of variable/function gu
+variableHasClassType: (Avatar.java:34) Class MakeLine rather than interface used as the type of variable/function arm1
+variableHasClassType: (Avatar.java:35) Class MakeLine rather than interface used as the type of variable/function arm2
+variableHasClassType: (Gorge.java:27) Class MakeLine rather than interface used as the type of variable/function l
+variableHasClassType: (Gorge.java:28) Class MakeLine rather than interface used as the type of variable/function l
+variableHasClassType: (Gorge.java:29) Class MakeLine rather than interface used as the type of variable/function l
+variableHasClassType: (Gorge.java:30) Class MakeLine rather than interface used as the type of variable/function l
+variableHasClassType: (StringHistory.java:66) Class StringHistory rather than interface used as the type of variable/function aStringHistory
+variableHasClassType: (IBridgeScene.java:18) Class Avatar rather than interface used as the type of variable/function a
+variableHasClassType: (IScannerBean.java:9) Class StringHistory rather than interface used as the type of variable/function getTokenList
+variableHasClassType: (Assignment7.java:19) Class CommandInterpreter rather than interface used as the type of variable/function c
+variableHasClassType: (CommandInterpreter.java:42) Class BridgeScene rather than interface used as the type of variable/function b
+variableHasClassType: (CommandInterpreter.java:59) Class Avatar rather than interface used as the type of variable/function av
+variableHasClassType: (CommandInterpreter.java:82) Class Avatar rather than interface used as the type of variable/function a
+variableHasClassType: (Assignment7.java:17) Class ScannerBean rather than interface used as the type of variable/function sb
+variableHasClassType: (CommandInterpreter.java:42) Class ScannerBean rather than interface used as the type of variable/function s
+variableHasClassType: (ScannerBean.java:39) Class StringHistory rather than interface used as the type of variable/function tokenList
+variableHasClassType: (ScannerBean.java:46) Class StringHistory rather than interface used as the type of variable/function getTokenList
+variableHasClassType: (SingletonsCreator.java:8) Class ScannerBean rather than interface used as the type of variable/function scanner
+variableHasClassType: (SingletonsCreator.java:9) Class BridgeScene rather than interface used as the type of variable/function bridgeScene
+variableHasClassType: (SingletonsCreator.java:11) Class CommandInterpreter rather than interface used as the type of variable/function commandInterpreter
+variableHasClassType: (SingletonsCreator.java:14) Class ScannerBean rather than interface used as the type of variable/function getOrCreateScannerBean
+variableHasClassType: (SingletonsCreator.java:22) Class BridgeScene rather than interface used as the type of variable/function getOrCreateBridgeScene
+variableHasClassType: (SingletonsCreator.java:48) Class CommandInterpreter rather than interface used as the type of variable/function getOrCreateCommandInterpreter
+variableHasClassType: (Assignment7.java:52) Class Table rather than interface used as the type of variable/function t
+variableHasClassType: (SingletonsCreator.java:10) Class Table rather than interface used as the type of variable/function table
+variableHasClassType: (SingletonsCreator.java:30) Class Table rather than interface used as the type of variable/function getOrCreateTable
+variableHasClassType: (Token.java:9) Class Token rather than interface used as the type of variable/function t
+variableHasClassType: (StringHistory.java:55) Class Word rather than interface used as the type of variable/function retVal
+variableHasClassType: (Word.java:16) Class Word rather than interface used as the type of variable/function w
+variableHasClassType: (CommandInterpreter.java:17) Class BridgeScene rather than interface used as the type of variable/function bridgeScene
+variableHasClassType: (CommandInterpreter.java:18) Class ScannerBean rather than interface used as the type of variable/function scannerBean
+variableHasClassType: (CommandInterpreter.java:20) Class StringHistory rather than interface used as the type of variable/function tokenList
+variableHasClassType: (CommandInterpreter.java:39) Class BridgeScene rather than interface used as the type of variable/function b
+variableHasClassType: (CommandInterpreter.java:39) Class ScannerBean rather than interface used as the type of variable/function s
+variableHasClassType: (CommandInterpreter.java:44) Class StringHistory rather than interface used as the type of variable/function t
+variableHasClassType: (CommandInterpreter.java:56) Class Avatar rather than interface used as the type of variable/function av
+variableHasClassType: (CommandInterpreter.java:79) Class Avatar rather than interface used as the type of variable/function a
+variableHasClassType: (ScannerBean.java:39) Class StringHistory rather than interface used as the type of variable/function tokenList
+variableHasClassType: (ScannerBean.java:46) Class StringHistory rather than interface used as the type of variable/function getTokenList
+variableHasClassType: (SingletonsCreator.java:9) Class BridgeScene rather than interface used as the type of variable/function bridgeScene
+variableHasClassType: (SingletonsCreator.java:10) Class Table rather than interface used as the type of variable/function table
+variableHasClassType: (SingletonsCreator.java:22) Class BridgeScene rather than interface used as the type of variable/function getOrCreateBridgeScene
+variableHasClassType: (SingletonsCreator.java:30) Class Table rather than interface used as the type of variable/function getOrCreateTable
+
+
+No magic numbers:
+  -- magic.number: (Assignment7.java:32) In type Assignment7, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment7.java:40) In type Assignment7, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment7.java:49) In type Assignment7, magic number 3000 in expression list EXPR 3000 
+magic.number: (Avatar.java:57) In type Avatar, magic number 1.5 in expression list 1.5 
+magic.number: (Avatar.java:58) In type Avatar, magic number .5 in expression list .5 
+magic.number: (Avatar.java:98) In type Avatar, magic number .5 in expression list .5 
+magic.number: (BridgeScene.java:101) In type BridgeScene, magic number .5 in expression list .5 
+magic.number: (BridgeScene.java:109) In type BridgeScene, magic number .5 in expression list .5 
+magic.number: (Gorge.java:33) In type Gorge, magic number 1000 in expression list EXPR 700 , EXPR 0 , EXPR 1000 , EXPR 0 
+magic.number: (Gorge.java:33) In type Gorge, magic number 700 in expression list EXPR 700 , EXPR 0 , EXPR 1000 , EXPR 0 
+magic.number: (Gorge.java:34) In type Gorge, magic number 1000 in expression list EXPR 1000 , EXPR 0 , EXPR 1000 , EXPR 0 
+magic.number: (Gorge.java:36) In type Gorge, magic number 300 in expression list EXPR 700 , EXPR 300 , EXPR 0 , EXPR 300 
+magic.number: (Gorge.java:36) In type Gorge, magic number 700 in expression list EXPR 700 , EXPR 300 , EXPR 0 , EXPR 300 
+magic.number: (Gorge.java:37) In type Gorge, magic number 300 in expression list EXPR 700 , EXPR 500 , EXPR 0 , EXPR 300 
+magic.number: (Gorge.java:37) In type Gorge, magic number 500 in expression list EXPR 700 , EXPR 500 , EXPR 0 , EXPR 300 
+magic.number: (Gorge.java:37) In type Gorge, magic number 700 in expression list EXPR 700 , EXPR 500 , EXPR 0 , EXPR 300 
+magic.number: (CommandInterpreter.java:57) In type CommandInterpreter, magic number 4 in expression list EXPR 4 
+magic.number: (CommandInterpreter.java:83) In type CommandInterpreter, magic number 3 in expression list EXPR 3 
+magic.number: (ScannerBean.java:238) In type ScannerBean, magic number 10000 in expression list 10000 
+magic.number: (ScannerBean.java:273) In type ScannerBean, magic number 100 in expression list 100 
+magic.number: (CommandInterpreter.java:54) In type CommandInterpreter, magic number 4 in expression list EXPR 4 
+magic.number: (CommandInterpreter.java:80) In type CommandInterpreter, magic number 3 in expression list EXPR 3 
+magic.number: (ScannerBean.java:238) In type ScannerBean, magic number 10000 in expression list 10000 
+magic.number: (ScannerBean.java:273) In type ScannerBean, magic number 100 in expression list 100 
+
+
+Illegal import or call:
+  -- Illegal type or call in:
+illegalTypeImported: (Approach.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Call.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Define.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Fail.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Move.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Pass.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (ProceedAll.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Redo.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Repeat.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (RotateLeftArm.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (RotateRightArm.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Say.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Sleep.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Thread.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Undo.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Wait.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Approach.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Call.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Define.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Fail.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Move.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Pass.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (ProceedAll.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Redo.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Repeat.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (RotateLeftArm.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (RotateRightArm.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Say.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Sleep.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Thread.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Undo.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (Wait.java:3) Used disallowed class src.tokens.Word 
+illegalTypeImported: (StringHistory.java:5) Used disallowed class src.tokens.Word 
+illegalTypeImported: (ScannerBean.java:12) Used disallowed class src.tokens.End 
+illegalTypeImported: (ScannerBean.java:13) Used disallowed class src.tokens.Minus 
+illegalTypeImported: (ScannerBean.java:14) Used disallowed class src.tokens.Plus 
+illegalTypeImported: (ScannerBean.java:15) Used disallowed class src.tokens.Quote 
+illegalTypeImported: (ScannerBean.java:16) Used disallowed class src.tokens.Start 
+illegalTypeImported: (ScannerBean.java:17) Used disallowed class src.tokens.Word 
+illegalTypeImported: (ScannerBean.java:12) Used disallowed class src.tokens.End 
+illegalTypeImported: (ScannerBean.java:13) Used disallowed class src.tokens.Minus 
+illegalTypeImported: (ScannerBean.java:14) Used disallowed class src.tokens.Plus 
+illegalTypeImported: (ScannerBean.java:15) Used disallowed class src.tokens.Quote 
+illegalTypeImported: (ScannerBean.java:16) Used disallowed class src.tokens.Start 
+illegalTypeImported: (ScannerBean.java:17) Used disallowed class src.tokens.Word 
+
+
+Submission time: 2014-01-16T15:03:28.874-05:00
+
+Early benefit: 105.0%
+TOTAL SCORE: 31.5

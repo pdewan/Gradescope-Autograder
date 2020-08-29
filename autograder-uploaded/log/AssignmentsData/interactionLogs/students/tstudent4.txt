@@ -1,0 +1,4 @@
+test, student(tstudent4)
+--------------------------------------------------------------------------------------------------
+Comp401f16:Assignment1 TOTAL:92.4 FEATURES:88.0 MULTIPLIER:1.05 MANUAL:3:13:17 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------

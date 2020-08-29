@@ -1,0 +1,63 @@
+
+Grading result for: Test, Student(tstudent3)
+
+Grading features...
+----------------------------------
+ScanStringTestSuite:ScanString functions correctly     15.0 / 15.0
+ScanningIteratorSuite:Scanning Iterator                0.0 / 30.0 (Extra credit)
+MultipleTokenSuite:Can process multiple tokens         30.0 / 30.0
+InvalidCharacterSuite:Handles Invalid Characters       0.0 / 10.0 (Extra credit)
+TerminatesWithStartingPeriodSuite:Terminating period forms complete line 5.0 /  5.0
+IndexOfNotTestSuite:IndexOfNot functions correctly     5.0 /  5.0 (Extra credit)
+IndexOfTestSuite:IndexOf functions correctly           18.0 / 18.0
+TerminatesWithPeriodLineSuite:Handles Space After Period 5.0 /  5.0
+SingleTokenSuite:Can process a single token            10.0 / 10.0
+VariableSpaceSuite:Handles Variable Spaces             5.0 /  5.0 (Extra credit)
+Required Methods Called in Main or Iterator            15.0 / 15.0
+IndexOf  Called in Iterator                            0.0 /  5.0 (Extra credit)
+indexOfNot Called in Main                              3.0 /  3.0 (Extra credit)
+IndexOfNot Called in Iterator                          0.0 /  3.0 (Extra credit)
+Iterator Methods Called in Main                        0.0 / 10.0 (Extra credit)
+Screenshots enclosed                                   0.0 /  5.0
+Screenshots show tests                                 0.0 / 10.0
+----------------------------------
+  Points Awarded: 111.0
+
+Grading restrictions...
+----------------------------------
+Illegal import or call                      0.0 /  -25.0
+----------------------------------
+  Points Deducted: 0.0
+
+  Features Score: 111.0
+
+Notes from grading features:
+----------------------------------
+ScanningIteratorSuite:Scanning Iterator:
+  -- Did not find a class in:[(.*)ScanningIterator(.*)]%Did not find a class in:[(.*)ScanningIterator(.*)]
+  -- Did not find a class in:[(.*)ScanningIterator(.*)]%Did not find a class in:[(.*)ScanningIterator(.*)]
+
+InvalidCharacterSuite:Handles Invalid Characters:
+  -- Incorrect output (Pattern:(.*)12(.*) not found in output line: [String?, Tokens:, two])  See console/transcript.
+  -- Incorrect output (Pattern:(.*)190(.*) not found in output line: [String?, Tokens:, 101, two])  See console/transcript.
+  -- Incorrect output (Pattern:(.*)1771944(.*) not found in output line: [String?, Tokens:, 101, two])  See console/transcript.
+
+IndexOf  Called in Iterator:
+  -- ScanningIterator not found by checkstyle
+
+IndexOfNot Called in Iterator:
+  -- ScanningIterator not found by checkstyle
+
+Iterator Methods Called in Main:
+  -- src\main\Assignment1.java:1: warning: missingMethodCall: (Assignment1.java:1) has not made expected call (.*)!hasNext:->boolean//EC
+
+  -- src\main\Assignment1.java:1: warning: missingMethodCall: (Assignment1.java:1) has not made expected call (.*)!next:->String//EC
+
+
+Screenshots enclosed:
+  -- Missing images
+
+Submission time: 2015-08-26T23:46:15.352-04:00
+
+Early benefit: 105.0%
+TOTAL SCORE: 116.6

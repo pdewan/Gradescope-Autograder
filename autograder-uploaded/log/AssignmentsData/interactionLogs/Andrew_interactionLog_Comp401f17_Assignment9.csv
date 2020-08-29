@@ -1,0 +1,191 @@
+1509571213535,17:20:13,ProjectStepperStarted
+1509571213576,17:20:13,NavigationKindChange,Automatic
+1509571213583,17:20:13,NavigationStarted
+1509571213583,17:20:13,AutomaticNavigationStarted
+1509571215721,17:20:15,GraderSettingsStarted,Comp401f17,Assignment9,tstudent1,tstudent1,Automatic,Grading Status,All
+1509571224861,17:20:24,NavigationInitiated
+1509571224897,17:20:24,GraderSettingsEnded
+1509571227101,17:20:27,GraderSettingsStarted,Comp401f17,Assignment9,tstudent1,tstudent1,Automatic,Grading Status,All
+1509571228180,17:20:28,NavigationKindChange,Automatic and then manual
+1509571240046,17:20:40,NavigationKindChange,Automatic
+1509571240050,17:20:40,NavigationParameterChange,All
+1509571240051,17:20:40,GradingStatusUserChange,All
+1509571244155,17:20:44,DownloadPathUserChange,C:\Users\Andrew\Documents\GitHub\Comp401AllChecks\Test Data\Comp401F17\Assignment9\Test1, Student(tstudent1)
+1509571249298,17:20:49,NavigationParameterChange,All
+1509571249298,17:20:49,GradingStatusUserChange,All
+1509571249298,17:20:49,DownloadPathUserChange,C:\Users\Andrew\Documents\GitHub\Comp401AllChecks\Test Data\Comp401F17\Assignment9
+1509571253377,17:20:53,NavigationKindChange,Automatic and then manual
+1509571254457,17:20:54,NavigationInitiated
+1509571254462,17:20:54,GraderSettingsEnded
+1509571256115,17:20:56,GraderSettingsStarted,Comp401f17,Assignment9,tstudent1,tstudent1,Automatic and then manual,Grading Status,All
+1509571276203,17:21:16,NavigationInitiated
+1509571276225,17:21:16,GraderSettingsEnded
+1509571277803,17:21:17,GraderSettingsStarted,Comp401f17,Assignment9,tstudent1,tstudent1,Automatic and then manual,Grading Status,All
+1509571292695,17:21:32,ProjectStepperStarted
+1509571292727,17:21:32,NavigationKindChange,Automatic
+1509571292727,17:21:32,NavigationStarted
+1509571292727,17:21:32,AutomaticNavigationStarted
+1509571292811,17:21:32,ProjectStepStarted,tstudent1,
+1509571335234,17:22:15,ProjectStepperStarted
+1509571335261,17:22:15,NavigationKindChange,Automatic
+1509571335263,17:22:15,NavigationStarted
+1509571335263,17:22:15,AutomaticNavigationStarted
+1509571337281,17:22:17,GraderSettingsStarted,Comp401f17,Assignment9,tstudent1,tstudent1,Automatic,Grading Status,All
+1509571354662,17:22:34,NavigationInitiated
+1509571354709,17:22:34,GraderSettingsEnded
+1509571356260,17:22:36,GraderSettingsStarted,Comp401f17,Assignment9,tstudent1,tstudent1,Automatic,Grading Status,All
+1509571369468,17:22:49,ProjectStepperStarted
+1509571369527,17:22:49,NavigationStarted
+1509571369527,17:22:49,AutomaticNavigationStarted
+1509571369528,17:22:49,ProjectStepStarted,tstudent1,
+1509571392952,17:23:12,ProjectStepperStarted
+1509571392983,17:23:12,NavigationStarted
+1509571392983,17:23:12,AutomaticNavigationStarted
+1509571392983,17:23:12,ProjectStepStarted,tstudent1,
+1509571415604,17:23:35,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1509571415619,17:23:35,AutomaticNavigationEnded
+1509571500651,17:25:00,ProjectStepperStarted
+1509571500681,17:25:00,NavigationKindChange,Automatic
+1509571500682,17:25:00,NavigationStarted
+1509571500682,17:25:00,AutomaticNavigationStarted
+1509571500704,17:25:00,ProjectStepStarted,tstudent1,
+1509571533390,17:25:33,ProjectStepperStarted
+1509571533421,17:25:33,NavigationKindChange,Automatic
+1509571533421,17:25:33,NavigationStarted
+1509571533421,17:25:33,AutomaticNavigationStarted
+1509571533465,17:25:33,ProjectStepStarted,tstudent1,
+1509571688468,17:28:08,ProjectStepperStarted
+1509571688505,17:28:08,NavigationKindChange,Automatic
+1509571688505,17:28:08,NavigationStarted
+1509571688505,17:28:08,AutomaticNavigationStarted
+1509571688521,17:28:08,ProjectStepStarted,tstudent1,
+1509571713558,17:28:33,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1509571713607,17:28:33,AutomaticNavigationEnded
+1509571713607,17:28:33,NavigationKindChange,Manual
+1509571713608,17:28:33,NavigationStarted
+1509571713608,17:28:33,ManualNavigationStarted
+1509571713609,17:28:33,ProjectStepStarted,tstudent1,test1COMMMA student
+1509571716450,17:28:36,ManualNavigationEnded
+1509572366298,17:39:26,ProceedWhenDoneChanged,tstudent1,test1COMMMA student
+1509572368002,17:39:28,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1509572368021,17:39:28,ProjectStepperEnded
+1510089041710,16:10:41,ProjectStepperStarted
+1510089041840,16:10:41,NavigationKindChange,Automatic
+1510089041841,16:10:41,NavigationStarted
+1510089041841,16:10:41,AutomaticNavigationStarted
+1510089041871,16:10:41,ProjectStepStarted,tstudent1,
+1510089069584,16:11:09,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1510089069616,16:11:09,AutomaticNavigationEnded
+1510089069616,16:11:09,NavigationKindChange,Manual
+1510089069616,16:11:09,NavigationStarted
+1510089069617,16:11:09,ManualNavigationStarted
+1510089069617,16:11:09,ProjectStepStarted,tstudent1,test1COMMMA student
+1510089072324,16:11:12,ManualNavigationEnded
+1510089198124,16:13:18,ProjectStepperStarted
+1510089198162,16:13:18,NavigationKindChange,Automatic
+1510089198162,16:13:18,NavigationStarted
+1510089198163,16:13:18,AutomaticNavigationStarted
+1510089198171,16:13:18,ProjectStepStarted,tstudent1,
+1510089216323,16:13:36,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1510089216341,16:13:36,AutomaticNavigationEnded
+1510089216342,16:13:36,NavigationKindChange,Manual
+1510089216342,16:13:36,NavigationStarted
+1510089216343,16:13:36,ManualNavigationStarted
+1510089216344,16:13:36,ProjectStepStarted,tstudent1,test1COMMMA student
+1510089217633,16:13:37,ManualNavigationEnded
+1510089229710,16:13:49,ProblemHistoryVisited,tstudent1,test1COMMMA student
+1510089230422,16:13:50,FeedbackVisited,tstudent1,test1COMMMA student
+1510089231053,16:13:51,SourceVisited,tstudent1,test1COMMMA student
+1510089233294,16:13:53,MainVisited,tstudent1,test1COMMMA student
+1510089287987,16:14:47,ProjectStepperStarted
+1510089288037,16:14:48,NavigationKindChange,Automatic
+1510089288037,16:14:48,NavigationStarted
+1510089288038,16:14:48,AutomaticNavigationStarted
+1510089288048,16:14:48,ProjectStepStarted,tstudent1,
+1510089306365,16:15:06,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1510089306392,16:15:06,AutomaticNavigationEnded
+1510089306398,16:15:06,NavigationKindChange,Manual
+1510089306398,16:15:06,NavigationStarted
+1510089306398,16:15:06,ManualNavigationStarted
+1510089306399,16:15:06,ProjectStepStarted,tstudent1,test1COMMMA student
+1510089307827,16:15:07,ManualNavigationEnded
+1510089348112,16:15:48,ProjectStepperStarted
+1510089348170,16:15:48,NavigationKindChange,Automatic
+1510089348170,16:15:48,NavigationStarted
+1510089348170,16:15:48,AutomaticNavigationStarted
+1510089348184,16:15:48,ProjectStepStarted,tstudent1,
+1510089366963,16:16:06,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1510089366986,16:16:06,AutomaticNavigationEnded
+1510089366987,16:16:06,NavigationKindChange,Manual
+1510089366988,16:16:06,NavigationStarted
+1510089366988,16:16:06,ManualNavigationStarted
+1510089366991,16:16:06,ProjectStepStarted,tstudent1,test1COMMMA student
+1510089368498,16:16:08,ManualNavigationEnded
+1510089384983,16:16:24,ProjectStepperStarted
+1510089385023,16:16:25,NavigationKindChange,Automatic
+1510089385023,16:16:25,NavigationStarted
+1510089385024,16:16:25,AutomaticNavigationStarted
+1510089385031,16:16:25,ProjectStepStarted,tstudent1,
+1510089403053,16:16:43,ProjectStepEnded,tstudent1,test1COMMMA student,155.4,148.0,0.0,1.05,,,0
+1510089403071,16:16:43,AutomaticNavigationEnded
+1510089403073,16:16:43,NavigationKindChange,Manual
+1510089403073,16:16:43,NavigationStarted
+1510089403073,16:16:43,ManualNavigationStarted
+1510089403074,16:16:43,ProjectStepStarted,tstudent1,test1COMMMA student
+1510089404617,16:16:44,ManualNavigationEnded
+1510089448651,16:17:28,ProjectStepperStarted
+1510089448698,16:17:28,NavigationKindChange,Automatic
+1510089448698,16:17:28,NavigationStarted
+1510089448698,16:17:28,AutomaticNavigationStarted
+1510089448706,16:17:28,ProjectStepStarted,tstudent1,
+1510089467846,16:17:47,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1510089467873,16:17:47,AutomaticNavigationEnded
+1510089467874,16:17:47,NavigationKindChange,Manual
+1510089467875,16:17:47,NavigationStarted
+1510089467876,16:17:47,ManualNavigationStarted
+1510089467876,16:17:47,ProjectStepStarted,tstudent1,test1COMMMA student
+1510089469627,16:17:49,ManualNavigationEnded
+1510089546821,16:19:06,ProceedWhenDoneChanged,tstudent1,test1COMMMA student
+1510089547897,16:19:07,ProjectStepEnded,tstudent1,test1COMMMA student,152.3,145.0,0.0,1.05,,,0
+1510089547898,16:19:07,ProjectStepperEnded
+1510089740237,16:22:20,ProjectStepperStarted
+1510089740273,16:22:20,NavigationKindChange,Automatic
+1510089740274,16:22:20,NavigationStarted
+1510089740274,16:22:20,AutomaticNavigationStarted
+1510089740283,16:22:20,ProjectStepStarted,tstudent1,
+1510089758316,16:22:38,ProjectStepEnded,tstudent1,test1COMMMA student,155.4,148.0,0.0,1.05,,,0
+1510089758347,16:22:38,AutomaticNavigationEnded
+1510089758347,16:22:38,NavigationKindChange,Manual
+1510089758348,16:22:38,NavigationStarted
+1510089758348,16:22:38,ManualNavigationStarted
+1510089758349,16:22:38,ProjectStepStarted,tstudent1,test1COMMMA student
+1510089759757,16:22:39,ManualNavigationEnded
+1510089834393,16:23:54,FeatureUserGraded,tstudent1,test1COMMMA student,BridgeSceneControllerSuite
+1510089842762,16:24:02,FeatureUserGraded,tstudent1,test1COMMMA student,Clicking and pressing buttons in display works correctly
+1510089848283,16:24:08,FeatureUserGraded,tstudent1,test1COMMMA student,Clicking and pressing buttons in display works correctly
+1510089865669,16:24:25,FeatureUserGraded,tstudent1,test1COMMMA student,Menu item and button
+1510089870865,16:24:30,FeatureUserGraded,tstudent1,test1COMMMA student,FactoryMethodSuiteA9
+1510089875816,16:24:35,FeatureUserGraded,tstudent1,test1COMMMA student,No magic numbers
+1510089883117,16:24:43,FeatureUserGraded,tstudent1,test1COMMMA student,Variables should have interface, not class, type
+1510089908207,16:25:08,FeatureUserGraded,tstudent1,test1COMMMA student,FactoryMethodSuiteA9
+1510091080518,16:44:40,ProceedWhenDoneChanged,tstudent1,test1COMMMA student
+1510091082125,16:44:42,ProjectStepEnded,tstudent1,test1COMMMA student,155.4,148.0,0.0,1.05,,,0
+1510091082126,16:44:42,ProjectStepperEnded
+1510091100014,16:45:00,ProjectStepperStarted
+1510091100061,16:45:00,NavigationKindChange,Automatic
+1510091100062,16:45:00,NavigationStarted
+1510091100064,16:45:00,AutomaticNavigationStarted
+1510091100080,16:45:00,ProjectStepStarted,tstudent1,
+1510091118924,16:45:18,ProjectStepEnded,tstudent1,test1COMMMA student,155.4,148.0,0.0,1.05,,,0
+1510091118955,16:45:18,AutomaticNavigationEnded
+1510091118956,16:45:18,NavigationKindChange,Manual
+1510091118956,16:45:18,NavigationStarted
+1510091118956,16:45:18,ManualNavigationStarted
+1510091118957,16:45:18,ProjectStepStarted,tstudent1,test1COMMMA student
+1510091120995,16:45:20,ManualNavigationEnded
+1510091143908,16:45:43,MainVisited,tstudent1,test1COMMMA student
+1510091205851,16:46:45,ProblemHistoryVisited,tstudent1,test1COMMMA student
+1510091211294,16:46:51,MainVisited,tstudent1,test1COMMMA student
+1510091317771,16:48:37,ProceedWhenDoneChanged,tstudent1,test1COMMMA student
+1510091318657,16:48:38,ProjectStepEnded,tstudent1,test1COMMMA student,155.4,148.0,0.0,1.05,,,0
+1510091318658,16:48:38,ProjectStepperEnded

@@ -1,0 +1,17 @@
+Auto Grading Time: Total: 0:0:26 Average: 0:0:4
+Manual Grading Time: Total: 3:51:24 Average: 0:38:34
+Number of Source Notes: Total: 6 Average: 1.0
+
+Comp401f16:Assignment1
+--------------------------------------------------------------------------------------------------
+all, correct (acorrect) TOTAL:63.0 FEATURES:60.0 MULTIPLIER:1.05 AUTO:0:0:12 MANUAL:0:27:39 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+extra, credit (ecredit) TOTAL:49.35 FEATURES:46.7 MULTIPLIER:1.05 MANUAL:0:0:31 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+test, student(tstudent) TOTAL:47.25 FEATURES:45.0 MULTIPLIER:1.05 AUTO:0:0:10 MANUAL:0:6:20 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+test, student(tstudent3) TOTAL:73.5 FEATURES:70.0 MULTIPLIER:1.05 MANUAL:0:1:55 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+test, student(tstudent4) TOTAL:92.4 FEATURES:88.0 MULTIPLIER:1.05 MANUAL:3:13:17 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+test, student(tstudent2) TOTAL:42.0 FEATURES:40.0 MULTIPLIER:1.05 AUTO:0:0:3 MANUAL:0:1:40 SECTIONS:[feedback, student_history, source, source_open, problem_history] GRADER:Andrew

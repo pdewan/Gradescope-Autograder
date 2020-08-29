@@ -1,0 +1,38 @@
+1507317653328,15:20:53,ProjectStepperStarted
+1507317653412,15:20:53,NavigationKindChange,Automatic
+1507317653423,15:20:53,NavigationStarted
+1507317653424,15:20:53,AutomaticNavigationStarted
+1507317653610,15:20:53,ProjectStepStarted,tstudent0,
+1507317679944,15:21:19,ProjectStepEnded,tstudent0,test0COMMMA student,169.1,161.0,0.0,1.05,,,0
+1507317680012,15:21:20,AutomaticNavigationEnded
+1507317680016,15:21:20,NavigationKindChange,Manual
+1507317680017,15:21:20,NavigationStarted
+1507317680021,15:21:20,ManualNavigationStarted
+1507317680031,15:21:20,ProjectStepStarted,tstudent0,test0COMMMA student
+1507317685308,15:21:25,ManualNavigationEnded
+1507317718828,15:21:58,ProceedWhenDoneChanged,tstudent0,test0COMMMA student
+1507317720562,15:22:00,ProjectStepEnded,tstudent0,test0COMMMA student,169.1,161.0,0.0,1.05,,,0
+1507317720581,15:22:00,ProjectStepperEnded
+1507851262720,19:34:22,ProjectStepperStarted
+1507851262815,19:34:22,NavigationKindChange,Automatic
+1507851262816,19:34:22,NavigationStarted
+1507851262816,19:34:22,AutomaticNavigationStarted
+1507851262912,19:34:22,ProjectStepStarted,tstudent0,
+1507851277354,19:34:37,ProjectStepEnded,tstudent0,test0COMMMA student,169.1,161.0,0.0,1.05,,,0
+1507851277388,19:34:37,AutomaticNavigationEnded
+1507851277389,19:34:37,NavigationKindChange,Manual
+1507851277389,19:34:37,NavigationStarted
+1507851277389,19:34:37,ManualNavigationStarted
+1507851277391,19:34:37,ProjectStepStarted,tstudent0,test0COMMMA student
+1507851280479,19:34:40,ManualNavigationEnded
+1507851313008,19:35:13,SourceVisited,tstudent0,test0COMMMA student
+1507851313773,19:35:13,FeedbackVisited,tstudent0,test0COMMMA student
+1507851314542,19:35:14,ProblemHistoryVisited,tstudent0,test0COMMMA student
+1507851329489,19:35:29,StudentHistoryVisited,tstudent0,test0COMMMA student
+1507851331605,19:35:31,ProblemHistoryVisited,tstudent0,test0COMMMA student
+1507851332939,19:35:32,FeedbackVisited,tstudent0,test0COMMMA student
+1507851334190,19:35:34,StudentHistoryVisited,tstudent0,test0COMMMA student
+1507851337128,19:35:37,MainVisited,tstudent0,test0COMMMA student
+1507851340815,19:35:40,ProceedWhenDoneChanged,tstudent0,test0COMMMA student
+1507851341330,19:35:41,ProjectStepEnded,tstudent0,test0COMMMA student,169.1,161.0,0.0,1.05,,,0
+1507851341332,19:35:41,ProjectStepperEnded

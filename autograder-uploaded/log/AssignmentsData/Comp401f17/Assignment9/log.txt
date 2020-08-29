@@ -1,0 +1,57 @@
+
+Grading result for: Test1, Student(tstudent1)
+
+Grading features...
+----------------------------------
+BridgeSceneControllerSuite                             40.0 / 40.0
+FactoryMethodSuiteA9                                   5.0 / 10.0
+ObservablePainterSuite                                 30.0 / 30.0 (Extra credit)
+ExtraCreditFactoryMethodSuiteA9                        20.0 / 20.0 (Extra credit)
+Public methods are in implemented interfaces           10.0 / 10.0
+Normal credit view (0.0 if extra credit instead)       0.0 / 15.0
+Extra credit view                                      25.0 / 25.0 (Extra credit)
+BridgeSceneController                                  12.0 / 12.0
+Clicking and pressing buttons in display works correctly 0.0 /  8.0
+CommandInterpreter controller                          3.0 /  3.0 (Extra credit)
+CommandInterpreter controller issues commands correctly0.0 /  7.0 (Extra credit)
+CommandInterpreter view                                3.0 /  3.0 (Extra credit)
+CommandInterpreter view shows error property correctly 0.0 /  5.0 (Extra credit)
+Menu item and button                                   3.0 /  3.0 (Extra credit)
+Menu item and button result in some action in display  0.0 /  7.0 (Extra credit)
+Progress bar or slider (max 2.0)                       2.0 /  4.0 (Extra credit)
+Progress bar or slider works                           0.0 /  4.0 (Extra credit)
+Animation shows function of command interpreter and correct output in all frames 0.0 / 15.0
+----------------------------------
+  Points Awarded: 153.0
+
+Grading restrictions...
+----------------------------------
+Variables should have interface, not class, type0.0 /  -10.0
+No magic numbers                            0.0 /  -10.0
+Interactive Run                             -5.0 /  -5.0
+Illegal import or call                      0.0 /  -25.0
+----------------------------------
+  Points Deducted: -5.0
+
+  Features Score: 148.0
+
+Notes from grading features:
+----------------------------------
+FactoryMethodSuiteA9:
+  -- Factory method:[inheritingbridgescenepainterfactorymethod] not found.
+
+Normal credit view (0.0 if extra credit instead):
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- Class matching InheritingBridgeScenePainter not instantiated in SingletonsCreator
+
+Progress bar or slider (max 2.0):
+  -- expectedGetters: (Assignment9.java:1) In type Assignment9, missing getter for property Slider of type JSlider
+
+
+Submission time: 2014-01-16T15:03:28.874-05:00
+
+Early benefit: 105.0%
+TOTAL SCORE: 155.4

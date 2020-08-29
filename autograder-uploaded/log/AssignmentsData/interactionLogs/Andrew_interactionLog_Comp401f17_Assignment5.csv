@@ -1,0 +1,73 @@
+1506628984977,16:03:04,ProjectStepperStarted
+1506628985632,16:03:05,NavigationKindChange,Automatic
+1506628985734,16:03:05,NavigationStarted
+1506628985735,16:03:05,AutomaticNavigationStarted
+1506628985937,16:03:05,ProjectStepStarted,null,
+1506629007201,16:03:27,ProjectStepEnded,null,exceptionCOMMMA nullpointer,55.7,53.0,0.0,1.05,Incorret names/tags,,0
+1506629007375,16:03:27,ProjectStepStarted,previous,exceptionCOMMMA nullpointer
+1506629024342,16:03:44,ProjectStepEnded,previous,previousCOMMMA assignment,5.3,5.0,0.0,1.05,,,0
+1506629024408,16:03:44,ProjectStepStarted,skeleton,previousCOMMMA assignment
+1506629037893,16:03:57,ProjectStepEnded,skeleton,correctCOMMMA skeleton,22.1,21.0,0.0,1.05,,,0
+1506629037938,16:03:57,ProjectStepStarted,stubs,correctCOMMMA skeleton
+1506629049344,16:04:09,ProjectStepEnded,stubs,correctCOMMMA stub,64.1,61.0,0.0,1.05,,,0
+1506629049407,16:04:09,ProjectStepStarted,student1,correctCOMMMA stub
+1506629058818,16:04:18,ProjectStepEnded,student1,oneCOMMMA student,5.3,5.0,0.0,1.05,,,0
+1506629058900,16:04:18,ProjectStepStarted,student2,oneCOMMMA student
+1506629069756,16:04:29,ProjectStepEnded,student2,twoCOMMMA student,84.0,80.0,0.0,1.05,,,0
+1506629069830,16:04:29,ProjectStepStarted,tstudent0,twoCOMMMA student
+1506629080936,16:04:40,ProjectStepEnded,tstudent0,test0COMMMA student,157.5,150.0,0.0,1.05,,,0
+1506629080982,16:04:40,AutomaticNavigationEnded
+1506629080984,16:04:40,NavigationKindChange,Manual
+1506629080984,16:04:40,NavigationStarted
+1506629080985,16:04:40,ManualNavigationStarted
+1506629081007,16:04:41,ProjectStepStarted,null,test0COMMMA student
+1506629083277,16:04:43,ManualNavigationEnded
+1506629098380,16:04:58,UserNextStep,null,exceptionCOMMMA nullpointer
+1506629101253,16:05:01,ProceedWhenDoneChanged,null,exceptionCOMMMA nullpointer
+1506629102251,16:05:02,UserNextStep,null,exceptionCOMMMA nullpointer
+1506629102329,16:05:02,ProjectStepEnded,null,exceptionCOMMMA nullpointer,55.7,53.0,0.0,1.05,Incorret names/tags,,0
+1506629102515,16:05:02,ProjectStepStarted,previous,exceptionCOMMMA nullpointer
+1506629107821,16:05:07,UserNextStep,previous,previousCOMMMA assignment
+1506629107823,16:05:07,ProjectStepEnded,previous,previousCOMMMA assignment,5.3,5.0,0.0,1.05,,,0
+1506629107830,16:05:07,ProjectStepStarted,skeleton,previousCOMMMA assignment
+1506629112096,16:05:12,UserNextStep,skeleton,correctCOMMMA skeleton
+1506629112098,16:05:12,ProjectStepEnded,skeleton,correctCOMMMA skeleton,22.1,21.0,0.0,1.05,,,0
+1506629112106,16:05:12,ProjectStepStarted,stubs,correctCOMMMA skeleton
+1506629116269,16:05:16,UserNextStep,stubs,correctCOMMMA stub
+1506629116272,16:05:16,ProjectStepEnded,stubs,correctCOMMMA stub,64.1,61.0,0.0,1.05,,,0
+1506629116279,16:05:16,ProjectStepStarted,student1,correctCOMMMA stub
+1506629120333,16:05:20,UserNextStep,student1,oneCOMMMA student
+1506629120336,16:05:20,ProjectStepEnded,student1,oneCOMMMA student,5.3,5.0,0.0,1.05,,,0
+1506629120341,16:05:20,ProjectStepStarted,student2,oneCOMMMA student
+1506629124603,16:05:24,UserNextStep,student2,twoCOMMMA student
+1506629124606,16:05:24,ProjectStepEnded,student2,twoCOMMMA student,84.0,80.0,0.0,1.05,,,0
+1506629124613,16:05:24,ProjectStepStarted,tstudent0,twoCOMMMA student
+1506633653229,17:20:53,ProjectStepEnded,tstudent0,test0COMMMA student,157.5,150.0,0.0,1.05,,,0
+1506633653245,17:20:53,ProjectStepperEnded
+1506670312242,03:31:52,ProjectStepperStarted
+1506670312333,03:31:52,NavigationKindChange,Automatic
+1506670312334,03:31:52,NavigationStarted
+1506670312335,03:31:52,AutomaticNavigationStarted
+1506670312392,03:31:52,ProjectStepStarted,null,
+1506670329255,03:32:09,ProjectStepEnded,null,exceptionCOMMMA nullpointer,55.7,53.0,0.0,1.05,Incorret names/tags,,0
+1506670329297,03:32:09,ProjectStepStarted,previous,exceptionCOMMMA nullpointer
+1506670339539,03:32:19,ProjectStepEnded,previous,previousCOMMMA assignment,5.3,5.0,0.0,1.05,,,0
+1506670339608,03:32:19,ProjectStepStarted,skeleton,previousCOMMMA assignment
+1506670347561,03:32:27,ProjectStepEnded,skeleton,correctCOMMMA skeleton,22.1,21.0,0.0,1.05,,,0
+1506670347651,03:32:27,ProjectStepStarted,stubs,correctCOMMMA skeleton
+1506670353670,03:32:33,ProjectStepEnded,stubs,correctCOMMMA stub,64.1,61.0,0.0,1.05,,,0
+1506670353703,03:32:33,ProjectStepStarted,student1,correctCOMMMA stub
+1506670361956,03:32:41,ProjectStepEnded,student1,oneCOMMMA student,5.3,5.0,0.0,1.05,,,0
+1506670361994,03:32:41,ProjectStepStarted,student2,oneCOMMMA student
+1506670371649,03:32:51,ProjectStepEnded,student2,twoCOMMMA student,84.0,80.0,0.0,1.05,,,0
+1506670371681,03:32:51,ProjectStepStarted,tstudent0,twoCOMMMA student
+1506670380520,03:33:00,ProjectStepEnded,tstudent0,test0COMMMA student,157.5,150.0,0.0,1.05,,,0
+1506670380552,03:33:00,AutomaticNavigationEnded
+1506670380553,03:33:00,NavigationKindChange,Manual
+1506670380554,03:33:00,NavigationStarted
+1506670380554,03:33:00,ManualNavigationStarted
+1506670380563,03:33:00,ProjectStepStarted,null,test0COMMMA student
+1506670385730,03:33:05,ManualNavigationEnded
+1506670408765,03:33:28,ProceedWhenDoneChanged,null,exceptionCOMMMA nullpointer
+1506670410277,03:33:30,ProjectStepEnded,null,exceptionCOMMMA nullpointer,55.7,53.0,0.0,1.05,Incorret names/tags,,0
+1506670410278,03:33:30,ProjectStepperEnded

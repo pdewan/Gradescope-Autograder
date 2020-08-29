@@ -1,0 +1,149 @@
+
+Grading result for: Test1, Student(tstudent1)
+
+Grading features...
+----------------------------------
+BridgeSceneControllerSuite                             0.0 / 40.0
+FactoryMethodSuiteA9                                   0.0 / 10.0
+ObservablePainterSuite                                 30.0 / 30.0 (Extra credit)
+ExtraCreditFactoryMethodSuiteA9                        20.0 / 20.0 (Extra credit)
+Public methods are in implemented interfaces           10.0 / 10.0
+Normal credit view (0.0 if extra credit instead)       0.0 / 15.0
+Extra credit view                                      17.5 / 25.0 (Extra credit)
+BridgeSceneController                                  12.0 / 12.0
+Clicking and pressing buttons in display works correctly 0.0 /  8.0
+CommandInterpreter controller                          3.0 /  3.0 (Extra credit)
+CommandInterpreter controller issues commands correctly0.0 /  7.0 (Extra credit)
+CommandInterpreter view                                3.0 /  3.0 (Extra credit)
+CommandInterpreter view shows error property correctly 0.0 /  5.0 (Extra credit)
+Menu item and button                                   1.0 /  3.0 (Extra credit)
+Menu item and button result in some action in display  0.0 /  7.0 (Extra credit)
+Progress bar or slider (max 2.0)                       0.0 /  4.0 (Extra credit)
+Progress bar or slider works                           0.0 /  4.0 (Extra credit)
+Animation shows function of command interpreter and correct output in all frames 0.0 / 15.0
+----------------------------------
+  Points Awarded: 96.5
+
+Grading restrictions...
+----------------------------------
+Variables should have interface, not class, type-10.0 /  -10.0
+No magic numbers                            -10.0 /  -10.0
+Interactive Run                             -5.0 /  -5.0
+Illegal import or call                      0.0 /  -25.0
+----------------------------------
+  Points Deducted: -25.0
+
+  Features Score: 71.5
+
+Notes from grading features:
+----------------------------------
+BridgeSceneControllerSuite:
+  -- Could not get bridge scene controller
+  -- Could not get bridge scene controller
+  -- Could not get bridge scene controller
+  -- Could not get bridge scene controller
+
+FactoryMethodSuiteA9:
+  -- Factory method returns null object
+  -- Factory method:[inheritingbridgescenepainterfactorymethod] not found.
+
+Normal credit view (0.0 if extra credit instead):
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- InheritingBridgeScenePainter not found by checkstyle
+  -- Class matching InheritingBridgeScenePainter not instantiated in SingletonsCreator
+
+Extra credit view:
+  -- PaintListener not found by checkstyle
+  -- PaintListener not found by checkstyle
+  -- PaintListener not found by checkstyle
+
+Menu item and button:
+  -- expectedGetters: (CIC.java:1) In type CIC, missing getter for property MenuItem of type JMenuItem
+
+  -- expectedGetters: (CIC.java:1) In type CIC, missing getter for property Button of type JButton
+
+
+Progress bar or slider (max 2.0):
+  -- ProgressBarCreator not found by checkstyle
+  -- ProgressBarCreator not found by checkstyle
+
+
+Notes from grading restrictions:
+----------------------------------
+Variables should have interface, not class, type:
+  -- variableHasClassType: (CommandInterpreter.java:29) Class SingletonsCreator rather than interface used as the type of variable/function singleton
+variableHasClassType: (SingletonsCreator.java:29) Class DBSV rather than interface used as the type of variable/function dbsv
+variableHasClassType: (SingletonsCreator.java:89) Class DBSV rather than interface used as the type of variable/function dBSVFM
+variableHasClassType: (SingletonsCreator.java:28) Class OBSP rather than interface used as the type of variable/function obsp
+variableHasClassType: (SingletonsCreator.java:81) Class OBSP rather than interface used as the type of variable/function oBSPFM
+
+
+No magic numbers:
+  -- magic.number: (Assignment9.java:38) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:41) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:44) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:47) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:53) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:54) In type Assignment9, magic number 100 in expression list EXPR 100 
+magic.number: (Assignment9.java:56) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:57) In type Assignment9, magic number 107 in expression list EXPR 107 
+magic.number: (Assignment9.java:59) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:60) In type Assignment9, magic number 100 in expression list EXPR 100 
+magic.number: (Assignment9.java:62) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:63) In type Assignment9, magic number 200 in expression list EXPR 200 
+magic.number: (Assignment9.java:65) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:66) In type Assignment9, magic number -90 in expression list 90 
+magic.number: (Assignment9.java:68) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:74) In type Assignment9, magic number 500 in expression list EXPR 500 , EXPR 500 
+magic.number: (Assignment9.java:75) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:76) In type Assignment9, magic number 200 in expression list EXPR 200 , EXPR 200 
+magic.number: (Assignment9.java:77) In type Assignment9, magic number 100 in expression list EXPR 500 , EXPR 100 
+magic.number: (Assignment9.java:77) In type Assignment9, magic number 500 in expression list EXPR 500 , EXPR 100 
+magic.number: (Assignment9.java:78) In type Assignment9, magic number 200 in expression list EXPR 400 , EXPR 200 
+magic.number: (Assignment9.java:78) In type Assignment9, magic number 400 in expression list EXPR 400 , EXPR 200 
+magic.number: (Assignment9.java:79) In type Assignment9, magic number 100 in expression list EXPR 300 , EXPR 100 
+magic.number: (Assignment9.java:79) In type Assignment9, magic number 300 in expression list EXPR 300 , EXPR 100 
+magic.number: (Assignment9.java:81) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:82) In type Assignment9, magic number -30 in expression list 30 
+magic.number: (Assignment9.java:84) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:87) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:88) In type Assignment9, magic number 2.5 in expression list EXPR 2.5 
+magic.number: (Assignment9.java:90) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:96) In type Assignment9, magic number 1000 in expression list EXPR 1000 , EXPR 1000 
+magic.number: (Assignment9.java:97) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:100) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:103) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:106) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:109) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:112) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:115) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:118) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:121) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:124) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:127) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:130) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:131) In type Assignment9, magic number 100 in expression list EXPR 100 , EXPR 100 
+magic.number: (Assignment9.java:133) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:143) In type Assignment9, magic number 1000 in expression list EXPR 1000 , EXPR 1000 
+magic.number: (Assignment9.java:144) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:147) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:150) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:153) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:156) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:168) In type Assignment9, magic number 1000 in expression list EXPR 1000 , EXPR 1000 
+magic.number: (Assignment9.java:169) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:171) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:173) In type Assignment9, magic number 3000 in expression list EXPR 3000 
+magic.number: (Assignment9.java:174) In type Assignment9, magic number 45 in expression list EXPR 45 
+magic.number: (Controller.java:31) In type Controller, magic number 1000 in expression list EXPR 1000 , EXPR 1000 
+magic.number: (CIC.java:40) In type CIC, magic number -100 in expression list 100 
+magic.number: (CIC.java:42) In type CIC, magic number 100 in expression list EXPR 100 , EXPR 100 
+magic.number: (CIV.java:42) In type CIV, magic number 250 in expression list EXPR 250 , EXPR 250 
+
+
+Submission time: 2014-01-16T15:03:28.874-05:00
+
+Early benefit: 105.0%
+TOTAL SCORE: 75.1

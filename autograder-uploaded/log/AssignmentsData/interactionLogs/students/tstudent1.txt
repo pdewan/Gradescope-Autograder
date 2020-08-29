@@ -1,0 +1,10 @@
+test1, student(tstudent1)
+--------------------------------------------------------------------------------------------------
+Comp401f17:Assignment12 TOTAL:5.3 FEATURES:5.0 MULTIPLIER:1.05 MANUAL:0:1:57 SECTIONS:[feedback, source, source_open] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+Comp401f17:Assignment9 TOTAL:155.4 FEATURES:148.0 MULTIPLIER:1.05 AUTO:0:5:35 MANUAL:0:45:20 SECTIONS:[feedback, source, problem_history] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+Comp401f17:Assignment7 TOTAL:0.0 AUTO:0:0:21 MANUAL:0:8:52 GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+Comp401f18:Assignment9 TOTAL:75.1 FEATURES:71.5 MULTIPLIER:1.05 AUTO:0:3:23 MANUAL:2:6:49 GRADER:Andrew
+--------------------------------------------------------------------------------------------------

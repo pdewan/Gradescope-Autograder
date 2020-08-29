@@ -1,0 +1,7 @@
+Auto Grading Time: Total: 0:5:54 Average: 0:5:54
+Manual Grading Time: Total: 0:45:1 Average: 0:45:1
+Number of Source Notes: Total: 1 Average: 1.0
+
+Comp401f17:Assignment9
+--------------------------------------------------------------------------------------------------
+test1, student(tstudent1) TOTAL:155.4 FEATURES:148.0 MULTIPLIER:1.05 AUTO:0:5:54 MANUAL:0:45:1 SECTIONS:[feedback, source, problem_history] GRADER:Andrew

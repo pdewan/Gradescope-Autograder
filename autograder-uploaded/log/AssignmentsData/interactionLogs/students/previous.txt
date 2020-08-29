@@ -1,0 +1,6 @@
+previous, assignment(previous)
+--------------------------------------------------------------------------------------------------
+Comp401f17:Assignment5 TOTAL:5.3 FEATURES:5.0 MULTIPLIER:1.05 AUTO:0:0:16 MANUAL:0:0:15 GRADER:Andrew
+--------------------------------------------------------------------------------------------------
+Comp401f17:Assignment12 TOTAL:5.3 FEATURES:5.0 MULTIPLIER:1.05 AUTO:0:0:45 MANUAL:0:1:43 SECTIONS:[feedback, source, source_open] GRADER:Andrew
+--------------------------------------------------------------------------------------------------
