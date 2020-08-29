@@ -18,10 +18,16 @@ public class JsonGradingManager {
 		Files.deleteIfExists(output);
 		Files.createFile(output);
 		
+//		JSONObject result = new JSONObject();
+//		result.put("score", grading.getScore());
+//		result.put("exection_time", runtime);
+//		result.put("visibility", visibility);
+//		result.put("tests", buildTests(grading));
 		JSONObject result = new JSONObject();
-		result.put("score", grading.getScore());
+		result.put("score", grading.getScore()*grading.getLatePenalty());
 		result.put("exection_time", runtime);
 		result.put("visibility", visibility);
+		result.put("output", "score multiplier: " + grading.getLatePenalty());
 		result.put("tests", buildTests(grading));
 		
 		Files.write(output, result.toString().getBytes());

@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
@@ -18,8 +19,12 @@ import org.json.JSONObject;
 
 public class AssignmentSetup {
 
-    private static final String DEFAULT_COURSE_NAME = "COMP401F18";
+//    private static final String DEFAULT_COURSE_NAME = "COMP401F18";
+    private static final String DEFAULT_COURSE_NAME = "COMP524F20";
+
     private static final int DEFAULT_ASSINGMENT_NUMBER = 1;
+    private static final String DEFAULT_ASSINGMENT_NUMBER_STRING = "1";
+
     private static String COURSE_NAME;
     private static String ASSIGNMENT;
     private static String ASSIGNMENT_NO_SPACE;
@@ -27,12 +32,19 @@ public class AssignmentSetup {
     private static final String PATH_SEPARATOR = System.getProperty("path.separator");
 
     private static final String ROOT_DIRECOTRY = Paths.get(".").toAbsolutePath().getRoot().resolve("autograder").toString();
+//    private static final String ROOT_DIRECOTRY = ".";
 
     private static final String GRADER_SOURCE_DIRECTORY = "source";
 
-    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp401Driver";
-    private static final String GRADER_JAR_FILE = "comp401-grader-11.12-jar-with-dependencies.jar";
+//    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp401Driver";
+    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp524Driver";
+
+//    private static final String GRADER_JAR_FILE = "comp401-grader-11.12-jar-with-dependencies.jar";
+    private static final String GRADER_JAR_FILE = "Comp524GraderAll.jar";
+
+//    private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();
     private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();
+
     private static final String CLASSPATH_EXTRA = "";
 //    private static String CLASSPATH = "." + (CLASSPATH_EXTRA.isEmpty() ?? "" : PATH_SEPARATOR + CLASSPATH_EXTRA);
     private static final String CLASSPATH = "." + PATH_SEPARATOR + GRADER_JAR_PATH
@@ -69,16 +81,22 @@ public class AssignmentSetup {
     private static final String GRADER_JSON_FILE = "results.json";
 
     private static final String METADATA_FILE_LOCATION = ROOT_DIRECOTRY;
+//    private static final String METADATA_FILE_LOCATION = "metadata";
+
     private static final String METADATA_FILE = "submission_metadata.json";
 
     private static final String EXECUTION_SHELL = "/bin/bash";
 
     private static final DateTimeFormatter SOURCE_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
+//    private static final DateTimeFormatter TARGET_DATE_TIME_FORMATTER = DateTimeFormatter
+//            .ofPattern("yyyyMMddHHmmssSSS");
     private static final DateTimeFormatter TARGET_DATE_TIME_FORMATTER = DateTimeFormatter
-            .ofPattern("yyyyMMddHHmmssSSS");
+            .ofPattern("yyyyMMddHHmmssSSS").withZone(ZoneId.of("America/New_York"));
 
     static {
-        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER);
+//        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER);
+        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER_STRING);
+
     }
 
     public static void main(String[] args) {
@@ -87,8 +105,10 @@ public class AssignmentSetup {
         if (args.length == 2) {
             COURSE_NAME = args[0];
             try {
-                int assignmentNum = Integer.parseInt(args[1]);
-                setAssignment(args[0], assignmentNum);
+//                int assignmentNum = Integer.parseInt(args[1]);
+//                setAssignment(args[0], assignmentNum);
+                setAssignment(args[0], args[1]);
+
             } catch (NumberFormatException e) {
                 System.err.println("Argument 2 is not a number, defaulting to " + COURSE_NAME + " " + DEFAULT_ASSINGMENT_NUMBER);
             }
@@ -109,6 +129,11 @@ public class AssignmentSetup {
     }
 
     private static void setAssignment(String name, int number) {
+        COURSE_NAME = name;
+        ASSIGNMENT = "Assignment " + number;
+        ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");
+    }
+    private static void setAssignment(String name, String number) {
         COURSE_NAME = name;
         ASSIGNMENT = "Assignment " + number;
         ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");
@@ -139,11 +164,27 @@ public class AssignmentSetup {
     }
 
     private static void buildRunScript(Path base, IGraderConfigWriter configWriter) throws IOException {
-        StringBuilder sb = new StringBuilder();
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("#! ").append(EXECUTION_SHELL).append("\n");
+//        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);
+//        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));
+//        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
+//        sb.append("cd ").append(base).append("\n");
+//        sb.append("java ").append("-cp ").append(CLASSPATH);
+//        sb.append(" ").append(GRADER_MAIN_CLASS);
+//        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));
+//        sb.append("\n");
+    	StringBuilder sb = new StringBuilder();
         sb.append("#! ").append(EXECUTION_SHELL).append("\n");
         Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls \"").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\"\n");
+        sb.append("echo \"submission dir\"\n");
+        sb.append("ls \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
         sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));
         sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls \"").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\"\n");
         sb.append("cd ").append(base).append("\n");
         sb.append("java ").append("-cp ").append(CLASSPATH);
         sb.append(" ").append(GRADER_MAIN_CLASS);
