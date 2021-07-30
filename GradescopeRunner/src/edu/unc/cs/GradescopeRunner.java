@@ -20,6 +20,8 @@ public class GradescopeRunner {
 		}
 		Path source = Paths.get(args[0]);
 		Path dest = Paths.get(args[1]);
+//		System.err.println ("runner main:" + source + " " + dest);
+
 		
 		try {
 			Files.createDirectories(dest.subpath(0, dest.getNameCount() - 1));
@@ -28,7 +30,10 @@ public class GradescopeRunner {
 		}
 		
 		try {
+//			System.err.println ("about to parse:");
+
 			Optional<Grading> grading = JsonGradingManager.parse(source);
+//			System.err.println ("ended parse:");
 			if (grading.isPresent()) {
 				JsonGradingManager.write(grading.get(), 0, GradescopeVisibility.VISIBLE, dest);
 			} else {

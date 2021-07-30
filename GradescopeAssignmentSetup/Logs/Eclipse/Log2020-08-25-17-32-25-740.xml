@@ -1,0 +1,1838 @@
+<Events startTimestamp="1598391145740" logVersion="1.0.0.202008151525">
+  <Command __id="601" _type="DiffBasedFileOpenCommand" date="Tue Aug 25 18:15:33 EDT 2020" docASTNodeCount="3338" docActiveCodeLength="31363" docExpressionCount="2332" docLength="48844" projectName="comp110-grader" starttimestamp="1598391145740" timestamp="2587435">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\settings\AGraderSettingsModel.java]]></filePath>
+    <diff><![CDATA[[Diff(EQUAL,"package grader.settings;¶¶import framework.utils.GraderSettings;¶import grader.basics.config.BasicStaticConfigurationUtils;¶import grader.basics.project.CurrentProjectHolder;¶import grader.basics.settings.BasicGradingEnvironment;¶import grader.config.ConfigurationManagerSelector;¶import grader.config.ExecutionSpecificationSelector;¶import grader.config.StaticConfigurationUtils;¶import grader.executor.ExecutorSelector;¶import grader.modules.AModuleProblemSelector;¶import grader.modules.ModuleProblemManager;¶import grader.modules.ModuleProblemManagerSelector;¶import grader.modules.ModuleProblemSelector;¶import grader.navigation.NavigationKind;¶import grader.navigation.NavigationListManagerFactory;¶import grader.sakai.GenericStudentAssignmentDatabase;¶import grader.sakai.StudentAssignment;¶import grader.sakai.project.SakaiProject;¶import grader.sakai.project.SakaiProjectDatabase;¶import grader.settings.folders.AGraderFilesSetterModel;¶import grader.settings.folders.AnOnyenRangeModel;¶import grader.settings.folders.GraderFilesSetterModel;¶import grader.settings.folders.OnyenRangeModel;¶import grader.settings.navigation.ANavigationSetter;¶import grader.settings.navigation.NavigationSetter;¶import grader.spreadsheet.FeatureGradeRecorder;¶import grader.spreadsheet.display.SpreadsheetDisplay;¶import grader.spreadsheet.display.SpreadsheetDisplayerFactory;¶import grader.trace.settings.DownloadPathUserChange;¶import grader.trace.settings.GraderSettingsEnded;¶import grader.trace.settings.GraderSettingsStarted;¶import grader.trace.settings.ModuleUserChange;¶import grader.trace.settings.NavigationInitiated;¶import grader.trace.settings.ProblemUserChange;¶import gradingTools.Driver;¶¶import java.awt.Desktop;¶import java.awt.GraphicsEnvironment;¶import java.beans.PropertyChangeEvent;¶import java.beans.PropertyChangeListener;¶import java.beans.PropertyChangeSupport;¶import java.io.File;¶import java.io.FileNotFoundException;¶import java.io.IOException;¶import java.net.URI;¶import java.util.ArrayList;¶import java.util.List;¶¶import javax.swing.JOptionPane;¶¶import plagiarism.PlagiarismRunner;¶import util.annotations.ComponentHeight;¶import util.annotations.Explanation;¶import util.annotations.Label;¶import util.annotations.Position;¶import util.annotations.Row;¶import util.annotations.StructurePattern;¶import util.annotations.StructurePatternNames;¶import util.annotations.Visible;¶import util.misc.Common;¶import util.trace.Tracer;¶import wrappers.framework.project.ProjectWrapper;¶import wrappers.grader.sakai.project.ProjectDatabaseFactory;¶import wrappers.grader.sakai.project.ProjectDatabaseWrapper;¶import bus.uigen.OEFrame;¶import bus.uigen.ObjectEditor;¶import bus.uigen.models.AFileSetterModel;¶¶@StructurePattern(StructurePatternNames.BEAN_PATTERN)¶@Label("Starter")¶public class AGraderSettingsModel implements GraderSettingsModel {¶	¶    GraderFilesSetterModel fileBrowsing = new AGraderFilesSetterModel();¶    NavigationSetter navigationSetter = new ANavigationSetter(this);¶    OnyenRangeModel onyens = new AnOnyenRangeModel(this);¶    ModuleProblemSelector moduleProblemSelector;   ¶    protected int graceDays = 0;¶    List<String> modules = new ArrayList();¶    List<String> problems = new ArrayList();¶    String editor;¶    String diff;¶    String testProjectSrc;¶    String currentModule;¶    List<String> currentProblems;¶    String currentProblem;¶    String currentModulePrefix;¶//	PropertiesConfiguration configuration, dynamicConfiguration;¶//	PropertiesConfiguration dynamicConfiguration;¶    GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector.getGraderSettingsManager();¶¶    ModuleProblemManager moduleProblemManager;¶    String problemDownloadPath;¶    String moduleDownloadPath;¶    boolean settingsLoaded;¶    boolean privacyMode;¶    boolean compileMode;¶//	DynamicEnum moduleEnum, problemEnum;¶¶    //	BeginActionModel beginActionModel = new ABeginActionModel();¶    boolean graderStarted;¶    PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);¶    SakaiProjectDatabase database;¶¶    public AGraderSettingsModel(SakaiProjectDatabase aDatabase) {¶        database = aDatabase;¶//		configuration = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration();¶//		dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();¶        moduleProblemManager = ModuleProblemManagerSelector.getModuleProblemManager();¶¶//		configuration = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration();¶//		dynamicConfiguration = ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();¶//		loadSettings();¶        String aModule = graderSettingsManager.getModule();¶        modules = moduleProblemManager.getModules();¶//	        problemDownloadPath = graderSettingsManager.getDownloadPath(aModule);¶////			if (problemDownloadPath == null)¶////	        ¶//////	        String downloadPath;¶////	        problemDownloadPath =  ;¶//	        if (problemDownloadPath != null) {¶////	            String downloadPath = GraderSettings.get().get("path");¶//	            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);¶//	        } else {¶//	        	noDownloadPath();¶//	        }¶        setCurrentModule(aModule);¶//	        GradingSettingsStarted.newCase(this, this);¶//		loadDynamicConfigurationSettings();¶    }¶¶    public AGraderSettingsModel() {¶//		database = aDatabase;¶¶//		AModuleProblemSelector moduleProblem = new AModuleProblemSelector(modules, problems);¶//		loadSettings();¶//		settingsLoaded = true;¶    }¶¶    @Override¶    @Visible(false)¶    public void init() {¶//    	graderSettingsManager.init();¶    	projectDatabase = null; // added this for reusing this for multiple drive invocations¶        currentProblem = null; // so that it is refreshed in refreshAll¶    	setGraderStarted(false);¶        //graderStarted = false;¶//		configuration = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration();¶//		dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();¶        moduleProblemManager = ModuleProblemManagerSelector.getModuleProblemManager();¶¶//		configuration = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration();¶//		dynamicConfiguration = ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();¶//		loadSettings();¶        String aModule = graderSettingsManager.getModule();¶        modules = moduleProblemManager.getModules();¶//	        problemDownloadPath = graderSettingsManager.getDownloadPath(aModule);¶////			if (problemDownloadPath == null)¶////	        ¶//////	        String downloadPath;¶////	        problemDownloadPath =  ;¶//	        if (problemDownloadPath != null) {¶////	            String downloadPath = GraderSettings.get().get("path");¶//	            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);¶//	        } else {¶//	        	noDownloadPath();¶//	        }¶        setCurrentModule(aModule);¶//		loadSettings();¶//		settingsLoaded = true;¶    }¶¶    @Override¶    @Visible(false)¶    public boolean isSettingsLoaded() {¶        return settingsLoaded;¶    }¶¶    @Override¶    @Visible(false)¶    public String getCurrentModule() {¶        return currentModule;¶    }¶    // never claled other than from setCurrentModule¶    void basicSetCurrentModule(String newValue) {¶    	Tracer.info(this, "Setting Current module to:" + newValue);¶        ModuleUserChange.newCase(currentModule, this, this);¶        currentModule = newValue;¶        BasicStaticConfigurationUtils.setModule(currentModule);¶//        refreshAll();¶//		 ModuleUserChange.newCase(currentModule, this, this);¶¶    }¶¶    void setCurrentModule(String newValue) {¶//    	System.out.println ("Current module to:" + newValue);¶//        ModuleUserChange.newCase(currentModule, this, this);¶//        currentModule = newValue;¶    	basicSetCurrentModule(newValue);¶        refreshAll();¶//		 ModuleUserChange.newCase(currentModule, this, this);¶¶    }¶    String  noDownloadPathMessage () {¶    	return "No stored download path. When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.";¶    }¶    boolean showMessageDialog = false;¶    void noDownloadPath() {¶        if (!GraphicsEnvironment.isHeadless() && showMessageDialog) {¶//            JOptionPane.showMessageDialog(null, "No stored download path. When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.");¶            JOptionPane.showMessageDialog(null, noDownloadPathMessage());¶¶        } else {¶            System.err.println("E***" + noDownloadPathMessage());¶        }¶¶    }¶    String  noValidDownloadPathMessage () {¶    	return "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.";¶    }¶//    boolean showMessageDialog = false;¶    void noValidDownloadPath(String aPath) {¶        if (!GraphicsEnvironment.isHeadless() && showMessageDialog) {¶//            JOptionPane.showMessageDialog(null, "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.");¶            JOptionPane.showMessageDialog(null, noValidDownloadPathMessage ());¶¶        } else {¶            System.err.println("E***" + noValidDownloadPathMessage());¶        }¶    }¶¶    @Visible(false)¶    public void refreshAll() {¶        loadDynamicConfigurationSettings();¶        refreshOnyens(currentModule);¶//		problems.clear();¶//		List<String> problems = new ArrayList();¶        String currentModulePrefix = moduleProblemManager.getModulePrefix(currentModule);¶        problems.clear();¶        problemDownloadPath = graderSettingsManager.getDownloadPath(currentModule);¶//		problemDownloadPath = moduleDownloadPath + "\\" +  currentProblem;¶        if (problemDownloadPath != null) { // may have the message, please browse to a valid location¶            File folder = new File(problemDownloadPath);¶//                        System.out.println("~~~ " + folder.getAbsolutePath() + " ~~~");¶            if (!folder.exists()) {¶//				JOptionPane.showMessageDialog(null, "Please enter download path for current problem in module:" + currentModule);¶                noValidDownloadPath(problemDownloadPath);¶                getFileBrowsing().getDownloadFolder().setText("");¶                return;¶//				Tracer.error("No folder found for:" + downloadPath);				¶            } else {¶                File gradesFile = new File(problemDownloadPath + "/grades.csv"); // is this a sakai assignment folder¶//                String aFolderName = null;¶                if (gradesFile.exists()) {¶                    if (currentProblem == null) {¶//                    	aFolderName = folder.getName();¶                    	basicSetCurrentProblem(folder.getName());¶//                        currentProblem = folder.getName();¶                    }¶                    folder = folder.getParentFile();¶                }¶//				try {¶                moduleDownloadPath = folder.getAbsolutePath();¶//                if (aFolderName != null && currentProblem == null) {¶//                	setCurrentProblem(aFolderName);¶//                }¶//				} catch (IOException e) {¶//					// TODO Auto-generated catch block¶//					e.printStackTrace();¶//				}¶                File[] children = folder.listFiles();¶                long latestTime = 0;¶                boolean noSetProblem = currentProblem == null;¶¶//				currentProblem;¶                for (File child : children) {¶                    if (child.getName().startsWith(currentModulePrefix) && !child.getName().equals("AssignmentsData")) {¶//						String normalizedName = child.getName().replaceAll("\\s+", "");¶                        String normalizedName = child.getName();¶¶                        problems.add(normalizedName);¶                        if (child.getAbsolutePath().equals(problemDownloadPath)) {¶                            currentProblem = normalizedName;¶                        }¶                        if (noSetProblem && child.lastModified() > latestTime) {¶                            currentProblem = normalizedName;¶//							try {¶                            problemDownloadPath = child.getAbsolutePath();¶//							} catch (IOException e) {¶//								// TODO Auto-generated catch block¶//								e.printStackTrace();¶//							}¶¶                        }¶                    }¶                }¶            }¶        }¶//		fileBrowsing.getDownloadFolder().setText(problemDownloadPath);¶        refreshProblemDownloadPath();¶        refreshTestProjectSrc();¶        if (moduleProblemSelector != null) {¶            moduleProblemSelector.getModule().setValue(currentModule);¶//				String savedProblem = currentProblem;¶            moduleProblemSelector.getProblem().setChoices(problems, currentProblem); // it is the same object but we need to fire property change¶//				moduleProblemSelector.getProblem().setValue(savedProblem); // current problem mught be resets¶¶        }¶        graderSettingsManager.setModule(currentModule);¶        graderSettingsManager.setProblem(currentModule, currentProblem);¶¶//        boolean isPrivacy = StaticConfigurationUtils.getPrivacy(¶//                ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration(),¶//                graderSettingsManager);¶        ¶        boolean isPrivacy = ExecutionSpecificationSelector.getExecutionSpecification().isPrivacy();¶        setPrivacyMode(isPrivacy);¶//		if (problems.size() > 0) {¶//			currentProblem = problems.get(problems.size() - 1);¶//		else¶//			currentProblem = null;¶//		return problems;¶    }¶¶    void refreshProblemDownloadPath() {¶        if (problemDownloadPath != null) {¶        	Tracer.info (this, "Refreshing problem download path:" + problemDownloadPath);¶            fileBrowsing.getDownloadFolder().setText(problemDownloadPath);¶        } else {¶        	System.err.println("Null problem download path");¶        }¶//        GraderSettings.get().set("path", problemDownloadPath);¶        GraderSettings.get().set(StaticConfigurationUtils.PROBLEM_PATH, problemDownloadPath);¶¶¶    }¶    void refreshTestProjectSrc() {¶        if (testProjectSrc != null) {¶        	Tracer.info (this, "Refreshing test project src:" + testProjectSrc);¶            fileBrowsing.getTestProjectSrc().setText(testProjectSrc);¶        } else {¶        	"), Diff(INSERT,"return;¶//        	"), Diff(EQUAL,"System.err.println("Null test project src");¶        }¶//        GraderSettings.get().set("path", problemDownloadPath);¶        GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrc);¶    }¶¶    void loadSettings() {¶¶        String editor;¶        if (GraderSettings.get().has("editor")) {¶            editor = GraderSettings.get().get("editor");¶            BasicGradingEnvironment.get().setEditor(editor); // why not for path also, perhaps its not used later?¶        } else {¶            editor = BasicGradingEnvironment.get().getEditor();¶        }¶        fileBrowsing.getTextEditor().getLabel().setText(editor);¶//        String downloadPath;¶        if (GraderSettings.get().has("path")) {¶            String downloadPath = GraderSettings.get().get("path");¶            fileBrowsing.getDownloadFolder().getLabel().setText(downloadPath);¶        }¶        if (GraderSettings.get().has(START_ONYEN)) {¶            String startingOnyen = GraderSettings.get().get(START_ONYEN);¶            onyens.setDisplayedStartingOnyen(startingOnyen);¶        }¶        if (GraderSettings.get().has(END_ONYEN)) {¶            String endingOnyen = GraderSettings.get().get(END_ONYEN);¶            onyens.setDisplayedEndingOnyen(endingOnyen);¶        }¶//        List objectModules = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration().getList("modules");¶//		modules = objectModules;¶//		if (objectModules.size() == 0) {¶//			Tracer.error("No modules specified in configuration file!");¶//			System.exit(-1);¶//		}¶//		setCurrentModule(GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration().getString("currentModule", modules.get(0)));¶//		String currentModulePrefix =  GradingEnvironment.get().getConfigurationManager().getStaticConfiguration().getString(currentModule + ".problems.prefix")	;¶//		if (currentModulePrefix == null)¶//			currentModulePrefix = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration().getString("default.problems.prefix", "Assignment");¶//				Common.arrayToArrayList(new String[] {"Comp110", "Comp401"});¶//		List<String> problems = Common.arrayToArrayList(new String[] {"A1", "A2"});¶//		moduleProblemSelector = new AModuleProblemSelector(objectModules, problems);¶    }¶//	   void maybeConvertToDynamicConfiguration() {¶//		 	Map<String, String> settings = GraderSettings.get().getSettings();¶////	    	PropertiesConfiguration dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();¶//	    	if (!dynamicConfiguration.isEmpty()) return;¶//	    	for (String key : settings.keySet())¶//	            dynamicConfiguration.setProperty(key, settings.get(key));¶//	    	try {¶//				dynamicConfiguration.save();¶//			} catch (ConfigurationException e) {¶//				// TODO Auto-generated catch block¶//				e.printStackTrace();¶//			}¶//	    	¶//	    }¶¶    public static final String EDITOR = "editor";¶    public static final String MODULE = "currentModule";¶    public static final String PROBLEM_PATH = "path";¶    public static final String START_ONYEN = "start";¶    public static final String END_ONYEN = "end";¶¶    void refreshOnyens(String aModule) {¶        String startingOnyen = graderSettingsManager.getStartingOnyen(aModule);¶¶        if (startingOnyen != null && !startingOnyen.isEmpty()) {¶//        	String startingOnyen = GraderSettings.get().get("start");¶            onyens.setDisplayedStartingOnyen(startingOnyen);¶        }¶//        String endingOnyen = dynamicConfiguration.getString(aModule + "." + END_ONYEN,¶//        		dynamicConfiguration.getString(END_ONYEN));¶        String endingOnyen = graderSettingsManager.getEndingOnyen(aModule);¶        if (endingOnyen != null && !endingOnyen.isEmpty()) {¶            onyens.setDisplayedEndingOnyen(endingOnyen);¶        }¶    }¶¶    void loadDynamicConfigurationSettings() {¶¶        problemDownloadPath = graderSettingsManager.getDownloadPath(currentModule);¶//		if (problemDownloadPath == null)¶//        ¶////        String downloadPath;¶//        problemDownloadPath =  ;¶        if (problemDownloadPath != null) {¶//            String downloadPath = GraderSettings.get().get("path");¶            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);¶        } else {¶        	fileBrowsing.getDownloadFolder().getLabel().setText("Browse to a valid assignment download path");¶            noDownloadPath();¶        }¶//		maybeConvertToDynamicConfiguration();¶        editor = graderSettingsManager.getEditor();¶        diff = graderSettingsManager.getDiff();¶        testProjectSrc = graderSettingsManager.getTestProjectSrc();¶¶//		 editor = dynamicConfiguration.getString(EDITOR);¶//		if (editor != null) {¶////			editor = GraderSettings.get().get("editor");¶//            GradingEnvironment.get().setEditor(editor); // why not for path also, perhaps its not used later?¶//        } else¶//            editor = GradingEnvironment.get().getEditor();¶        fileBrowsing.getTextEditor().getLabel().setText(editor);¶        fileBrowsing.getDiff().getLabel().setText(diff);¶        String aModule = currentModule;¶//        String aModule = graderSettingsManager.getModule();¶//        modules = moduleProblemManager.getModules();¶//¶//		String aModule = dynamicConfiguration.getString(MODULE, modules.get(0));¶//		setCurrentModule(dynamicConfiguration.getString("currentModule", modules.get(0)));¶¶//		if (aModule == null) {¶//			if (modules != null && modules.size() > 0)¶//				aModule = modules.get(0);¶//		} else {¶//			aModule = "YourCourse";¶//			if (modules == null) modules = new ArrayList();¶//			modules.add(aModule);¶//		}¶//¶//		problemDownloadPath =  dynamicConfiguration.getString(aModule + "." + PROBLEM_PATH,¶//				dynamicConfiguration.getString(PROBLEM_PATH));¶//		problemDownloadPath = graderSettingsManager.getDownloadPath(aModule);¶//		if (problemDownloadPath == null)¶//        ¶////        String downloadPath;¶//        problemDownloadPath =  ;¶//        if (problemDownloadPath != null) {¶////            String downloadPath = GraderSettings.get().get("path");¶//            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);¶//        } else {¶//        	noDownloadPath();¶//        }¶        NavigationKind aNavigationKind = graderSettingsManager.getNavigationKind(aModule);¶        if (aNavigationKind != null) {¶            navigationSetter.setNavigationKind(aNavigationKind);¶        }¶        navigationSetter.getAutomaticNavigationSetter().setAnimateGrades(¶                graderSettingsManager.getAnimateGrades(aModule));¶¶        navigationSetter.getAutomaticNavigationSetter().setAnimationPauseTime(¶                graderSettingsManager.getAnimationPauseTime(aModule));¶        String aNavigationFilter = graderSettingsManager.getNavigationFilter(aModule);¶        if (aNavigationFilter != null) {¶            navigationSetter.getNavigationFilterSetter().getNavigationFilterType().setValue(aNavigationFilter);¶            String optionString = graderSettingsManager.getNavigationFilterOption(aModule, aNavigationFilter);¶            Object currentOption = navigationSetter.getNavigationFilterSetter().getParameter();¶            Object newOption = Common.fromString(currentOption.getClass(), optionString);¶            navigationSetter.getNavigationFilterSetter().setParameter(newOption);¶        }¶¶//        else {¶//        	 fileBrowsing.getDownloadFolder().getLabel().setText("Please enter  folder");¶//        }¶//        String startingOnyen =  dynamicConfiguration.getString(aModule + "." + START_ONYEN,     	¶//        		¶//        		dynamicConfiguration.getString(START_ONYEN));¶//        refreshOnyens(aModule);¶//        String startingOnyen =  graderSettingsManager.getStartingOnyen(aModule);¶//        ¶//        if (startingOnyen != null) {¶////        	String startingOnyen = GraderSettings.get().get("start");¶//        	onyens.setStartingOnyen(startingOnyen);¶//        }¶////        String endingOnyen = dynamicConfiguration.getString(aModule + "." + END_ONYEN,¶////        		dynamicConfiguration.getString(END_ONYEN));¶//        String endingOnyen = graderSettingsManager.getEndingOnyen(aModule);¶//        if (endingOnyen != null) {¶//        	onyens.setEndingOnyen(endingOnyen);¶//        }¶//        List objectModules = configuration.getList("modules");¶//        ¶//		modules = objectModules;¶//		if (objectModules.size() == 0) {¶//			Tracer.error("No modules specified in configuration file!");¶//			System.exit(-1);¶//		}¶//		 currentModulePrefix =  configuration.getString(currentModule + ".problems.prefix")	;¶//¶//		if (currentModulePrefix == null)¶//			currentModulePrefix = configuration.getString("default.problems.prefix", "Assignment");¶//				Common.arrayToArrayList(new String[] {"Comp110", "Comp401"});¶//		List<String> problems = Common.arrayToArrayList(new String[] {"A1", "A2"});¶//		setCurrentModule(dynamicConfiguration.getString("currentModule", modules.get(0)));¶//		setCurrentModule(aModule);¶        if (moduleProblemSelector == null) {¶¶            moduleProblemSelector = new AModuleProblemSelector(modules, problems);¶            moduleProblemSelector.getProblem().setValue(currentProblem);¶            moduleProblemSelector.getModule().setValue(currentModule);¶            moduleProblemSelector.getModule().addPropertyChangeListener(this);¶            moduleProblemSelector.getProblem().addPropertyChangeListener(this);¶            fileBrowsing.getDownloadFolder().getLabel().addPropertyChangeListener(this);¶            fileBrowsing.getTestProjectSrc().getLabel().addPropertyChangeListener(this);¶            getFileBrowsing().getTestProjectSrc().getLabel().addPropertyChangeListener(this);¶            onyens.addPropertyChangeListener(this);¶        }¶¶    }¶¶    void saveSettings() {¶        // Update the settings¶        String editor = fileBrowsing.getTextEditor().getLabel().getText();¶        String downloadPath = fileBrowsing.getDownloadFolder().getLabel().getText();¶        String diff = fileBrowsing.getDiff().getLabel().getText();¶        String testProjectSrcFolder = fileBrowsing.getTestProjectSrc().getLabel().getText(); ¶        String startingOnyen = onyens.getStartingOnyen();¶        String endingOnyen = onyens.getEndingOnyen();¶        GraderSettings.get().set(START_ONYEN, startingOnyen);¶        GraderSettings.get().set(END_ONYEN, endingOnyen);¶        Tracer.info (this, "Saving PROBLEM_PATH:" + downloadPath);¶        GraderSettings.get().set(PROBLEM_PATH, downloadPath);¶        BasicGradingEnvironment.get().setAssignmentName(currentProblem);¶//        ASakaiProjectDatabase.setCurrentSakaiProjectDatabase(new ASakaiProjectDatabase(downloadPath, null));¶//        GraderSettings.get().set("editor", editor);¶        GraderSettings.get().set(StaticConfigurationUtils.EDITOR, editor);¶//        GraderSettings.get().set("diff", diff);¶        GraderSettings.get().set(StaticConfigurationUtils.DIFF, diff);¶¶        GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrcFolder);¶¶        GraderSettings.get().save();¶        graderSettingsManager.setEditor(editor);¶        graderSettingsManager.setModule(currentModule);¶        graderSettingsManager.setDownloadPath(currentModule, downloadPath);¶        graderSettingsManager.setStartingOnyen(currentModule, startingOnyen);¶        graderSettingsManager.setEndingOnyen(currentModule, endingOnyen);¶        graderSettingsManager.setProblem(currentModule, currentProblem);¶        graderSettingsManager.setDiff(diff);¶¶        graderSettingsManager.setNavigationKind(currentModule, navigationSetter.getNavigationKind());¶        graderSettingsManager.setAnimateGrades(currentModule, navigationSetter.getAutomaticNavigationSetter().getAnimateGrades());¶¶        graderSettingsManager.setAnimationPauseTime(currentModule, navigationSetter.getAutomaticNavigationSetter().getAnimationPauseTime());¶¶        String navigationFilter = navigationSetter.getNavigationFilterSetter().getNavigationFilterType().getValue().toString();¶        graderSettingsManager.setNavigationFilter(currentModule,¶                navigationFilter);¶        graderSettingsManager.setNavigationFilterOption(currentModule, navigationFilter, navigationSetter.getNavigationFilterSetter().getParameter());¶¶        graderSettingsManager.save();¶¶¶    }¶¶    @Override¶    @Row(0)¶    public ModuleProblemSelector getModuleProblemSelector() {¶        return moduleProblemSelector;¶    }¶¶    @Override¶    public void setModuleProblemSelector(ModuleProblemSelector moduleProblemSelector) {¶        this.moduleProblemSelector = moduleProblemSelector;¶    }¶¶    @Row(1)¶    @Explanation("Editor and assignment folder.")¶    public GraderFilesSetterModel getFileBrowsing() {¶        return fileBrowsing;¶    }¶¶    public void setFileBrowsing(GraderFilesSetterModel fileBrowsing) {¶        this.fileBrowsing = fileBrowsing;¶    }¶    @Override¶    @Row(2)¶    @Explanation("Specification of alphabetically sorted list of student onyens.")¶    public OnyenRangeModel getOnyens() {¶        return onyens;¶    }¶¶    public void setOnyens(OnyenRangeModel onyens) {¶        this.onyens = onyens;¶    }¶¶    @Row(3)¶    @Override¶//	@Visible(false)¶    @Explanation("Automatic and manual navigation settings.")¶    public NavigationSetter getNavigationSetter() {¶        return navigationSetter;¶    }¶¶    @Override¶    public void setNavigationSetter(NavigationSetter navigationSetter) {¶        this.navigationSetter = navigationSetter;¶    }¶¶    public boolean preBegin() {¶        return !isGraderStarted();¶    }¶¶    @Row(4)¶    @ComponentHeight(25)¶    @Explanation("Start navigation through the projects of the selected onyens.")¶    public synchronized void begin() {¶¶        NavigationInitiated.newCase(this, this);¶        notify();¶¶    }¶    @Visible(false)¶    public synchronized void preSettings() {¶        GraderSettingsStarted.newCase(this, this);¶¶        setGraderStarted(false);¶        //graderStarted = false;¶    }¶    @Visible(false)¶    public synchronized void postSettings() {¶        //GraderSettingsStarted.newCase(this, this);¶¶        //graderStarted = false;¶        // see comment about race conditions¶//		propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions¶        saveSettings();¶        setGraderStarted(true);¶        //graderStarted = true;¶        GraderSettingsEnded.newCase(this, this);¶¶            // this can cause concurrent changed to object editor  leading to race conditions¶//			propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions¶    }¶¶    @Visible(false)¶    public synchronized void awaitBegin() {¶        preSettings();¶        //GraderSettingsStarted.newCase(this, this);¶¶        //graderStarted = false;¶        // see comment about race conditions¶//		propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions¶        try {¶            wait();¶            postSettings();¶            //saveSettings();¶            //graderStarted = true;¶            //GraderSettingsEnded.newCase(this, this);¶¶            // this can cause concurrent changed to object editor  leading to race conditions¶//			propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions¶        } catch (InterruptedException e) {¶            // TODO Auto-generated catch block¶            e.printStackTrace();¶        }¶    }¶//	public BeginActionModel getBeginActionModel() {¶//		return beginActionModel;¶//	}¶//	public void setBeginActionModel(BeginActionModel beginActionModel) {¶//		this.beginActionModel = beginActionModel;¶//	}¶¶    @Visible(false)¶    @Override¶    public boolean isGraderStarted() {¶        return graderStarted;¶    }¶¶    @Override¶    @Visible(false)¶    public void setGraderStarted(boolean graderStarted) {¶//        System.out.println("Grader started: " + this.graderStarted + " -> " + graderStarted);¶        this.graderStarted = graderStarted;¶        propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions¶¶    }¶//	¶//	public void removeFeatureSpreadsheet() {¶//		boolean retVal = database.getAssigmentDataFolder().removeFeatureGradeFile();¶//		¶//	}¶//	¶//	public boolean preRestoreFeatureSpreadsheet() {¶//		return database.getAssigmentDataFolder().backupExists();¶//	}¶//	¶//	public void restoreFeatureSpreadsheet() {¶//		boolean retVal = database.getAssigmentDataFolder().restoreFeatureGradeFile();¶//		¶//	}¶    ¶    void basicSetCurrentProblem(String aProblem) {¶        ProblemUserChange.newCase(currentProblem, this, this);¶    	Tracer.info(this, "Setting current problem to:" + aProblem);¶        currentProblem = aProblem;¶        BasicStaticConfigurationUtils.setProblem(aProblem);¶    }¶¶    void setCurrentProblem(String aProblem) {¶//    	System.out.println("Setting current problem to:" + aProblem);¶//        currentProblem = aProblem;¶    	basicSetCurrentProblem(aProblem);¶//        problemDownloadPath = moduleDownloadPath + "\\" + currentProblem;¶        problemDownloadPath = moduleDownloadPath + System.getProperty("file.separator") + currentProblem;¶        refreshProblemDownloadPath();¶//		ProblemUserChange.newCase(currentProblem, this, this);¶¶    }¶¶    @Override¶    @Visible(false)¶    public String getCurrentProblem() {¶        return currentProblem;¶    }¶¶    @Override¶    public void addPropertyChangeListener(PropertyChangeListener aListener) {¶        propertyChangeSupport.addPropertyChangeListener(aListener);¶¶        settingsLoaded = true; // OE has opened it¶¶    }¶    SakaiProjectDatabase projectDatabase;¶¶    void maybeCreateProjectDatabase() {¶        if (projectDatabase != null) {¶            return;¶        }¶        saveSettings();¶        Driver.initAssignmentDataFolder();¶//        projectDatabase = new ProjectDatabaseWrapper();¶        projectDatabase = ProjectDatabaseFactory.createProjectDatabase();¶¶        projectDatabase.setGraderSettings(this);¶    }¶¶    @Visible(false)¶    @Override¶    public void cleanAllSubmissionFolders() {¶//		saveSettings();¶//		Driver.initAssignmentDataFolder();¶//		projectDatabase = new ProjectDatabaseWrapper();¶//		projectDatabase.setGraderSettings(this);¶        maybeCreateProjectDatabase();¶        projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();¶        clear();¶¶    }¶    @Override¶    @Position(7)¶    public void setGraceDays (int newVal) {¶    	graceDays = newVal;¶    }¶    @Override¶    @Visible(false)¶    public int getGraceDays() {¶    	return graceDays;¶    }¶¶    @Override¶    @Position(4)¶    // making this 3 causes OE to put it at position 2, bug in OE¶    public void resetFeatureSpreadsheet() {¶        maybeCreateProjectDatabase();¶        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();¶        clear();¶    }¶    public static final String CLEAN_SLATE_ALL = "CleanSlateAll";¶    @Override¶    @Explanation("Reset grades of all students in the class, cleaning the entire spreadsheet")¶    @Position(2)¶    public void cleanSlateAll() {¶    	¶    	Tracer.info(this, "Clearing scores of all students");¶//    	System.out.println("Clearing scores of all students");¶        maybeCreateProjectDatabase();¶        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();¶        projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();¶        clear();¶        propertyChangeSupport.firePropertyChange(CLEAN_SLATE_ALL, null, CLEAN_SLATE_ALL);¶    }¶¶    @Override¶    @Position(6)¶    public void compileExecutor() {¶        ExecutorSelector.getExecutor().compile();¶    }¶    ¶    protected void clear() {¶    	if (projectDatabase != null) {¶    		projectDatabase.clear();¶    	}¶    }¶    ¶    protected void doCleanSlate(String anOnyen) {¶    	Tracer.info(this, "Clearing scores of student:" + anOnyen);¶¶//    	System.out.println("Clearing scores of student:" + anOnyen);¶¶        maybeCreateProjectDatabase();¶        FeatureGradeRecorder featureGradeRecorder = projectDatabase.getFeatureGradeRecorder();¶¶        featureGradeRecorder.clearGrades(anOnyen, "");¶        SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);¶        if (aProject == null) {¶            System.err.println("Did not find project of:" + anOnyen + " nothing to clean");¶            return;¶        }¶        StudentAssignment aStudentAssignment = aProject.getStudentAssignment();¶        if (aStudentAssignment != null) {¶            aStudentAssignment.cleanFeedbackFolder();¶            aStudentAssignment.cleanSubmissionFolder();¶        }¶        ¶        GenericStudentAssignmentDatabase aStudentAssignmentDatabase = projectDatabase.getStudentAssignmentDatabase();¶        aStudentAssignmentDatabase.removeStudentAssignment(anOnyen);¶        ¶        ¶¶        clear();¶    }¶    public static final String CLEAN_SLATE_ONYEN = "cleanSlateOnyen";¶    @Override¶    @Position(0)¶    @Explanation("Reset grades of student specified as argument of this operation")¶    public void cleanSlate(String anOnyen) {¶    	doCleanSlate(anOnyen);¶    	propertyChangeSupport.firePropertyChange(CLEAN_SLATE_ONYEN, null, anOnyen);¶//    	System.out.println("Clearing scores of student:" + anOnyen);¶//¶//        maybeCreateProjectDatabase();¶//        FeatureGradeRecorder featureGradeRecorder = projectDatabase.getFeatureGradeRecorder();¶//¶//        featureGradeRecorder.clearGrades(anOnyen, "");¶//        SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);¶//        if (aProject == null) {¶//            System.out.println("Did not find project of:" + anOnyen + " nothing to clean");¶//            return;¶//        }¶//        StudentAssignment aStudentAssignment = aProject.getStudentAssignment();¶//        if (aStudentAssignment != null) {¶//            aStudentAssignment.cleanFeedbackFolder();¶//            aStudentAssignment.cleanSubmissionFolder();¶//        }¶//¶////        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();¶////        projectDatabase.getStudentAssignmentDatabase().cleanFeedbackAndSubmissionFolder(anOnyen);¶//        clear();¶    }¶    public static final String CLEAN_SLATE_SPECIFIED = "CleanSlateSpecified";¶    @Override¶    @Position(1)¶    @Explanation("Reset grades of student specified by start, end, and gotoonyens")¶    public void cleanSlateSpecified() {¶    	List<String> anOnyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();¶    	for (String anOnyen:anOnyens) {¶//    		cleanSlate(anOnyen);¶    		doCleanSlate(anOnyen);¶    	}¶    	propertyChangeSupport.firePropertyChange(CLEAN_SLATE_SPECIFIED, null, CLEAN_SLATE_SPECIFIED);¶    	¶    }¶¶//	public void maybePreCompile() {¶////      	if (!AProject.isCompileMissingObjectCode()) return;¶//		maybeCreateProjectDatabase();¶//		List<String> onyens = projectDatabase.getOnyenNavigationList();¶//		OnyenRangeModel anOnyenRangeModel = getOnyens();¶//		String aStartOnyen = anOnyenRangeModel.getStartingOnyen();¶//		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();¶//		¶//		for (String anOnyen:onyens) {¶//			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {¶//				try {¶//					new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);¶//				} catch (FileNotFoundException e) {¶//					// TODO Auto-generated catch block¶//					e.printStackTrace();¶//				}¶//			}¶//		}		¶//		¶//	}¶    @Override¶    @Visible(false)¶    public boolean maybePreUnzip() {¶        if (!BasicGradingEnvironment.get().isUnzipFiles()) {¶            return false;¶        }¶        unzipSelectedOnyens();¶//        maybeCreateProjectDatabase();¶//¶//        List<String> onyens = projectDatabase.getOnyenNavigationList();¶////		OnyenRangeModel anOnyenRangeModel = getOnyens();¶////		String aStartOnyen = GraderSettings.get().¶////		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();¶//¶//        for (String anOnyen : onyens) {¶//            try {¶//                System.out.println("Unzipping directory for onyen:" + anOnyen);¶//                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getProject(anOnyen));¶//            } catch (FileNotFoundException e) {¶//                // TODO Auto-generated catch block¶////		e.printStackTrace();¶//                System.out.println("Could not unzip project for student:" + anOnyen + " " + e);¶//                e.printStackTrace();¶//            }¶//////			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {¶////            try {¶////                new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);¶////            } catch (FileNotFoundException e) {¶////                // TODO Auto-generated catch block¶////                e.printStackTrace();¶////            }¶////			}¶//        }¶//¶//        clear();¶        return true;¶¶    }¶    @Override¶    @Position(8)¶    public void unzipSelectedOnyens() {¶       ¶        maybeCreateProjectDatabase();¶¶        List<String> onyens = projectDatabase.getOnyenNavigationList();¶    	onyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();¶¶¶        for (String anOnyen : onyens) {¶            try {¶                Tracer.info(this, "Unzipping directory for onyen:" + anOnyen);¶¶//                System.out.println("Unzipping directory for onyen:" + anOnyen);¶                SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);¶                if (aProject == null) {¶                	System.err.println("No project found for onyen:" + anOnyen);¶                	continue;¶                }¶                ProjectWrapper.getDirectoryAndMaybeUnzip(aProject);¶¶//                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getOrCreateProject(anOnyen));¶            } catch (FileNotFoundException e) {¶                // TODO Auto-generated catch block¶//		e.printStackTrace();¶                System.err.println("Could not unzip project for student:" + anOnyen + " " + e);¶                e.printStackTrace();¶            }¶////			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {¶//            try {¶//                new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);¶//            } catch (FileNotFoundException e) {¶//                // TODO Auto-generated catch block¶//                e.printStackTrace();¶//            }¶//			}¶        }¶¶        clear();¶//        return true;¶¶    }¶    @Position(8)¶    public void runPlaigarismDetector() {¶    	PlagiarismRunner.ReadProperties(); ¶    	File aProblemDownloadPathFile = new File(problemDownloadPath);¶    	if (!aProblemDownloadPathFile.exists()) {¶    		System.err.println("Cannot find input folder " + aProblemDownloadPathFile);¶    		return;¶    	}¶    	try {¶    		PlagiarismRunner.setInputFileFolderName("\"" + aProblemDownloadPathFile.getCanonicalPath() + "\"");¶		¶    		PlagiarismRunner.processAfterProperties();¶    	    String anIndexFileName = PlagiarismRunner.getJplagIndex();¶    	    if (!Driver.isHeadless()) {¶    	    	if(Desktop.isDesktopSupported())¶    	    	{¶    	    	  Desktop.getDesktop().browse(new URI(anIndexFileName));¶    	    	}¶    	    }¶    	    String[] aMossArgs = PlagiarismRunner.getMossArgs();¶//    	    String aMossCommandFile = PlaigarismRunner.getMossCommandFile();¶//    	    StringBuffer aText = Common.toText(aMossCommandFile);¶    	    (new ProcessBuilder(aMossArgs)).start();¶//    	    Runtime.getRuntime().exec(aMossArgs);¶¶    	    ¶    	} catch (Exception e) {¶			// TODO Auto-generated catch block¶			e.printStackTrace();¶    	}¶    	¶    }¶    @Position(9)¶    public  void displayStudentSpreadsheet() {¶    	maybeCreateProjectDatabase();¶    	 SpreadsheetDisplayerFactory.displaySpreadsheet();¶    	¶    }¶    ¶   ¶¶    @Override¶    @Visible(false)¶    public boolean maybePreCompile() {¶        if (!BasicGradingEnvironment.get().isPreCompileMissingObjectCode()) {¶            return false;¶        }¶        maybeCreateProjectDatabase();¶¶        List<String> onyens = projectDatabase.getOnyenNavigationList();¶//		OnyenRangeModel anOnyenRangeModel = getOnyens();¶//		String aStartOnyen = GraderSettings.get().¶//		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();¶¶        for (String anOnyen : onyens) {¶//			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {¶            try {¶                ProjectWrapper project = new ProjectWrapper(projectDatabase.getOrCreateProject(anOnyen), anOnyen);¶                project.getProject().clear();¶            } catch (FileNotFoundException e) {¶                // TODO Auto-generated catch block¶                e.printStackTrace();¶            }¶//			}¶        }¶¶        clear();¶¶        return true;¶¶    }¶¶    @Override¶    public void propertyChange(PropertyChangeEvent evt) {¶        if (evt.getSource() == moduleProblemSelector.getProblem()) {¶            String newProblem = (String) moduleProblemSelector.getProblem().getValue();¶            if (newProblem == null) {¶                return;¶            }¶¶            if (currentProblem != null && currentProblem.equals(moduleProblemSelector.getProblem().getValue())) {¶                return;¶            }¶            setCurrentProblem(moduleProblemSelector.getProblem().getValue());¶//            ProblemUserChange.newCase(currentProblem, this, this);¶¶//			currentProblem = moduleProblemSelector.getProblem().getValue();¶//			problemDownloadPath = moduleDownloadPath + "/" +  currentModule;¶//			refreshProblemDownloadPath();¶        } else if (evt.getSource() == moduleProblemSelector.getModule()) {¶            if (currentModule.equals(moduleProblemSelector.getModule().getValue())) {¶                return;¶            }¶            setCurrentModule(moduleProblemSelector.getModule().getValue());¶//            ModuleUserChange.newCase(currentModule, this, this);¶¶        } else if (evt.getSource() == fileBrowsing.getDownloadFolder().getLabel()) {¶            String newPath = fileBrowsing.getDownloadFolder().getLabel().getText();¶            if (grader.settings.folders.AFileSetterModel.INVALID_FILE_NAME_MESSAGE.equals(newPath)) {¶            	return; // no need to do anything, this is a side effect of a previous action¶            }¶            if (newPath == null) {¶                return;¶            }¶            if (problemDownloadPath != null && problemDownloadPath.equals(newPath)) {¶                return; // bounce back¶            }¶            graderSettingsManager.setDownloadPath(currentModule, newPath);¶            refreshAll();¶            DownloadPathUserChange.newCase(newPath, this, this);¶        } else if (evt.getSource() == onyens) {¶        	if (evt.getPropertyName().equals("displayedStartingOnyen")) {¶        		GraderSettings.get().set(START_ONYEN,  (String)evt.getNewValue());¶        		¶        	} else if (evt.getPropertyName().equals("displayedEndingOnyen")) {¶        		GraderSettings.get().set(END_ONYEN, (String) evt.getNewValue());¶        	}¶        }  else if (evt.getSource() == fileBrowsing.getTestProjectSrc().getLabel()) {¶            String newPath = fileBrowsing.getTestProjectSrc().getLabel().getText();¶            if (grader.settings.folders.AFileSetterModel.INVALID_FILE_NAME_MESSAGE.equals(newPath)) {¶            	return; // no need to do anything, this is a side effect of a previous action¶            }¶            if (newPath == null) {¶                return;¶            }¶            if (testProjectSrc != null && testProjectSrc.equals(newPath)) {¶                return; // bounce back¶            }¶            graderSettingsManager.setTestProjectSrc(newPath);¶            refreshAll();¶//            DownloadPathUserChange.newCase(newPath, this, this);¶        }¶¶    }¶¶    @Visible(false)¶    public boolean isPrivacyMode() {¶        return privacyMode;¶    }¶    public static final String ONYENS_PROPERTY = "onyens";¶    @Visible(false)¶    public void setPrivacyMode(boolean newValue) {¶        if (privacyMode == newValue) {¶            return;¶        }¶        this.privacyMode = newValue;¶//        propertyChangeSupport.firePropertyChange("onyens", null, onyens);¶        propertyChangeSupport.firePropertyChange(ONYENS_PROPERTY, null, onyens);¶¶    }¶    @Position(5)¶    public void togglePrivacyMode() {¶        setPrivacyMode(!privacyMode);¶    }¶¶    @Visible(false)¶    @Override¶    public boolean getCompileMode() {¶        return compileMode;¶    }¶¶    public static void main(String[] args) {¶        AGraderSettingsModel startModel = new AGraderSettingsModel(null);¶        OEFrame frame = ObjectEditor.edit(startModel);¶        frame.setTitle("Grader Settings");¶        frame.setSize(550, 475);¶    }¶¶}¶")]]]></diff>
+    <snapshot><![CDATA[package grader.settings;
+
+import framework.utils.GraderSettings;
+import grader.basics.config.BasicStaticConfigurationUtils;
+import grader.basics.project.CurrentProjectHolder;
+import grader.basics.settings.BasicGradingEnvironment;
+import grader.config.ConfigurationManagerSelector;
+import grader.config.ExecutionSpecificationSelector;
+import grader.config.StaticConfigurationUtils;
+import grader.executor.ExecutorSelector;
+import grader.modules.AModuleProblemSelector;
+import grader.modules.ModuleProblemManager;
+import grader.modules.ModuleProblemManagerSelector;
+import grader.modules.ModuleProblemSelector;
+import grader.navigation.NavigationKind;
+import grader.navigation.NavigationListManagerFactory;
+import grader.sakai.GenericStudentAssignmentDatabase;
+import grader.sakai.StudentAssignment;
+import grader.sakai.project.SakaiProject;
+import grader.sakai.project.SakaiProjectDatabase;
+import grader.settings.folders.AGraderFilesSetterModel;
+import grader.settings.folders.AnOnyenRangeModel;
+import grader.settings.folders.GraderFilesSetterModel;
+import grader.settings.folders.OnyenRangeModel;
+import grader.settings.navigation.ANavigationSetter;
+import grader.settings.navigation.NavigationSetter;
+import grader.spreadsheet.FeatureGradeRecorder;
+import grader.spreadsheet.display.SpreadsheetDisplay;
+import grader.spreadsheet.display.SpreadsheetDisplayerFactory;
+import grader.trace.settings.DownloadPathUserChange;
+import grader.trace.settings.GraderSettingsEnded;
+import grader.trace.settings.GraderSettingsStarted;
+import grader.trace.settings.ModuleUserChange;
+import grader.trace.settings.NavigationInitiated;
+import grader.trace.settings.ProblemUserChange;
+import gradingTools.Driver;
+
+import java.awt.Desktop;
+import java.awt.GraphicsEnvironment;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import plagiarism.PlagiarismRunner;
+import util.annotations.ComponentHeight;
+import util.annotations.Explanation;
+import util.annotations.Label;
+import util.annotations.Position;
+import util.annotations.Row;
+import util.annotations.StructurePattern;
+import util.annotations.StructurePatternNames;
+import util.annotations.Visible;
+import util.misc.Common;
+import util.trace.Tracer;
+import wrappers.framework.project.ProjectWrapper;
+import wrappers.grader.sakai.project.ProjectDatabaseFactory;
+import wrappers.grader.sakai.project.ProjectDatabaseWrapper;
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
+import bus.uigen.models.AFileSetterModel;
+
+@StructurePattern(StructurePatternNames.BEAN_PATTERN)
+@Label("Starter")
+public class AGraderSettingsModel implements GraderSettingsModel {
+	
+    GraderFilesSetterModel fileBrowsing = new AGraderFilesSetterModel();
+    NavigationSetter navigationSetter = new ANavigationSetter(this);
+    OnyenRangeModel onyens = new AnOnyenRangeModel(this);
+    ModuleProblemSelector moduleProblemSelector;   
+    protected int graceDays = 0;
+    List<String> modules = new ArrayList();
+    List<String> problems = new ArrayList();
+    String editor;
+    String diff;
+    String testProjectSrc;
+    String currentModule;
+    List<String> currentProblems;
+    String currentProblem;
+    String currentModulePrefix;
+//	PropertiesConfiguration configuration, dynamicConfiguration;
+//	PropertiesConfiguration dynamicConfiguration;
+    GraderSettingsManager graderSettingsManager = GraderSettingsManagerSelector.getGraderSettingsManager();
+
+    ModuleProblemManager moduleProblemManager;
+    String problemDownloadPath;
+    String moduleDownloadPath;
+    boolean settingsLoaded;
+    boolean privacyMode;
+    boolean compileMode;
+//	DynamicEnum moduleEnum, problemEnum;
+
+    //	BeginActionModel beginActionModel = new ABeginActionModel();
+    boolean graderStarted;
+    PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    SakaiProjectDatabase database;
+
+    public AGraderSettingsModel(SakaiProjectDatabase aDatabase) {
+        database = aDatabase;
+//		configuration = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration();
+//		dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();
+        moduleProblemManager = ModuleProblemManagerSelector.getModuleProblemManager();
+
+//		configuration = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration();
+//		dynamicConfiguration = ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
+//		loadSettings();
+        String aModule = graderSettingsManager.getModule();
+        modules = moduleProblemManager.getModules();
+//	        problemDownloadPath = graderSettingsManager.getDownloadPath(aModule);
+////			if (problemDownloadPath == null)
+////	        
+//////	        String downloadPath;
+////	        problemDownloadPath =  ;
+//	        if (problemDownloadPath != null) {
+////	            String downloadPath = GraderSettings.get().get("path");
+//	            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);
+//	        } else {
+//	        	noDownloadPath();
+//	        }
+        setCurrentModule(aModule);
+//	        GradingSettingsStarted.newCase(this, this);
+//		loadDynamicConfigurationSettings();
+    }
+
+    public AGraderSettingsModel() {
+//		database = aDatabase;
+
+//		AModuleProblemSelector moduleProblem = new AModuleProblemSelector(modules, problems);
+//		loadSettings();
+//		settingsLoaded = true;
+    }
+
+    @Override
+    @Visible(false)
+    public void init() {
+//    	graderSettingsManager.init();
+    	projectDatabase = null; // added this for reusing this for multiple drive invocations
+        currentProblem = null; // so that it is refreshed in refreshAll
+    	setGraderStarted(false);
+        //graderStarted = false;
+//		configuration = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration();
+//		dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();
+        moduleProblemManager = ModuleProblemManagerSelector.getModuleProblemManager();
+
+//		configuration = ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration();
+//		dynamicConfiguration = ConfigurationManagerSelector.getConfigurationManager().getDynamicConfiguration();
+//		loadSettings();
+        String aModule = graderSettingsManager.getModule();
+        modules = moduleProblemManager.getModules();
+//	        problemDownloadPath = graderSettingsManager.getDownloadPath(aModule);
+////			if (problemDownloadPath == null)
+////	        
+//////	        String downloadPath;
+////	        problemDownloadPath =  ;
+//	        if (problemDownloadPath != null) {
+////	            String downloadPath = GraderSettings.get().get("path");
+//	            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);
+//	        } else {
+//	        	noDownloadPath();
+//	        }
+        setCurrentModule(aModule);
+//		loadSettings();
+//		settingsLoaded = true;
+    }
+
+    @Override
+    @Visible(false)
+    public boolean isSettingsLoaded() {
+        return settingsLoaded;
+    }
+
+    @Override
+    @Visible(false)
+    public String getCurrentModule() {
+        return currentModule;
+    }
+    // never claled other than from setCurrentModule
+    void basicSetCurrentModule(String newValue) {
+    	Tracer.info(this, "Setting Current module to:" + newValue);
+        ModuleUserChange.newCase(currentModule, this, this);
+        currentModule = newValue;
+        BasicStaticConfigurationUtils.setModule(currentModule);
+//        refreshAll();
+//		 ModuleUserChange.newCase(currentModule, this, this);
+
+    }
+
+    void setCurrentModule(String newValue) {
+//    	System.out.println ("Current module to:" + newValue);
+//        ModuleUserChange.newCase(currentModule, this, this);
+//        currentModule = newValue;
+    	basicSetCurrentModule(newValue);
+        refreshAll();
+//		 ModuleUserChange.newCase(currentModule, this, this);
+
+    }
+    String  noDownloadPathMessage () {
+    	return "No stored download path. When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.";
+    }
+    boolean showMessageDialog = false;
+    void noDownloadPath() {
+        if (!GraphicsEnvironment.isHeadless() && showMessageDialog) {
+//            JOptionPane.showMessageDialog(null, "No stored download path. When the settings window comes up, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
+            JOptionPane.showMessageDialog(null, noDownloadPathMessage());
+
+        } else {
+            System.err.println("E***" + noDownloadPathMessage());
+        }
+
+    }
+    String  noValidDownloadPathMessage () {
+    	return "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.";
+    }
+//    boolean showMessageDialog = false;
+    void noValidDownloadPath(String aPath) {
+        if (!GraphicsEnvironment.isHeadless() && showMessageDialog) {
+//            JOptionPane.showMessageDialog(null, "No folder found for download path:" + problemDownloadPath + ". In the settings window, please enter correct download path for a problem in module:" + currentModule + " or change the module.");
+            JOptionPane.showMessageDialog(null, noValidDownloadPathMessage ());
+
+        } else {
+            System.err.println("E***" + noValidDownloadPathMessage());
+        }
+    }
+
+    @Visible(false)
+    public void refreshAll() {
+        loadDynamicConfigurationSettings();
+        refreshOnyens(currentModule);
+//		problems.clear();
+//		List<String> problems = new ArrayList();
+        String currentModulePrefix = moduleProblemManager.getModulePrefix(currentModule);
+        problems.clear();
+        problemDownloadPath = graderSettingsManager.getDownloadPath(currentModule);
+//		problemDownloadPath = moduleDownloadPath + "\\" +  currentProblem;
+        if (problemDownloadPath != null) { // may have the message, please browse to a valid location
+            File folder = new File(problemDownloadPath);
+//                        System.out.println("~~~ " + folder.getAbsolutePath() + " ~~~");
+            if (!folder.exists()) {
+//				JOptionPane.showMessageDialog(null, "Please enter download path for current problem in module:" + currentModule);
+                noValidDownloadPath(problemDownloadPath);
+                getFileBrowsing().getDownloadFolder().setText("");
+                return;
+//				Tracer.error("No folder found for:" + downloadPath);				
+            } else {
+                File gradesFile = new File(problemDownloadPath + "/grades.csv"); // is this a sakai assignment folder
+//                String aFolderName = null;
+                if (gradesFile.exists()) {
+                    if (currentProblem == null) {
+//                    	aFolderName = folder.getName();
+                    	basicSetCurrentProblem(folder.getName());
+//                        currentProblem = folder.getName();
+                    }
+                    folder = folder.getParentFile();
+                }
+//				try {
+                moduleDownloadPath = folder.getAbsolutePath();
+//                if (aFolderName != null && currentProblem == null) {
+//                	setCurrentProblem(aFolderName);
+//                }
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+                File[] children = folder.listFiles();
+                long latestTime = 0;
+                boolean noSetProblem = currentProblem == null;
+
+//				currentProblem;
+                for (File child : children) {
+                    if (child.getName().startsWith(currentModulePrefix) && !child.getName().equals("AssignmentsData")) {
+//						String normalizedName = child.getName().replaceAll("\\s+", "");
+                        String normalizedName = child.getName();
+
+                        problems.add(normalizedName);
+                        if (child.getAbsolutePath().equals(problemDownloadPath)) {
+                            currentProblem = normalizedName;
+                        }
+                        if (noSetProblem && child.lastModified() > latestTime) {
+                            currentProblem = normalizedName;
+//							try {
+                            problemDownloadPath = child.getAbsolutePath();
+//							} catch (IOException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+
+                        }
+                    }
+                }
+            }
+        }
+//		fileBrowsing.getDownloadFolder().setText(problemDownloadPath);
+        refreshProblemDownloadPath();
+        refreshTestProjectSrc();
+        if (moduleProblemSelector != null) {
+            moduleProblemSelector.getModule().setValue(currentModule);
+//				String savedProblem = currentProblem;
+            moduleProblemSelector.getProblem().setChoices(problems, currentProblem); // it is the same object but we need to fire property change
+//				moduleProblemSelector.getProblem().setValue(savedProblem); // current problem mught be resets
+
+        }
+        graderSettingsManager.setModule(currentModule);
+        graderSettingsManager.setProblem(currentModule, currentProblem);
+
+//        boolean isPrivacy = StaticConfigurationUtils.getPrivacy(
+//                ConfigurationManagerSelector.getConfigurationManager().getStaticConfiguration(),
+//                graderSettingsManager);
+        
+        boolean isPrivacy = ExecutionSpecificationSelector.getExecutionSpecification().isPrivacy();
+        setPrivacyMode(isPrivacy);
+//		if (problems.size() > 0) {
+//			currentProblem = problems.get(problems.size() - 1);
+//		else
+//			currentProblem = null;
+//		return problems;
+    }
+
+    void refreshProblemDownloadPath() {
+        if (problemDownloadPath != null) {
+        	Tracer.info (this, "Refreshing problem download path:" + problemDownloadPath);
+            fileBrowsing.getDownloadFolder().setText(problemDownloadPath);
+        } else {
+        	System.err.println("Null problem download path");
+        }
+//        GraderSettings.get().set("path", problemDownloadPath);
+        GraderSettings.get().set(StaticConfigurationUtils.PROBLEM_PATH, problemDownloadPath);
+
+
+    }
+    void refreshTestProjectSrc() {
+        if (testProjectSrc != null) {
+        	Tracer.info (this, "Refreshing test project src:" + testProjectSrc);
+            fileBrowsing.getTestProjectSrc().setText(testProjectSrc);
+        } else {
+        	return;
+//        	System.err.println("Null test project src");
+        }
+//        GraderSettings.get().set("path", problemDownloadPath);
+        GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrc);
+    }
+
+    void loadSettings() {
+
+        String editor;
+        if (GraderSettings.get().has("editor")) {
+            editor = GraderSettings.get().get("editor");
+            BasicGradingEnvironment.get().setEditor(editor); // why not for path also, perhaps its not used later?
+        } else {
+            editor = BasicGradingEnvironment.get().getEditor();
+        }
+        fileBrowsing.getTextEditor().getLabel().setText(editor);
+//        String downloadPath;
+        if (GraderSettings.get().has("path")) {
+            String downloadPath = GraderSettings.get().get("path");
+            fileBrowsing.getDownloadFolder().getLabel().setText(downloadPath);
+        }
+        if (GraderSettings.get().has(START_ONYEN)) {
+            String startingOnyen = GraderSettings.get().get(START_ONYEN);
+            onyens.setDisplayedStartingOnyen(startingOnyen);
+        }
+        if (GraderSettings.get().has(END_ONYEN)) {
+            String endingOnyen = GraderSettings.get().get(END_ONYEN);
+            onyens.setDisplayedEndingOnyen(endingOnyen);
+        }
+//        List objectModules = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration().getList("modules");
+//		modules = objectModules;
+//		if (objectModules.size() == 0) {
+//			Tracer.error("No modules specified in configuration file!");
+//			System.exit(-1);
+//		}
+//		setCurrentModule(GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration().getString("currentModule", modules.get(0)));
+//		String currentModulePrefix =  GradingEnvironment.get().getConfigurationManager().getStaticConfiguration().getString(currentModule + ".problems.prefix")	;
+//		if (currentModulePrefix == null)
+//			currentModulePrefix = GradingEnvironment.get().getConfigurationManager().getStaticConfiguration().getString("default.problems.prefix", "Assignment");
+//				Common.arrayToArrayList(new String[] {"Comp110", "Comp401"});
+//		List<String> problems = Common.arrayToArrayList(new String[] {"A1", "A2"});
+//		moduleProblemSelector = new AModuleProblemSelector(objectModules, problems);
+    }
+//	   void maybeConvertToDynamicConfiguration() {
+//		 	Map<String, String> settings = GraderSettings.get().getSettings();
+////	    	PropertiesConfiguration dynamicConfiguration = GradingEnvironment.get().getConfigurationManager().getDynamicConfiguration();
+//	    	if (!dynamicConfiguration.isEmpty()) return;
+//	    	for (String key : settings.keySet())
+//	            dynamicConfiguration.setProperty(key, settings.get(key));
+//	    	try {
+//				dynamicConfiguration.save();
+//			} catch (ConfigurationException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//	    	
+//	    }
+
+    public static final String EDITOR = "editor";
+    public static final String MODULE = "currentModule";
+    public static final String PROBLEM_PATH = "path";
+    public static final String START_ONYEN = "start";
+    public static final String END_ONYEN = "end";
+
+    void refreshOnyens(String aModule) {
+        String startingOnyen = graderSettingsManager.getStartingOnyen(aModule);
+
+        if (startingOnyen != null && !startingOnyen.isEmpty()) {
+//        	String startingOnyen = GraderSettings.get().get("start");
+            onyens.setDisplayedStartingOnyen(startingOnyen);
+        }
+//        String endingOnyen = dynamicConfiguration.getString(aModule + "." + END_ONYEN,
+//        		dynamicConfiguration.getString(END_ONYEN));
+        String endingOnyen = graderSettingsManager.getEndingOnyen(aModule);
+        if (endingOnyen != null && !endingOnyen.isEmpty()) {
+            onyens.setDisplayedEndingOnyen(endingOnyen);
+        }
+    }
+
+    void loadDynamicConfigurationSettings() {
+
+        problemDownloadPath = graderSettingsManager.getDownloadPath(currentModule);
+//		if (problemDownloadPath == null)
+//        
+////        String downloadPath;
+//        problemDownloadPath =  ;
+        if (problemDownloadPath != null) {
+//            String downloadPath = GraderSettings.get().get("path");
+            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);
+        } else {
+        	fileBrowsing.getDownloadFolder().getLabel().setText("Browse to a valid assignment download path");
+            noDownloadPath();
+        }
+//		maybeConvertToDynamicConfiguration();
+        editor = graderSettingsManager.getEditor();
+        diff = graderSettingsManager.getDiff();
+        testProjectSrc = graderSettingsManager.getTestProjectSrc();
+
+//		 editor = dynamicConfiguration.getString(EDITOR);
+//		if (editor != null) {
+////			editor = GraderSettings.get().get("editor");
+//            GradingEnvironment.get().setEditor(editor); // why not for path also, perhaps its not used later?
+//        } else
+//            editor = GradingEnvironment.get().getEditor();
+        fileBrowsing.getTextEditor().getLabel().setText(editor);
+        fileBrowsing.getDiff().getLabel().setText(diff);
+        String aModule = currentModule;
+//        String aModule = graderSettingsManager.getModule();
+//        modules = moduleProblemManager.getModules();
+//
+//		String aModule = dynamicConfiguration.getString(MODULE, modules.get(0));
+//		setCurrentModule(dynamicConfiguration.getString("currentModule", modules.get(0)));
+
+//		if (aModule == null) {
+//			if (modules != null && modules.size() > 0)
+//				aModule = modules.get(0);
+//		} else {
+//			aModule = "YourCourse";
+//			if (modules == null) modules = new ArrayList();
+//			modules.add(aModule);
+//		}
+//
+//		problemDownloadPath =  dynamicConfiguration.getString(aModule + "." + PROBLEM_PATH,
+//				dynamicConfiguration.getString(PROBLEM_PATH));
+//		problemDownloadPath = graderSettingsManager.getDownloadPath(aModule);
+//		if (problemDownloadPath == null)
+//        
+////        String downloadPath;
+//        problemDownloadPath =  ;
+//        if (problemDownloadPath != null) {
+////            String downloadPath = GraderSettings.get().get("path");
+//            fileBrowsing.getDownloadFolder().getLabel().setText(problemDownloadPath);
+//        } else {
+//        	noDownloadPath();
+//        }
+        NavigationKind aNavigationKind = graderSettingsManager.getNavigationKind(aModule);
+        if (aNavigationKind != null) {
+            navigationSetter.setNavigationKind(aNavigationKind);
+        }
+        navigationSetter.getAutomaticNavigationSetter().setAnimateGrades(
+                graderSettingsManager.getAnimateGrades(aModule));
+
+        navigationSetter.getAutomaticNavigationSetter().setAnimationPauseTime(
+                graderSettingsManager.getAnimationPauseTime(aModule));
+        String aNavigationFilter = graderSettingsManager.getNavigationFilter(aModule);
+        if (aNavigationFilter != null) {
+            navigationSetter.getNavigationFilterSetter().getNavigationFilterType().setValue(aNavigationFilter);
+            String optionString = graderSettingsManager.getNavigationFilterOption(aModule, aNavigationFilter);
+            Object currentOption = navigationSetter.getNavigationFilterSetter().getParameter();
+            Object newOption = Common.fromString(currentOption.getClass(), optionString);
+            navigationSetter.getNavigationFilterSetter().setParameter(newOption);
+        }
+
+//        else {
+//        	 fileBrowsing.getDownloadFolder().getLabel().setText("Please enter  folder");
+//        }
+//        String startingOnyen =  dynamicConfiguration.getString(aModule + "." + START_ONYEN,     	
+//        		
+//        		dynamicConfiguration.getString(START_ONYEN));
+//        refreshOnyens(aModule);
+//        String startingOnyen =  graderSettingsManager.getStartingOnyen(aModule);
+//        
+//        if (startingOnyen != null) {
+////        	String startingOnyen = GraderSettings.get().get("start");
+//        	onyens.setStartingOnyen(startingOnyen);
+//        }
+////        String endingOnyen = dynamicConfiguration.getString(aModule + "." + END_ONYEN,
+////        		dynamicConfiguration.getString(END_ONYEN));
+//        String endingOnyen = graderSettingsManager.getEndingOnyen(aModule);
+//        if (endingOnyen != null) {
+//        	onyens.setEndingOnyen(endingOnyen);
+//        }
+//        List objectModules = configuration.getList("modules");
+//        
+//		modules = objectModules;
+//		if (objectModules.size() == 0) {
+//			Tracer.error("No modules specified in configuration file!");
+//			System.exit(-1);
+//		}
+//		 currentModulePrefix =  configuration.getString(currentModule + ".problems.prefix")	;
+//
+//		if (currentModulePrefix == null)
+//			currentModulePrefix = configuration.getString("default.problems.prefix", "Assignment");
+//				Common.arrayToArrayList(new String[] {"Comp110", "Comp401"});
+//		List<String> problems = Common.arrayToArrayList(new String[] {"A1", "A2"});
+//		setCurrentModule(dynamicConfiguration.getString("currentModule", modules.get(0)));
+//		setCurrentModule(aModule);
+        if (moduleProblemSelector == null) {
+
+            moduleProblemSelector = new AModuleProblemSelector(modules, problems);
+            moduleProblemSelector.getProblem().setValue(currentProblem);
+            moduleProblemSelector.getModule().setValue(currentModule);
+            moduleProblemSelector.getModule().addPropertyChangeListener(this);
+            moduleProblemSelector.getProblem().addPropertyChangeListener(this);
+            fileBrowsing.getDownloadFolder().getLabel().addPropertyChangeListener(this);
+            fileBrowsing.getTestProjectSrc().getLabel().addPropertyChangeListener(this);
+            getFileBrowsing().getTestProjectSrc().getLabel().addPropertyChangeListener(this);
+            onyens.addPropertyChangeListener(this);
+        }
+
+    }
+
+    void saveSettings() {
+        // Update the settings
+        String editor = fileBrowsing.getTextEditor().getLabel().getText();
+        String downloadPath = fileBrowsing.getDownloadFolder().getLabel().getText();
+        String diff = fileBrowsing.getDiff().getLabel().getText();
+        String testProjectSrcFolder = fileBrowsing.getTestProjectSrc().getLabel().getText(); 
+        String startingOnyen = onyens.getStartingOnyen();
+        String endingOnyen = onyens.getEndingOnyen();
+        GraderSettings.get().set(START_ONYEN, startingOnyen);
+        GraderSettings.get().set(END_ONYEN, endingOnyen);
+        Tracer.info (this, "Saving PROBLEM_PATH:" + downloadPath);
+        GraderSettings.get().set(PROBLEM_PATH, downloadPath);
+        BasicGradingEnvironment.get().setAssignmentName(currentProblem);
+//        ASakaiProjectDatabase.setCurrentSakaiProjectDatabase(new ASakaiProjectDatabase(downloadPath, null));
+//        GraderSettings.get().set("editor", editor);
+        GraderSettings.get().set(StaticConfigurationUtils.EDITOR, editor);
+//        GraderSettings.get().set("diff", diff);
+        GraderSettings.get().set(StaticConfigurationUtils.DIFF, diff);
+
+        GraderSettings.get().set(StaticConfigurationUtils.TEST_PROJECT_SRC, testProjectSrcFolder);
+
+        GraderSettings.get().save();
+        graderSettingsManager.setEditor(editor);
+        graderSettingsManager.setModule(currentModule);
+        graderSettingsManager.setDownloadPath(currentModule, downloadPath);
+        graderSettingsManager.setStartingOnyen(currentModule, startingOnyen);
+        graderSettingsManager.setEndingOnyen(currentModule, endingOnyen);
+        graderSettingsManager.setProblem(currentModule, currentProblem);
+        graderSettingsManager.setDiff(diff);
+
+        graderSettingsManager.setNavigationKind(currentModule, navigationSetter.getNavigationKind());
+        graderSettingsManager.setAnimateGrades(currentModule, navigationSetter.getAutomaticNavigationSetter().getAnimateGrades());
+
+        graderSettingsManager.setAnimationPauseTime(currentModule, navigationSetter.getAutomaticNavigationSetter().getAnimationPauseTime());
+
+        String navigationFilter = navigationSetter.getNavigationFilterSetter().getNavigationFilterType().getValue().toString();
+        graderSettingsManager.setNavigationFilter(currentModule,
+                navigationFilter);
+        graderSettingsManager.setNavigationFilterOption(currentModule, navigationFilter, navigationSetter.getNavigationFilterSetter().getParameter());
+
+        graderSettingsManager.save();
+
+
+    }
+
+    @Override
+    @Row(0)
+    public ModuleProblemSelector getModuleProblemSelector() {
+        return moduleProblemSelector;
+    }
+
+    @Override
+    public void setModuleProblemSelector(ModuleProblemSelector moduleProblemSelector) {
+        this.moduleProblemSelector = moduleProblemSelector;
+    }
+
+    @Row(1)
+    @Explanation("Editor and assignment folder.")
+    public GraderFilesSetterModel getFileBrowsing() {
+        return fileBrowsing;
+    }
+
+    public void setFileBrowsing(GraderFilesSetterModel fileBrowsing) {
+        this.fileBrowsing = fileBrowsing;
+    }
+    @Override
+    @Row(2)
+    @Explanation("Specification of alphabetically sorted list of student onyens.")
+    public OnyenRangeModel getOnyens() {
+        return onyens;
+    }
+
+    public void setOnyens(OnyenRangeModel onyens) {
+        this.onyens = onyens;
+    }
+
+    @Row(3)
+    @Override
+//	@Visible(false)
+    @Explanation("Automatic and manual navigation settings.")
+    public NavigationSetter getNavigationSetter() {
+        return navigationSetter;
+    }
+
+    @Override
+    public void setNavigationSetter(NavigationSetter navigationSetter) {
+        this.navigationSetter = navigationSetter;
+    }
+
+    public boolean preBegin() {
+        return !isGraderStarted();
+    }
+
+    @Row(4)
+    @ComponentHeight(25)
+    @Explanation("Start navigation through the projects of the selected onyens.")
+    public synchronized void begin() {
+
+        NavigationInitiated.newCase(this, this);
+        notify();
+
+    }
+    @Visible(false)
+    public synchronized void preSettings() {
+        GraderSettingsStarted.newCase(this, this);
+
+        setGraderStarted(false);
+        //graderStarted = false;
+    }
+    @Visible(false)
+    public synchronized void postSettings() {
+        //GraderSettingsStarted.newCase(this, this);
+
+        //graderStarted = false;
+        // see comment about race conditions
+//		propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions
+        saveSettings();
+        setGraderStarted(true);
+        //graderStarted = true;
+        GraderSettingsEnded.newCase(this, this);
+
+            // this can cause concurrent changed to object editor  leading to race conditions
+//			propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions
+    }
+
+    @Visible(false)
+    public synchronized void awaitBegin() {
+        preSettings();
+        //GraderSettingsStarted.newCase(this, this);
+
+        //graderStarted = false;
+        // see comment about race conditions
+//		propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions
+        try {
+            wait();
+            postSettings();
+            //saveSettings();
+            //graderStarted = true;
+            //GraderSettingsEnded.newCase(this, this);
+
+            // this can cause concurrent changed to object editor  leading to race conditions
+//			propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+//	public BeginActionModel getBeginActionModel() {
+//		return beginActionModel;
+//	}
+//	public void setBeginActionModel(BeginActionModel beginActionModel) {
+//		this.beginActionModel = beginActionModel;
+//	}
+
+    @Visible(false)
+    @Override
+    public boolean isGraderStarted() {
+        return graderStarted;
+    }
+
+    @Override
+    @Visible(false)
+    public void setGraderStarted(boolean graderStarted) {
+//        System.out.println("Grader started: " + this.graderStarted + " -> " + graderStarted);
+        this.graderStarted = graderStarted;
+        propertyChangeSupport.firePropertyChange("this", null, this); // evaluate pre conditions
+
+    }
+//	
+//	public void removeFeatureSpreadsheet() {
+//		boolean retVal = database.getAssigmentDataFolder().removeFeatureGradeFile();
+//		
+//	}
+//	
+//	public boolean preRestoreFeatureSpreadsheet() {
+//		return database.getAssigmentDataFolder().backupExists();
+//	}
+//	
+//	public void restoreFeatureSpreadsheet() {
+//		boolean retVal = database.getAssigmentDataFolder().restoreFeatureGradeFile();
+//		
+//	}
+    
+    void basicSetCurrentProblem(String aProblem) {
+        ProblemUserChange.newCase(currentProblem, this, this);
+    	Tracer.info(this, "Setting current problem to:" + aProblem);
+        currentProblem = aProblem;
+        BasicStaticConfigurationUtils.setProblem(aProblem);
+    }
+
+    void setCurrentProblem(String aProblem) {
+//    	System.out.println("Setting current problem to:" + aProblem);
+//        currentProblem = aProblem;
+    	basicSetCurrentProblem(aProblem);
+//        problemDownloadPath = moduleDownloadPath + "\\" + currentProblem;
+        problemDownloadPath = moduleDownloadPath + System.getProperty("file.separator") + currentProblem;
+        refreshProblemDownloadPath();
+//		ProblemUserChange.newCase(currentProblem, this, this);
+
+    }
+
+    @Override
+    @Visible(false)
+    public String getCurrentProblem() {
+        return currentProblem;
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener aListener) {
+        propertyChangeSupport.addPropertyChangeListener(aListener);
+
+        settingsLoaded = true; // OE has opened it
+
+    }
+    SakaiProjectDatabase projectDatabase;
+
+    void maybeCreateProjectDatabase() {
+        if (projectDatabase != null) {
+            return;
+        }
+        saveSettings();
+        Driver.initAssignmentDataFolder();
+//        projectDatabase = new ProjectDatabaseWrapper();
+        projectDatabase = ProjectDatabaseFactory.createProjectDatabase();
+
+        projectDatabase.setGraderSettings(this);
+    }
+
+    @Visible(false)
+    @Override
+    public void cleanAllSubmissionFolders() {
+//		saveSettings();
+//		Driver.initAssignmentDataFolder();
+//		projectDatabase = new ProjectDatabaseWrapper();
+//		projectDatabase.setGraderSettings(this);
+        maybeCreateProjectDatabase();
+        projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();
+        clear();
+
+    }
+    @Override
+    @Position(7)
+    public void setGraceDays (int newVal) {
+    	graceDays = newVal;
+    }
+    @Override
+    @Visible(false)
+    public int getGraceDays() {
+    	return graceDays;
+    }
+
+    @Override
+    @Position(4)
+    // making this 3 causes OE to put it at position 2, bug in OE
+    public void resetFeatureSpreadsheet() {
+        maybeCreateProjectDatabase();
+        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
+        clear();
+    }
+    public static final String CLEAN_SLATE_ALL = "CleanSlateAll";
+    @Override
+    @Explanation("Reset grades of all students in the class, cleaning the entire spreadsheet")
+    @Position(2)
+    public void cleanSlateAll() {
+    	
+    	Tracer.info(this, "Clearing scores of all students");
+//    	System.out.println("Clearing scores of all students");
+        maybeCreateProjectDatabase();
+        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
+        projectDatabase.getStudentAssignmentDatabase().cleanAllFeedbackAndSubmissionFolders();
+        clear();
+        propertyChangeSupport.firePropertyChange(CLEAN_SLATE_ALL, null, CLEAN_SLATE_ALL);
+    }
+
+    @Override
+    @Position(6)
+    public void compileExecutor() {
+        ExecutorSelector.getExecutor().compile();
+    }
+    
+    protected void clear() {
+    	if (projectDatabase != null) {
+    		projectDatabase.clear();
+    	}
+    }
+    
+    protected void doCleanSlate(String anOnyen) {
+    	Tracer.info(this, "Clearing scores of student:" + anOnyen);
+
+//    	System.out.println("Clearing scores of student:" + anOnyen);
+
+        maybeCreateProjectDatabase();
+        FeatureGradeRecorder featureGradeRecorder = projectDatabase.getFeatureGradeRecorder();
+
+        featureGradeRecorder.clearGrades(anOnyen, "");
+        SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
+        if (aProject == null) {
+            System.err.println("Did not find project of:" + anOnyen + " nothing to clean");
+            return;
+        }
+        StudentAssignment aStudentAssignment = aProject.getStudentAssignment();
+        if (aStudentAssignment != null) {
+            aStudentAssignment.cleanFeedbackFolder();
+            aStudentAssignment.cleanSubmissionFolder();
+        }
+        
+        GenericStudentAssignmentDatabase aStudentAssignmentDatabase = projectDatabase.getStudentAssignmentDatabase();
+        aStudentAssignmentDatabase.removeStudentAssignment(anOnyen);
+        
+        
+
+        clear();
+    }
+    public static final String CLEAN_SLATE_ONYEN = "cleanSlateOnyen";
+    @Override
+    @Position(0)
+    @Explanation("Reset grades of student specified as argument of this operation")
+    public void cleanSlate(String anOnyen) {
+    	doCleanSlate(anOnyen);
+    	propertyChangeSupport.firePropertyChange(CLEAN_SLATE_ONYEN, null, anOnyen);
+//    	System.out.println("Clearing scores of student:" + anOnyen);
+//
+//        maybeCreateProjectDatabase();
+//        FeatureGradeRecorder featureGradeRecorder = projectDatabase.getFeatureGradeRecorder();
+//
+//        featureGradeRecorder.clearGrades(anOnyen, "");
+//        SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
+//        if (aProject == null) {
+//            System.out.println("Did not find project of:" + anOnyen + " nothing to clean");
+//            return;
+//        }
+//        StudentAssignment aStudentAssignment = aProject.getStudentAssignment();
+//        if (aStudentAssignment != null) {
+//            aStudentAssignment.cleanFeedbackFolder();
+//            aStudentAssignment.cleanSubmissionFolder();
+//        }
+//
+////        projectDatabase.getAssignmentDataFolder().removeFeatureGradeFile();
+////        projectDatabase.getStudentAssignmentDatabase().cleanFeedbackAndSubmissionFolder(anOnyen);
+//        clear();
+    }
+    public static final String CLEAN_SLATE_SPECIFIED = "CleanSlateSpecified";
+    @Override
+    @Position(1)
+    @Explanation("Reset grades of student specified by start, end, and gotoonyens")
+    public void cleanSlateSpecified() {
+    	List<String> anOnyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();
+    	for (String anOnyen:anOnyens) {
+//    		cleanSlate(anOnyen);
+    		doCleanSlate(anOnyen);
+    	}
+    	propertyChangeSupport.firePropertyChange(CLEAN_SLATE_SPECIFIED, null, CLEAN_SLATE_SPECIFIED);
+    	
+    }
+
+//	public void maybePreCompile() {
+////      	if (!AProject.isCompileMissingObjectCode()) return;
+//		maybeCreateProjectDatabase();
+//		List<String> onyens = projectDatabase.getOnyenNavigationList();
+//		OnyenRangeModel anOnyenRangeModel = getOnyens();
+//		String aStartOnyen = anOnyenRangeModel.getStartingOnyen();
+//		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();
+//		
+//		for (String anOnyen:onyens) {
+//			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {
+//				try {
+//					new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);
+//				} catch (FileNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}		
+//		
+//	}
+    @Override
+    @Visible(false)
+    public boolean maybePreUnzip() {
+        if (!BasicGradingEnvironment.get().isUnzipFiles()) {
+            return false;
+        }
+        unzipSelectedOnyens();
+//        maybeCreateProjectDatabase();
+//
+//        List<String> onyens = projectDatabase.getOnyenNavigationList();
+////		OnyenRangeModel anOnyenRangeModel = getOnyens();
+////		String aStartOnyen = GraderSettings.get().
+////		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();
+//
+//        for (String anOnyen : onyens) {
+//            try {
+//                System.out.println("Unzipping directory for onyen:" + anOnyen);
+//                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getProject(anOnyen));
+//            } catch (FileNotFoundException e) {
+//                // TODO Auto-generated catch block
+////		e.printStackTrace();
+//                System.out.println("Could not unzip project for student:" + anOnyen + " " + e);
+//                e.printStackTrace();
+//            }
+//////			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {
+////            try {
+////                new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);
+////            } catch (FileNotFoundException e) {
+////                // TODO Auto-generated catch block
+////                e.printStackTrace();
+////            }
+////			}
+//        }
+//
+//        clear();
+        return true;
+
+    }
+    @Override
+    @Position(8)
+    public void unzipSelectedOnyens() {
+       
+        maybeCreateProjectDatabase();
+
+        List<String> onyens = projectDatabase.getOnyenNavigationList();
+    	onyens = NavigationListManagerFactory.getNavigationListManager().getRawOnyenNavigationList();
+
+
+        for (String anOnyen : onyens) {
+            try {
+                Tracer.info(this, "Unzipping directory for onyen:" + anOnyen);
+
+//                System.out.println("Unzipping directory for onyen:" + anOnyen);
+                SakaiProject aProject = projectDatabase.getOrCreateProject(anOnyen);
+                if (aProject == null) {
+                	System.err.println("No project found for onyen:" + anOnyen);
+                	continue;
+                }
+                ProjectWrapper.getDirectoryAndMaybeUnzip(aProject);
+
+//                ProjectWrapper.getDirectoryAndMaybeUnzip(projectDatabase.getOrCreateProject(anOnyen));
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+//		e.printStackTrace();
+                System.err.println("Could not unzip project for student:" + anOnyen + " " + e);
+                e.printStackTrace();
+            }
+////			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {
+//            try {
+//                new ProjectWrapper(projectDatabase.getProject(anOnyen), anOnyen);
+//            } catch (FileNotFoundException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//			}
+        }
+
+        clear();
+//        return true;
+
+    }
+    @Position(8)
+    public void runPlaigarismDetector() {
+    	PlagiarismRunner.ReadProperties(); 
+    	File aProblemDownloadPathFile = new File(problemDownloadPath);
+    	if (!aProblemDownloadPathFile.exists()) {
+    		System.err.println("Cannot find input folder " + aProblemDownloadPathFile);
+    		return;
+    	}
+    	try {
+    		PlagiarismRunner.setInputFileFolderName("\"" + aProblemDownloadPathFile.getCanonicalPath() + "\"");
+		
+    		PlagiarismRunner.processAfterProperties();
+    	    String anIndexFileName = PlagiarismRunner.getJplagIndex();
+    	    if (!Driver.isHeadless()) {
+    	    	if(Desktop.isDesktopSupported())
+    	    	{
+    	    	  Desktop.getDesktop().browse(new URI(anIndexFileName));
+    	    	}
+    	    }
+    	    String[] aMossArgs = PlagiarismRunner.getMossArgs();
+//    	    String aMossCommandFile = PlaigarismRunner.getMossCommandFile();
+//    	    StringBuffer aText = Common.toText(aMossCommandFile);
+    	    (new ProcessBuilder(aMossArgs)).start();
+//    	    Runtime.getRuntime().exec(aMossArgs);
+
+    	    
+    	} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+    	}
+    	
+    }
+    @Position(9)
+    public  void displayStudentSpreadsheet() {
+    	maybeCreateProjectDatabase();
+    	 SpreadsheetDisplayerFactory.displaySpreadsheet();
+    	
+    }
+    
+   
+
+    @Override
+    @Visible(false)
+    public boolean maybePreCompile() {
+        if (!BasicGradingEnvironment.get().isPreCompileMissingObjectCode()) {
+            return false;
+        }
+        maybeCreateProjectDatabase();
+
+        List<String> onyens = projectDatabase.getOnyenNavigationList();
+//		OnyenRangeModel anOnyenRangeModel = getOnyens();
+//		String aStartOnyen = GraderSettings.get().
+//		String anEndOnyen = anOnyenRangeModel.getEndingOnyen();
+
+        for (String anOnyen : onyens) {
+//			if (aStartOnyen.compareTo(anOnyen) <= 0 && anEndOnyen.compareTo(anOnyen) >= 0) {
+            try {
+                ProjectWrapper project = new ProjectWrapper(projectDatabase.getOrCreateProject(anOnyen), anOnyen);
+                project.getProject().clear();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+//			}
+        }
+
+        clear();
+
+        return true;
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getSource() == moduleProblemSelector.getProblem()) {
+            String newProblem = (String) moduleProblemSelector.getProblem().getValue();
+            if (newProblem == null) {
+                return;
+            }
+
+            if (currentProblem != null && currentProblem.equals(moduleProblemSelector.getProblem().getValue())) {
+                return;
+            }
+            setCurrentProblem(moduleProblemSelector.getProblem().getValue());
+//            ProblemUserChange.newCase(currentProblem, this, this);
+
+//			currentProblem = moduleProblemSelector.getProblem().getValue();
+//			problemDownloadPath = moduleDownloadPath + "/" +  currentModule;
+//			refreshProblemDownloadPath();
+        } else if (evt.getSource() == moduleProblemSelector.getModule()) {
+            if (currentModule.equals(moduleProblemSelector.getModule().getValue())) {
+                return;
+            }
+            setCurrentModule(moduleProblemSelector.getModule().getValue());
+//            ModuleUserChange.newCase(currentModule, this, this);
+
+        } else if (evt.getSource() == fileBrowsing.getDownloadFolder().getLabel()) {
+            String newPath = fileBrowsing.getDownloadFolder().getLabel().getText();
+            if (grader.settings.folders.AFileSetterModel.INVALID_FILE_NAME_MESSAGE.equals(newPath)) {
+            	return; // no need to do anything, this is a side effect of a previous action
+            }
+            if (newPath == null) {
+                return;
+            }
+            if (problemDownloadPath != null && problemDownloadPath.equals(newPath)) {
+                return; // bounce back
+            }
+            graderSettingsManager.setDownloadPath(currentModule, newPath);
+            refreshAll();
+            DownloadPathUserChange.newCase(newPath, this, this);
+        } else if (evt.getSource() == onyens) {
+        	if (evt.getPropertyName().equals("displayedStartingOnyen")) {
+        		GraderSettings.get().set(START_ONYEN,  (String)evt.getNewValue());
+        		
+        	} else if (evt.getPropertyName().equals("displayedEndingOnyen")) {
+        		GraderSettings.get().set(END_ONYEN, (String) evt.getNewValue());
+        	}
+        }  else if (evt.getSource() == fileBrowsing.getTestProjectSrc().getLabel()) {
+            String newPath = fileBrowsing.getTestProjectSrc().getLabel().getText();
+            if (grader.settings.folders.AFileSetterModel.INVALID_FILE_NAME_MESSAGE.equals(newPath)) {
+            	return; // no need to do anything, this is a side effect of a previous action
+            }
+            if (newPath == null) {
+                return;
+            }
+            if (testProjectSrc != null && testProjectSrc.equals(newPath)) {
+                return; // bounce back
+            }
+            graderSettingsManager.setTestProjectSrc(newPath);
+            refreshAll();
+//            DownloadPathUserChange.newCase(newPath, this, this);
+        }
+
+    }
+
+    @Visible(false)
+    public boolean isPrivacyMode() {
+        return privacyMode;
+    }
+    public static final String ONYENS_PROPERTY = "onyens";
+    @Visible(false)
+    public void setPrivacyMode(boolean newValue) {
+        if (privacyMode == newValue) {
+            return;
+        }
+        this.privacyMode = newValue;
+//        propertyChangeSupport.firePropertyChange("onyens", null, onyens);
+        propertyChangeSupport.firePropertyChange(ONYENS_PROPERTY, null, onyens);
+
+    }
+    @Position(5)
+    public void togglePrivacyMode() {
+        setPrivacyMode(!privacyMode);
+    }
+
+    @Visible(false)
+    @Override
+    public boolean getCompileMode() {
+        return compileMode;
+    }
+
+    public static void main(String[] args) {
+        AGraderSettingsModel startModel = new AGraderSettingsModel(null);
+        OEFrame frame = ObjectEditor.edit(startModel);
+        frame.setTitle("Grader Settings");
+        frame.setSize(550, 475);
+    }
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="610" _type="ShellCommand" date="Tue Aug 25 18:25:45 EDT 2020" starttimestamp="1598391145740" timestamp="3199508" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="612" _type="MoveCaretCommand" caretOffset="2630" date="Tue Aug 25 18:26:10 EDT 2020" docOffset="3077" starttimestamp="1598391145740" timestamp="3225251" />
+  <Command __id="613" _type="SelectTextCommand" caretOffset="2115" date="Tue Aug 25 18:26:12 EDT 2020" end="2115" start="2113" starttimestamp="1598391145740" timestamp="3226568" />
+  <Command __id="614" _type="SelectTextCommand" caretOffset="2115" date="Tue Aug 25 18:26:12 EDT 2020" end="2115" start="2113" starttimestamp="1598391145740" timestamp="3226568" />
+  <Command __id="615" _type="MoveCaretCommand" caretOffset="2116" date="Tue Aug 25 18:26:14 EDT 2020" docOffset="2563" starttimestamp="1598391145740" timestamp="3228268" />
+  <Command __id="616" _type="MoveCaretCommand" caretOffset="2116" date="Tue Aug 25 18:26:14 EDT 2020" docOffset="2563" starttimestamp="1598391145740" timestamp="3228269" />
+  <Command __id="618" _type="ShellCommand" date="Tue Aug 25 18:26:19 EDT 2020" starttimestamp="1598391145740" timestamp="3234195" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="619" _type="FindCommand" caseSensitive="false" date="Tue Aug 25 18:26:25 EDT 2020" forward="true" matchWord="false" offset="2563" regexp="false" replaceAll="false" selection="Find" selectionScope="false" starttimestamp="1598391145740" timestamp="3239516" wrapSearch="true">
+    <searchString><![CDATA[buildruns]]></searchString>
+    <replaceString><![CDATA[]]></replaceString>
+  </Command>
+  <Command __id="620" _type="ShellCommand" date="Tue Aug 25 18:26:26 EDT 2020" starttimestamp="1598391145740" timestamp="3240936" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="621" _type="MoveCaretCommand" caretOffset="5360" date="Tue Aug 25 18:26:29 EDT 2020" docOffset="5807" starttimestamp="1598391145740" timestamp="3243853" />
+  <Command __id="622" _type="MoveCaretCommand" caretOffset="5360" date="Tue Aug 25 18:26:29 EDT 2020" docOffset="5807" starttimestamp="1598391145740" timestamp="3243853" />
+  <Command __id="623" _type="MoveCaretCommand" caretOffset="5280" date="Tue Aug 25 18:26:32 EDT 2020" docOffset="5727" starttimestamp="1598391145740" timestamp="3247128" />
+  <Command __id="624" _type="MoveCaretCommand" caretOffset="5280" date="Tue Aug 25 18:26:32 EDT 2020" docOffset="5727" starttimestamp="1598391145740" timestamp="3247129" />
+  <Command __id="625" _type="MoveCaretCommand" caretOffset="4342" date="Tue Aug 25 18:26:57 EDT 2020" docOffset="4789" starttimestamp="1598391145740" timestamp="3271719" />
+  <Command __id="626" _type="MoveCaretCommand" caretOffset="4342" date="Tue Aug 25 18:26:57 EDT 2020" docOffset="4789" starttimestamp="1598391145740" timestamp="3271719" />
+  <Command __id="627" _type="MoveCaretCommand" caretOffset="4342" date="Tue Aug 25 18:26:57 EDT 2020" docOffset="4789" starttimestamp="1598391145740" timestamp="3272205" />
+  <Command __id="628" _type="MoveCaretCommand" caretOffset="4342" date="Tue Aug 25 18:26:57 EDT 2020" docOffset="4789" starttimestamp="1598391145740" timestamp="3272205" />
+  <Command __id="611" _type="DiffBasedFileOpenCommand" date="Tue Aug 25 18:26:10 EDT 2020" docASTNodeCount="1616" docActiveCodeLength="12436" docExpressionCount="1031" docLength="13570" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3224956">
+    <filePath><![CDATA[D:\dewan_backup\Java\Gradescope-Autograder\GradescopeAssignmentSetup\src\edu\unc\cs\AssignmentSetup.java]]></filePath>
+    <diff><![CDATA[[Diff(EQUAL,"package edu.unc.cs;¶¶import java.io.IOException;¶import java.nio.file.FileSystems;¶import java.nio.file.FileVisitResult;¶import java.nio.file.FileVisitor;¶import java.nio.file.Files;¶import java.nio.file.Path;¶import java.nio.file.Paths;¶import java.nio.file.attribute.BasicFileAttributes;¶import java.time.format.DateTimeFormatter;¶import java.time.temporal.TemporalAccessor;¶import java.util.ArrayList;¶import java.util.Arrays;¶import java.util.List;¶¶import org.json.JSONObject;¶¶public class AssignmentSetup {¶¶//    private static final String DEFAULT_COURSE_NAME = "COMP401F18";¶    private static final String DEFAULT_COURSE_NAME = "COMP524F20";¶¶    private static final int DEFAULT_ASSINGMENT_NUMBER = 1;¶    private static final String DEFAULT_ASSINGMENT_NUMBER_STRING = "1";¶¶    private static String COURSE_NAME;¶    private static String ASSIGNMENT;¶    private static String ASSIGNMENT_NO_SPACE;¶¶    private static final String PATH_SEPARATOR = System.getProperty("path.separator");¶¶    private static final String ROOT_DIRECOTRY = Paths.get(".").toAbsolutePath().getRoot().resolve("autograder").toString();¶//    private static final String ROOT_DIRECOTRY = ".";¶¶    private static final String GRADER_SOURCE_DIRECTORY = "source";¶¶//    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp401Driver";¶    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp524Driver";¶¶//    private static final String GRADER_JAR_FILE = "comp401-grader-11.12-jar-with-dependencies.jar";¶    private static final String GRADER_JAR_FILE = "Comp524GraderAll.jar";¶¶//    private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();¶    private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();¶¶    private static final String CLASSPATH_EXTRA = "";¶//    private static String CLASSPATH = "." + (CLASSPATH_EXTRA.isEmpty() ?? "" : PATH_SEPARATOR + CLASSPATH_EXTRA);¶    private static final String CLASSPATH = "." + PATH_SEPARATOR + GRADER_JAR_PATH¶            + (CLASSPATH_EXTRA.isEmpty() ? "" : PATH_SEPARATOR + CLASSPATH_EXTRA)¶            + (System.getProperty("java.class.path").isEmpty() ? "" : PATH_SEPARATOR + System.getProperty("java.class.path"));¶¶    private static final String GRADER_SCRIPT_NAME = "run-grader";¶¶    private static String ONYEN = "student";¶    private static String FIRST_NAME = "me";¶    private static String LAST_NAME = "grade";¶    private static final String USER_DIRECTORY = LAST_NAME + ", " + FIRST_NAME + "(" + ONYEN + ")";¶¶    private static final String FEEDBACK_DIRECOTRY = "Feedback Attachment(s)";¶    private static final String SUBMISSION_DIRECOTRY = "Submission attachment(s)";¶¶    private static final String GRADE_SPREADSHEET = "grades.csv";¶    private static final String TIMESTAMP_FILE = "timestamp.txt";¶¶    private static final String GRADER_DIRECTORY = "graderProgram";¶    private static final String GRADER_CONFIG_FOLDER = "config";¶    private static final String GRADER_CONFIG_NAME = "config.properties";¶¶    private static final String ASSIGNMENT_DATA_FOLDER = "log/AssignmentData";¶¶    private static final String SUBMISSION_LOCATION = "submission";¶    private static final String SUBMISSION_ARCHIVE_NAME = "submission.zip";¶¶    private static final String RESULT_FILE_PROCESSOR = "GradescopeRunner.jar";¶    private static final String GRADESCOPE_RESULT_DIR = "results";¶    private static final String GRADESCOPE_JSON_FILE = "results.json";¶¶    private static final String GRADER_RESULT_DIR = FEEDBACK_DIRECOTRY;¶    private static final String GRADER_JSON_FILE = "results.json";¶¶    private static final String METADATA_FILE_LOCATION = ROOT_DIRECOTRY;¶//    private static final String METADATA_FILE_LOCATION = "metadata";¶¶    private static final String METADATA_FILE = "submission_metadata.json";¶¶    private static final String EXECUTION_SHELL = "/bin/bash";¶¶    private static final DateTimeFormatter SOURCE_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;¶    private static final DateTimeFormatter TARGET_DATE_TIME_FORMATTER = DateTimeFormatter¶            .ofPattern("yyyyMMddHHmmssSSS");¶¶    static {¶//        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER);¶        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER_STRING);¶¶    }¶¶    public static void main(String[] args) {¶//    	System.out.println("classpath: " + System.getProperty("java.class.path"));¶//    	CLASSPATH += (System.getProperty("java.class.path").isEmpty() ? "" : PATH_SEPARATOR + System.getProperty("java.class.path"));¶        if (args.length == 2) {¶            COURSE_NAME = args[0];¶            try {¶//                int assignmentNum = Integer.parseInt(args[1]);¶//                setAssignment(args[0], assignmentNum);¶                setAssignment(args[0], args[1]);¶¶            } catch (NumberFormatException e) {¶                System.err.println("Argument 2 is not a number, defaulting to " + COURSE_NAME + " " + DEFAULT_ASSINGMENT_NUMBER);¶            }¶        }¶        Path testBase = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, ASSIGNMENT_NO_SPACE);¶        Path graderBase = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY);¶        try {¶            purge(testBase);¶            buildDirectories(testBase);¶            buildFiles(testBase);¶¶            IGraderConfigWriter configWriter = buildConfigWriter(testBase);¶            setupGrader(graderBase, configWriter);¶            buildRunScript(graderBase, configWriter);¶        } catch (IOException e) {¶            e.printStackTrace();¶        }¶    }¶¶    private static void setAssignment(String name, int number) {¶        COURSE_NAME = name;¶        ASSIGNMENT = "Assignment " + number;¶        ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");¶    }¶    private static void setAssignment(String name, String number) {¶        COURSE_NAME = name;¶        ASSIGNMENT = "Assignment " + number;¶        ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");¶    }¶¶    private static IGraderConfigWriter buildConfigWriter(Path base) {¶        IGraderConfigWriter configWriter = new GraderConfigWriter();¶        configWriter.setAssignmentName(ASSIGNMENT_NO_SPACE);¶        configWriter.setController(IGraderConfigWriter.HEADLESS_GRADING_MANAGER);¶        configWriter.setPath(base.toString());¶        configWriter.setStartOnyen(ONYEN);¶        configWriter.setEndOnyen(ONYEN);¶        configWriter.setCourseName(COURSE_NAME);¶        configWriter.setLogging(IGraderConfigWriter.FEEDBACK_JSON, IGraderConfigWriter.FEEDBACK_TXT,¶                IGraderConfigWriter.LOCAL_JSON, IGraderConfigWriter.LOCAL_TXT);¶¶        return configWriter;¶    }¶¶    private static void setupGrader(Path base, IGraderConfigWriter configWriter) throws IOException {¶        Files.createDirectories(base.resolve(ASSIGNMENT_DATA_FOLDER).resolve(ASSIGNMENT_NO_SPACE));¶        Path configDir = base.resolve(GRADER_CONFIG_FOLDER);¶        Files.createDirectories(configDir);¶        Path configFilePath = configDir.resolve(GRADER_CONFIG_NAME);¶        if (Files.notExists(configFilePath)) {¶        	configWriter.write(configFilePath);¶        }¶    }¶¶    private static void buildRunScript(Path base, IGraderConfigWriter configWriter) throws IOException {¶        StringBuilder sb = new StringBuilder();¶        sb.append("#! ").append(EXECUTION_SHELL).append("\n");¶        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);¶        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));¶        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");¶        sb.append("cd ").append(base).append("\n");¶        sb.append("java ").append("-cp ").append(CLASSPATH);¶        sb.append(" ").append(GRADER_MAIN_CLASS);¶        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));¶        sb.append("\n");¶¶        Path graderResultFile = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY).resolve(GRADER_RESULT_DIR).resolve(GRADER_JSON_FILE);¶        Path gradescopeResultFile = Paths.get(ROOT_DIRECOTRY, GRADESCOPE_RESULT_DIR, GRADESCOPE_JSON_FILE);¶¶        sb.append("java -jar ").append(RESULT_FILE_PROCESSOR)¶                .append(" \"").append(graderResultFile.toString())¶                .append("\" \"").append(gradescopeResultFile.toString()).append("\"");¶¶        Files.write(base.resolve(GRADER_SCRIPT_NAME), sb.toString().getBytes());¶    }¶¶    private static void buildDirectories(Path base) throws IOException {¶        Files.createDirectories(base);¶        Path userDir = base.resolve(USER_DIRECTORY);¶        Files.createDirectories(userDir);¶        Files.createDirectories(userDir.resolve(FEEDBACK_DIRECOTRY));¶        Files.createDirectories(userDir.resolve(SUBMISSION_DIRECOTRY));¶    }¶¶    private static void buildFiles(Path base) throws IOException {¶        Path gradeSpreadsheet = base.resolve(GRADE_SPREADSHEET);¶        Files.deleteIfExists(gradeSpreadsheet);¶        Files.createFile(gradeSpreadsheet);¶        writeGradeSpreadsheet(gradeSpreadsheet);¶        Path userDir = base.resolve(USER_DIRECTORY);¶        createTimestamp(userDir);¶//        copyAll(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION), userDir.resolve(SUBMISSION_DIRECOTRY));¶    }¶¶    private static void writeGradeSpreadsheet(Path file) throws IOException {¶        List<String> lines = new ArrayList<>();¶        lines.add(ASSIGNMENT + ",Points,,,");¶        lines.add(",,,,");¶        lines.add("Display ID,ID,Last Name,First Name,grade");¶        lines.add(ONYEN + "," + ONYEN + "," + LAST_NAME + "," + FIRST_NAME + ",0.0");¶        Files.write(file, lines);¶    }¶¶    private static void createTimestamp(Path userDir) throws IOException {¶        String rawTimestamp = getRawTimestamp();¶        TemporalAccessor gradescopeTimestamp = SOURCE_DATE_TIME_FORMATTER.parse(rawTimestamp);¶        String sakaiTimestamp = TARGET_DATE_TIME_FORMATTER.format(gradescopeTimestamp);¶        Files.write(userDir.resolve(TIMESTAMP_FILE), sakaiTimestamp.getBytes());¶    }¶¶    private static String getRawTimestamp() throws IOException {¶        Path metadataFile = Paths.get(METADATA_FILE_LOCATION, METADATA_FILE);¶¶        StringBuilder sb = new StringBuilder();¶        Files.readAllLines(metadataFile).forEach(line -> sb.append(line).append("\n"));¶¶        JSONObject metadata = new JSONObject(sb.toString());¶        return metadata.getString("created_at");¶    }¶¶    private static void purge(Path root) throws IOException {¶        Files.walkFileTree(root, new FileVisitor<Path>() {¶¶            @Override¶            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {¶                Files.deleteIfExists(file);¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {¶                return FileVisitResult.TERMINATE;¶            }¶¶            @Override¶            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {¶                Files.deleteIfExists(dir);¶                return FileVisitResult.CONTINUE;¶            }¶¶        });¶    }¶¶    private static void copyAll(Path source, Path dest) throws IOException {¶    	System.out.println("COPY FROM: " + source.toString() + " TO: " + dest.toString());¶        Files.walkFileTree(source, new FileVisitor<Path>() {¶¶            @Override¶            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {¶                System.out.println("DIR START: " + dir.toString());¶            	Path relative = source.relativize(dir);¶                Files.createDirectories(dest.resolve(relative));¶                System.out.println("    save as " + dest.resolve(relative));¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {¶            	System.out.println("FILE: " + file.toString());¶                Path relative = source.relativize(file);¶                Files.copy(file, dest.resolve(relative));¶                System.out.println("    save as " + dest.resolve(relative));¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {¶            	System.out.println("FILE ERR: " + file.toString());¶                return FileVisitResult.TERMINATE;¶            }¶¶            @Override¶            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {¶            	System.out.println("DIR END: " + dir.toString());¶                return FileVisitResult.CONTINUE;¶            }¶¶        });¶    }¶}¶")]]]></diff>
+  </Command>
+  <Command __id="629" _type="SelectTextCommand" caretOffset="7788" date="Tue Aug 25 18:27:35 EDT 2020" end="7788" start="7100" starttimestamp="1598391145740" timestamp="3309513" />
+  <Command __id="630" _type="SelectTextCommand" caretOffset="7788" date="Tue Aug 25 18:27:35 EDT 2020" end="7788" start="7100" starttimestamp="1598391145740" timestamp="3309513" />
+  <Command __id="641" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.toggle.comment" date="Tue Aug 25 18:27:39 EDT 2020" starttimestamp="1598391145740" timestamp="3313297" />
+  <Command __id="649" _type="EclipseCommand" commandID="" date="Tue Aug 25 18:27:43 EDT 2020" starttimestamp="1598391145740" timestamp="3318234" />
+  <Command __id="650" _type="EclipseCommand" commandID="org.eclipse.ui.file.save" date="Tue Aug 25 18:27:44 EDT 2020" starttimestamp="1598391145740" timestamp="3318300" />
+  <Command __id="651" _type="EclipseCommand" commandID="" date="Tue Aug 25 18:27:44 EDT 2020" starttimestamp="1598391145740" timestamp="3318430" />
+  <Command __id="654" _type="RunCommand" date="Tue Aug 25 18:28:14 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3348422" type="Run" />
+  <Command __id="655" _type="RunCommand" date="Tue Aug 25 18:28:14 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3348422" type="Run" />
+  <Command __id="656" _type="RunCommand" date="Tue Aug 25 18:28:14 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="3348742" type="Debug" />
+  <Command __id="657" _type="RunCommand" date="Tue Aug 25 18:28:14 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3348742" type="Run" />
+  <Command __id="658" _type="RunCommand" date="Tue Aug 25 18:28:14 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="3348742" type="Debug" />
+  <Command __id="659" _type="RunCommand" date="Tue Aug 25 18:28:14 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3348742" type="Run" />
+  <Command __id="660" _type="ShellCommand" date="Tue Aug 25 18:28:20 EDT 2020" starttimestamp="1598391145740" timestamp="3354715" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="661" _type="ShellCommand" date="Tue Aug 25 18:28:27 EDT 2020" starttimestamp="1598391145740" timestamp="3362211" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="662" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Tue Aug 25 18:28:27 EDT 2020" starttimestamp="1598391145740" timestamp="3362232" />
+  <Command __id="663" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Tue Aug 25 18:28:27 EDT 2020" starttimestamp="1598391145740" timestamp="3362232" />
+  <Command __id="664" _type="MoveCaretCommand" caretOffset="5132" date="Tue Aug 25 18:28:29 EDT 2020" docOffset="5579" starttimestamp="1598391145740" timestamp="3363348" />
+  <Command __id="665" _type="MoveCaretCommand" caretOffset="5132" date="Tue Aug 25 18:28:29 EDT 2020" docOffset="5579" starttimestamp="1598391145740" timestamp="3363348" />
+  <Command __id="666" _type="EclipseCommand" commandID="org.eclipse.debug.ui.commands.RunLast" date="Tue Aug 25 18:28:30 EDT 2020" starttimestamp="1598391145740" timestamp="3365019" />
+  <Command __id="667" _type="RunCommand" date="Tue Aug 25 18:28:30 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3365238" type="Run" />
+  <Command __id="668" _type="RunCommand" date="Tue Aug 25 18:28:30 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3365238" type="Run" />
+  <Command __id="669" _type="RunCommand" date="Tue Aug 25 18:28:31 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="3365801" type="Debug" />
+  <Command __id="670" _type="RunCommand" date="Tue Aug 25 18:28:31 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3365802" type="Run" />
+  <Command __id="671" _type="RunCommand" date="Tue Aug 25 18:28:31 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="3365802" type="Debug" />
+  <Command __id="672" _type="RunCommand" date="Tue Aug 25 18:28:31 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3365802" type="Run" />
+  <Command __id="673" _type="ShellCommand" date="Tue Aug 25 18:28:40 EDT 2020" starttimestamp="1598391145740" timestamp="3375151" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="674" _type="ShellCommand" date="Tue Aug 25 18:30:39 EDT 2020" starttimestamp="1598391145740" timestamp="3493627" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="675" _type="ShellCommand" date="Tue Aug 25 18:30:43 EDT 2020" starttimestamp="1598391145740" timestamp="3498077" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="676" _type="ShellCommand" date="Tue Aug 25 18:31:19 EDT 2020" starttimestamp="1598391145740" timestamp="3534178" type="ECLIPSE_GAINED_FOCUS" />
+  <DocumentChange __id="631" _type="Insert" date="Tue Aug 25 18:27:38 EDT 2020" docASTNodeCount="1608" docActiveCodeLength="12389" docExpressionCount="1027" docLength="13572" length="2" offset="7540" starttimestamp="1598391145740" timestamp="3313243">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="632" _type="Insert" date="Tue Aug 25 18:27:38 EDT 2020" docASTNodeCount="1597" docActiveCodeLength="12327" docExpressionCount="1017" docLength="13574" length="2" offset="7591" starttimestamp="1598391145740" timestamp="3313247">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="633" _type="Insert" date="Tue Aug 25 18:27:38 EDT 2020" docASTNodeCount="1585" docActiveCodeLength="12246" docExpressionCount="1008" docLength="13576" length="2" offset="7657" starttimestamp="1598391145740" timestamp="3313250">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="634" _type="Insert" date="Tue Aug 25 18:27:38 EDT 2020" docASTNodeCount="1571" docActiveCodeLength="12136" docExpressionCount="995" docLength="13578" length="2" offset="7742" starttimestamp="1598391145740" timestamp="3313255">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="635" _type="Insert" date="Tue Aug 25 18:27:38 EDT 2020" docASTNodeCount="1556" docActiveCodeLength="12039" docExpressionCount="981" docLength="13580" length="2" offset="7856" starttimestamp="1598391145740" timestamp="3313258">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="636" _type="Insert" date="Tue Aug 25 18:27:39 EDT 2020" docASTNodeCount="1545" docActiveCodeLength="11988" docExpressionCount="971" docLength="13582" length="2" offset="7957" starttimestamp="1598391145740" timestamp="3313261">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="637" _type="Insert" date="Tue Aug 25 18:27:39 EDT 2020" docASTNodeCount="1534" docActiveCodeLength="11928" docExpressionCount="961" docLength="13584" length="2" offset="8012" starttimestamp="1598391145740" timestamp="3313264">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="638" _type="Insert" date="Tue Aug 25 18:27:39 EDT 2020" docASTNodeCount="1526" docActiveCodeLength="11879" docExpressionCount="954" docLength="13586" length="2" offset="8076" starttimestamp="1598391145740" timestamp="3313267">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="639" _type="Insert" date="Tue Aug 25 18:27:39 EDT 2020" docASTNodeCount="1516" docActiveCodeLength="11783" docExpressionCount="945" docLength="13588" length="2" offset="8129" starttimestamp="1598391145740" timestamp="3313271">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="640" _type="Insert" date="Tue Aug 25 18:27:39 EDT 2020" docASTNodeCount="1511" docActiveCodeLength="11759" docExpressionCount="941" docLength="13590" length="2" offset="8229" starttimestamp="1598391145740" timestamp="3313276">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="644" _type="Insert" date="Tue Aug 25 18:27:41 EDT 2020" docASTNodeCount="1511" docActiveCodeLength="11766" docExpressionCount="941" docLength="13597" length="7" offset="8255" starttimestamp="1598391145740" timestamp="3315310">
+    <text><![CDATA[
+    	]]></text>
+  </DocumentChange>
+  <DocumentChange __id="647" _type="Replace" date="Tue Aug 25 18:27:41 EDT 2020" docASTNodeCount="1674" docActiveCodeLength="12891" docExpressionCount="1083" docLength="14722" endLine="173" insertionLength="1130" int_docASTNodeCount="1511" int_docActiveCodeLength="11761" int_docExpressionCount="941" int_docLength="13592" length="5" offset="8257" startLine="173" starttimestamp="1598391145740" timestamp="3316234">
+    <deletedText><![CDATA[    	]]></deletedText>
+    <insertedText><![CDATA[    	StringBuilder sb = new StringBuilder();
+        sb.append("#! ").append(EXECUTION_SHELL).append("\n");
+        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls ").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\n");
+        sb.append("echo \"submission dir\"\n");
+        sb.append("ls ").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\n");
+        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));
+        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls ").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\n");
+        sb.append("cd ").append(base).append("\n");
+        sb.append("java ").append("-cp ").append(CLASSPATH);
+        sb.append(" ").append(GRADER_MAIN_CLASS);
+        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));
+        sb.append("\n");]]></insertedText>
+  </DocumentChange>
+  <Command __id="677" _type="SelectTextCommand" caretOffset="7815" date="Tue Aug 25 18:31:38 EDT 2020" end="8940" start="7815" starttimestamp="1598391145740" timestamp="3552390" />
+  <Command __id="678" _type="SelectTextCommand" caretOffset="7815" date="Tue Aug 25 18:31:38 EDT 2020" end="8940" start="7815" starttimestamp="1598391145740" timestamp="3552390" />
+  <DocumentChange __id="679" _type="Delete" date="Tue Aug 25 18:31:39 EDT 2020" docASTNodeCount="1511" docActiveCodeLength="11766" docExpressionCount="941" docLength="13597" endLine="188" length="1125" offset="8262" startLine="173" starttimestamp="1598391145740" timestamp="3553514">
+    <text><![CDATA[StringBuilder sb = new StringBuilder();
+        sb.append("#! ").append(EXECUTION_SHELL).append("\n");
+        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls ").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\n");
+        sb.append("echo \"submission dir\"\n");
+        sb.append("ls ").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\n");
+        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));
+        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls ").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\n");
+        sb.append("cd ").append(base).append("\n");
+        sb.append("java ").append("-cp ").append(CLASSPATH);
+        sb.append(" ").append(GRADER_MAIN_CLASS);
+        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));
+        sb.append("\n");]]></text>
+  </DocumentChange>
+  <Command __id="680" _type="EclipseCommand" commandID="org.eclipse.ui.edit.delete" date="Tue Aug 25 18:31:39 EDT 2020" starttimestamp="1598391145740" timestamp="3553536" />
+  <Command __id="682" _type="PasteCommand" date="Tue Aug 25 18:31:40 EDT 2020" starttimestamp="1598391145740" timestamp="3554819" />
+  <Command __id="683" _type="EclipseCommand" commandID="org.eclipse.ui.file.save" date="Tue Aug 25 18:31:41 EDT 2020" starttimestamp="1598391145740" timestamp="3556145" />
+  <Command __id="684" _type="EclipseCommand" commandID="" date="Tue Aug 25 18:31:42 EDT 2020" starttimestamp="1598391145740" timestamp="3556282" />
+  <Command __id="685" _type="EclipseCommand" commandID="" date="Tue Aug 25 18:31:42 EDT 2020" starttimestamp="1598391145740" timestamp="3556344" />
+  <Command __id="686" _type="MoveCaretCommand" caretOffset="8593" date="Tue Aug 25 18:31:42 EDT 2020" docOffset="9040" starttimestamp="1598391145740" timestamp="3557130" />
+  <Command __id="687" _type="MoveCaretCommand" caretOffset="8593" date="Tue Aug 25 18:31:42 EDT 2020" docOffset="9040" starttimestamp="1598391145740" timestamp="3557130" />
+  <Command __id="688" _type="EclipseCommand" commandID="org.eclipse.debug.ui.commands.RunLast" date="Tue Aug 25 18:31:43 EDT 2020" starttimestamp="1598391145740" timestamp="3558191" />
+  <Command __id="689" _type="RunCommand" date="Tue Aug 25 18:31:44 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3558383" type="Run" />
+  <Command __id="690" _type="RunCommand" date="Tue Aug 25 18:31:44 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3558383" type="Run" />
+  <Command __id="691" _type="RunCommand" date="Tue Aug 25 18:31:44 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="3558783" type="Debug" />
+  <Command __id="692" _type="RunCommand" date="Tue Aug 25 18:31:44 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3558783" type="Run" />
+  <Command __id="693" _type="RunCommand" date="Tue Aug 25 18:31:44 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="3558783" type="Debug" />
+  <Command __id="694" _type="RunCommand" date="Tue Aug 25 18:31:44 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="3558783" type="Run" />
+  <Command __id="695" _type="ShellCommand" date="Tue Aug 25 18:32:01 EDT 2020" starttimestamp="1598391145740" timestamp="3575908" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="696" _type="ShellCommand" date="Tue Aug 25 18:32:34 EDT 2020" starttimestamp="1598391145740" timestamp="3608664" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="697" _type="ShellCommand" date="Tue Aug 25 18:32:38 EDT 2020" starttimestamp="1598391145740" timestamp="3612568" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="698" _type="ShellCommand" date="Tue Aug 25 18:33:07 EDT 2020" starttimestamp="1598391145740" timestamp="3641491" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="699" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Tue Aug 25 18:33:07 EDT 2020" starttimestamp="1598391145740" timestamp="3641543" />
+  <Command __id="700" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Tue Aug 25 18:33:07 EDT 2020" starttimestamp="1598391145740" timestamp="3641543" />
+  <Command __id="701" _type="ShellCommand" date="Tue Aug 25 18:33:13 EDT 2020" starttimestamp="1598391145740" timestamp="3647975" type="ECLIPSE_MINIMIZED" />
+  <Command __id="702" _type="ShellCommand" date="Tue Aug 25 18:33:13 EDT 2020" starttimestamp="1598391145740" timestamp="3647988" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="713" _type="MoveCaretCommand" caretOffset="1930" date="Tue Aug 25 18:48:14 EDT 2020" docOffset="2231" starttimestamp="1598391145740" timestamp="4548626" />
+  <Command __id="714" _type="ShellCommand" date="Tue Aug 25 18:48:22 EDT 2020" starttimestamp="1598391145740" timestamp="4556416" type="ECLIPSE_MINIMIZED" />
+  <Command __id="715" _type="ShellCommand" date="Tue Aug 25 18:48:22 EDT 2020" starttimestamp="1598391145740" timestamp="4556434" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="1811" _type="DiffBasedFileOpenCommand" date="Tue Aug 25 19:45:30 EDT 2020" docASTNodeCount="44" docActiveCodeLength="406" docExpressionCount="21" docLength="406" projectName="comp110-grader" starttimestamp="1598391145740" timestamp="7984858">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\assignment\timestamp\TimestampComputerSelector.java]]></filePath>
+    <diff><![CDATA[null]]></diff>
+    <snapshot><![CDATA[package grader.assignment.timestamp;
+
+public class TimestampComputerSelector {
+static TimestampComputer timestampComputer = new SakaiTimestampComputer();
+
+public static TimestampComputer getTimestampComputer() {
+	return timestampComputer;
+}
+
+public static void setTimestampComputer(TimestampComputer timestampComputer) {
+	TimestampComputerSelector.timestampComputer = timestampComputer;
+}
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="1815" _type="DiffBasedFileOpenCommand" date="Tue Aug 25 19:45:35 EDT 2020" docASTNodeCount="178" docActiveCodeLength="1335" docExpressionCount="129" docLength="1691" projectName="comp110-grader" starttimestamp="1598391145740" timestamp="7989377">
+    <filePath><![CDATA[D:\dewan_backup\Java\Grader\src\main\java\grader\assignment\timestamp\SakaiTimestampComputer.java]]></filePath>
+    <diff><![CDATA[null]]></diff>
+    <snapshot><![CDATA[package grader.assignment.timestamp;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Date;
+
+import org.apache.commons.io.FileUtils;
+import org.joda.time.DateTime;
+
+import framework.navigation.SakaiStudentFolder;
+import grader.basics.util.Option;
+import grader.util.SakaiDateUtil;
+import util.trace.Tracer;
+
+public class SakaiTimestampComputer implements TimestampComputer{
+
+	@Override
+	public DateTime computeStudentFolderTimeStamp(SakaiStudentFolder aStudentFolder) {
+		File timestampFile = new File(aStudentFolder.getFolder(), "timestamp.txt");
+        if (timestampFile.exists()) {
+        	Tracer.info(this, "Found timestamp file:" + timestampFile.getAbsolutePath());
+
+//        	System.out.println(("Found timestamp file:" + timestampFile.getAbsolutePath()));
+            try {
+                String timestampText = FileUtils.readFileToString(timestampFile);
+            	Tracer.info(this, "Found timestamp:" + timestampText);
+
+//            	System.out.println("Found timestamp:" + timestampText);
+            	Date aDate = SakaiDateUtil.toDate(timestampText);
+
+            	Tracer.info (this, "Timestamp Date:" + aDate );
+//            	System.out.println ("Timestamp Date:" + aDate );
+
+            	DateTime aDateTime = new DateTime(aDate);
+            	Tracer.info (this, "Date time:" + aDateTime );
+
+//            	System.out.println ("Date time:" + aDateTime );
+            	return aDateTime;
+
+
+            //    return Option.apply(new DateTime(Common.toDate(timestampText)));
+            } catch (IOException e) {
+                return null;
+            }
+        } else
+            return null;
+    }
+	
+
+}
+]]></snapshot>
+  </Command>
+  <Command __id="1821" _type="ShellCommand" date="Tue Aug 25 20:01:31 EDT 2020" starttimestamp="1598391145740" timestamp="8945323" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="1823" _type="MoveCaretCommand" caretOffset="8593" date="Tue Aug 25 20:01:54 EDT 2020" docOffset="9040" starttimestamp="1598391145740" timestamp="8968399" />
+  <Command __id="1822" _type="DiffBasedFileOpenCommand" date="Tue Aug 25 20:01:53 EDT 2020" docASTNodeCount="1674" docActiveCodeLength="12903" docExpressionCount="1083" docLength="14734" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="8968232">
+    <filePath><![CDATA[D:\dewan_backup\Java\Gradescope-Autograder\GradescopeAssignmentSetup\src\edu\unc\cs\AssignmentSetup.java]]></filePath>
+    <diff><![CDATA[[Diff(EQUAL,"package edu.unc.cs;¶¶import java.io.IOException;¶import java.nio.file.FileSystems;¶import java.nio.file.FileVisitResult;¶import java.nio.file.FileVisitor;¶import java.nio.file.Files;¶import java.nio.file.Path;¶import java.nio.file.Paths;¶import java.nio.file.attribute.BasicFileAttributes;¶import java.time.format.DateTimeFormatter;¶import java.time.temporal.TemporalAccessor;¶import java.util.ArrayList;¶import java.util.Arrays;¶import java.util.List;¶¶import org.json.JSONObject;¶¶public class AssignmentSetup {¶¶//    private static final String DEFAULT_COURSE_NAME = "COMP401F18";¶    private static final String DEFAULT_COURSE_NAME = "COMP524F20";¶¶    private static final int DEFAULT_ASSINGMENT_NUMBER = 1;¶    private static final String DEFAULT_ASSINGMENT_NUMBER_STRING = "1";¶¶    private static String COURSE_NAME;¶    private static String ASSIGNMENT;¶    private static String ASSIGNMENT_NO_SPACE;¶¶    private static final String PATH_SEPARATOR = System.getProperty("path.separator");¶¶    private static final String ROOT_DIRECOTRY = Paths.get(".").toAbsolutePath().getRoot().resolve("autograder").toString();¶//    private static final String ROOT_DIRECOTRY = ".";¶¶    private static final String GRADER_SOURCE_DIRECTORY = "source";¶¶//    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp401Driver";¶    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp524Driver";¶¶//    private static final String GRADER_JAR_FILE = "comp401-grader-11.12-jar-with-dependencies.jar";¶    private static final String GRADER_JAR_FILE = "Comp524GraderAll.jar";¶¶//    private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();¶    private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();¶¶    private static final String CLASSPATH_EXTRA = "";¶//    private static String CLASSPATH = "." + (CLASSPATH_EXTRA.isEmpty() ?? "" : PATH_SEPARATOR + CLASSPATH_EXTRA);¶    private static final String CLASSPATH = "." + PATH_SEPARATOR + GRADER_JAR_PATH¶            + (CLASSPATH_EXTRA.isEmpty() ? "" : PATH_SEPARATOR + CLASSPATH_EXTRA)¶            + (System.getProperty("java.class.path").isEmpty() ? "" : PATH_SEPARATOR + System.getProperty("java.class.path"));¶¶    private static final String GRADER_SCRIPT_NAME = "run-grader";¶¶    private static String ONYEN = "student";¶    private static String FIRST_NAME = "me";¶    private static String LAST_NAME = "grade";¶    private static final String USER_DIRECTORY = LAST_NAME + ", " + FIRST_NAME + "(" + ONYEN + ")";¶¶    private static final String FEEDBACK_DIRECOTRY = "Feedback Attachment(s)";¶    private static final String SUBMISSION_DIRECOTRY = "Submission attachment(s)";¶¶    private static final String GRADE_SPREADSHEET = "grades.csv";¶    private static final String TIMESTAMP_FILE = "timestamp.txt";¶¶    private static final String GRADER_DIRECTORY = "graderProgram";¶    private static final String GRADER_CONFIG_FOLDER = "config";¶    private static final String GRADER_CONFIG_NAME = "config.properties";¶¶    private static final String ASSIGNMENT_DATA_FOLDER = "log/AssignmentData";¶¶    private static final String SUBMISSION_LOCATION = "submission";¶    private static final String SUBMISSION_ARCHIVE_NAME = "submission.zip";¶¶    private static final String RESULT_FILE_PROCESSOR = "GradescopeRunner.jar";¶    private static final String GRADESCOPE_RESULT_DIR = "results";¶    private static final String GRADESCOPE_JSON_FILE = "results.json";¶¶    private static final String GRADER_RESULT_DIR = FEEDBACK_DIRECOTRY;¶    private static final String GRADER_JSON_FILE = "results.json";¶¶    private static final String METADATA_FILE_LOCATION = ROOT_DIRECOTRY;¶//    private static final String METADATA_FILE_LOCATION = "metadata";¶¶    private static final String METADATA_FILE = "submission_metadata.json";¶¶    private static final String EXECUTION_SHELL = "/bin/bash";¶¶    private static final DateTimeFormatter SOURCE_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;¶    private static final DateTimeFormatter TARGET_DATE_TIME_FORMATTER = DateTimeFormatter¶            .ofPattern("yyyyMMddHHmmssSSS");¶¶    static {¶//        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER);¶        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER_STRING);¶¶    }¶¶    public static void main(String[] args) {¶//    	System.out.println("classpath: " + System.getProperty("java.class.path"));¶//    	CLASSPATH += (System.getProperty("java.class.path").isEmpty() ? "" : PATH_SEPARATOR + System.getProperty("java.class.path"));¶        if (args.length == 2) {¶            COURSE_NAME = args[0];¶            try {¶//                int assignmentNum = Integer.parseInt(args[1]);¶//                setAssignment(args[0], assignmentNum);¶                setAssignment(args[0], args[1]);¶¶            } catch (NumberFormatException e) {¶                System.err.println("Argument 2 is not a number, defaulting to " + COURSE_NAME + " " + DEFAULT_ASSINGMENT_NUMBER);¶            }¶        }¶        Path testBase = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, ASSIGNMENT_NO_SPACE);¶        Path graderBase = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY);¶        try {¶            purge(testBase);¶            buildDirectories(testBase);¶            buildFiles(testBase);¶¶            IGraderConfigWriter configWriter = buildConfigWriter(testBase);¶            setupGrader(graderBase, configWriter);¶            buildRunScript(graderBase, configWriter);¶        } catch (IOException e) {¶            e.printStackTrace();¶        }¶    }¶¶    private static void setAssignment(String name, int number) {¶        COURSE_NAME = name;¶        ASSIGNMENT = "Assignment " + number;¶        ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");¶    }¶    private static void setAssignment(String name, String number) {¶        COURSE_NAME = name;¶        ASSIGNMENT = "Assignment " + number;¶        ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");¶    }¶¶    private static IGraderConfigWriter buildConfigWriter(Path base) {¶        IGraderConfigWriter configWriter = new GraderConfigWriter();¶        configWriter.setAssignmentName(ASSIGNMENT_NO_SPACE);¶        configWriter.setController(IGraderConfigWriter.HEADLESS_GRADING_MANAGER);¶        configWriter.setPath(base.toString());¶        configWriter.setStartOnyen(ONYEN);¶        configWriter.setEndOnyen(ONYEN);¶        configWriter.setCourseName(COURSE_NAME);¶        configWriter.setLogging(IGraderConfigWriter.FEEDBACK_JSON, IGraderConfigWriter.FEEDBACK_TXT,¶                IGraderConfigWriter.LOCAL_JSON, IGraderConfigWriter.LOCAL_TXT);¶¶        return configWriter;¶    }¶¶    private static void setupGrader(Path base, IGraderConfigWriter configWriter) throws IOException {¶        Files.createDirectories(base.resolve(ASSIGNMENT_DATA_FOLDER).resolve(ASSIGNMENT_NO_SPACE));¶        Path configDir = base.resolve(GRADER_CONFIG_FOLDER);¶        Files.createDirectories(configDir);¶        Path configFilePath = configDir.resolve(GRADER_CONFIG_NAME);¶        if (Files.notExists(configFilePath)) {¶        	configWriter.write(configFilePath);¶        }¶    }¶¶    private static void buildRunScript(Path base, IGraderConfigWriter configWriter) throws IOException {¶"), Diff(INSERT,"//"), Diff(EQUAL,"        StringBuilder sb = new StringBuilder();¶"), Diff(INSERT,"//"), Diff(EQUAL,"        sb.append("#! ").append(EXECUTION_SHELL).append("\n");¶"), Diff(INSERT,"//"), Diff(EQUAL,"        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);¶"), Diff(INSERT,"//"), Diff(EQUAL,"        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));¶"), Diff(INSERT,"//"), Diff(EQUAL,"        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");¶"), Diff(INSERT,"//        sb.append("cd ").append(base).append("\n");¶//        sb.append("java ").append("-cp ").append(CLASSPATH);¶//        sb.append(" ").append(GRADER_MAIN_CLASS);¶//        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));¶//        sb.append("\n");¶    	StringBuilder sb = new StringBuilder();¶        sb.append("#! ").append(EXECUTION_SHELL).append("\n");¶        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);¶        sb.append("echo \"submission attachments dir\"\n");¶        sb.append("ls \"").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\"\n");¶        sb.append("echo \"submission dir\"\n");¶        sb.append("ls \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");¶        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));¶        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");¶        sb.append("echo \"submission attachments dir\"\n");¶        sb.append("ls \"").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\"\n");¶"), Diff(EQUAL,"        sb.append("cd ").append(base).append("\n");¶        sb.append("java ").append("-cp ").append(CLASSPATH);¶        sb.append(" ").append(GRADER_MAIN_CLASS);¶        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));¶        sb.append("\n");¶¶        Path graderResultFile = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY).resolve(GRADER_RESULT_DIR).resolve(GRADER_JSON_FILE);¶        Path gradescopeResultFile = Paths.get(ROOT_DIRECOTRY, GRADESCOPE_RESULT_DIR, GRADESCOPE_JSON_FILE);¶¶        sb.append("java -jar ").append(RESULT_FILE_PROCESSOR)¶                .append(" \"").append(graderResultFile.toString())¶                .append("\" \"").append(gradescopeResultFile.toString()).append("\"");¶¶        Files.write(base.resolve(GRADER_SCRIPT_NAME), sb.toString().getBytes());¶    }¶¶    private static void buildDirectories(Path base) throws IOException {¶        Files.createDirectories(base);¶        Path userDir = base.resolve(USER_DIRECTORY);¶        Files.createDirectories(userDir);¶        Files.createDirectories(userDir.resolve(FEEDBACK_DIRECOTRY));¶        Files.createDirectories(userDir.resolve(SUBMISSION_DIRECOTRY));¶    }¶¶    private static void buildFiles(Path base) throws IOException {¶        Path gradeSpreadsheet = base.resolve(GRADE_SPREADSHEET);¶        Files.deleteIfExists(gradeSpreadsheet);¶        Files.createFile(gradeSpreadsheet);¶        writeGradeSpreadsheet(gradeSpreadsheet);¶        Path userDir = base.resolve(USER_DIRECTORY);¶        createTimestamp(userDir);¶//        copyAll(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION), userDir.resolve(SUBMISSION_DIRECOTRY));¶    }¶¶    private static void writeGradeSpreadsheet(Path file) throws IOException {¶        List<String> lines = new ArrayList<>();¶        lines.add(ASSIGNMENT + ",Points,,,");¶        lines.add(",,,,");¶        lines.add("Display ID,ID,Last Name,First Name,grade");¶        lines.add(ONYEN + "," + ONYEN + "," + LAST_NAME + "," + FIRST_NAME + ",0.0");¶        Files.write(file, lines);¶    }¶¶    private static void createTimestamp(Path userDir) throws IOException {¶        String rawTimestamp = getRawTimestamp();¶        TemporalAccessor gradescopeTimestamp = SOURCE_DATE_TIME_FORMATTER.parse(rawTimestamp);¶        String sakaiTimestamp = TARGET_DATE_TIME_FORMATTER.format(gradescopeTimestamp);¶        Files.write(userDir.resolve(TIMESTAMP_FILE), sakaiTimestamp.getBytes());¶    }¶¶    private static String getRawTimestamp() throws IOException {¶        Path metadataFile = Paths.get(METADATA_FILE_LOCATION, METADATA_FILE);¶¶        StringBuilder sb = new StringBuilder();¶        Files.readAllLines(metadataFile).forEach(line -> sb.append(line).append("\n"));¶¶        JSONObject metadata = new JSONObject(sb.toString());¶        return metadata.getString("created_at");¶    }¶¶    private static void purge(Path root) throws IOException {¶        Files.walkFileTree(root, new FileVisitor<Path>() {¶¶            @Override¶            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {¶                Files.deleteIfExists(file);¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {¶                return FileVisitResult.TERMINATE;¶            }¶¶            @Override¶            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {¶                Files.deleteIfExists(dir);¶                return FileVisitResult.CONTINUE;¶            }¶¶        });¶    }¶¶    private static void copyAll(Path source, Path dest) throws IOException {¶    	System.out.println("COPY FROM: " + source.toString() + " TO: " + dest.toString());¶        Files.walkFileTree(source, new FileVisitor<Path>() {¶¶            @Override¶            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {¶                System.out.println("DIR START: " + dir.toString());¶            	Path relative = source.relativize(dir);¶                Files.createDirectories(dest.resolve(relative));¶                System.out.println("    save as " + dest.resolve(relative));¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {¶            	System.out.println("FILE: " + file.toString());¶                Path relative = source.relativize(file);¶                Files.copy(file, dest.resolve(relative));¶                System.out.println("    save as " + dest.resolve(relative));¶                return FileVisitResult.CONTINUE;¶            }¶¶            @Override¶            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {¶            	System.out.println("FILE ERR: " + file.toString());¶                return FileVisitResult.TERMINATE;¶            }¶¶            @Override¶            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {¶            	System.out.println("DIR END: " + dir.toString());¶                return FileVisitResult.CONTINUE;¶            }¶¶        });¶    }¶}¶")]]]></diff>
+    <snapshot><![CDATA[package edu.unc.cs;
+
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.json.JSONObject;
+
+public class AssignmentSetup {
+
+//    private static final String DEFAULT_COURSE_NAME = "COMP401F18";
+    private static final String DEFAULT_COURSE_NAME = "COMP524F20";
+
+    private static final int DEFAULT_ASSINGMENT_NUMBER = 1;
+    private static final String DEFAULT_ASSINGMENT_NUMBER_STRING = "1";
+
+    private static String COURSE_NAME;
+    private static String ASSIGNMENT;
+    private static String ASSIGNMENT_NO_SPACE;
+
+    private static final String PATH_SEPARATOR = System.getProperty("path.separator");
+
+    private static final String ROOT_DIRECOTRY = Paths.get(".").toAbsolutePath().getRoot().resolve("autograder").toString();
+//    private static final String ROOT_DIRECOTRY = ".";
+
+    private static final String GRADER_SOURCE_DIRECTORY = "source";
+
+//    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp401Driver";
+    private static final String GRADER_MAIN_CLASS = "gradingTools.Comp524Driver";
+
+//    private static final String GRADER_JAR_FILE = "comp401-grader-11.12-jar-with-dependencies.jar";
+    private static final String GRADER_JAR_FILE = "Comp524GraderAll.jar";
+
+//    private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();
+    private static final String GRADER_JAR_PATH = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, GRADER_JAR_FILE).toString();
+
+    private static final String CLASSPATH_EXTRA = "";
+//    private static String CLASSPATH = "." + (CLASSPATH_EXTRA.isEmpty() ?? "" : PATH_SEPARATOR + CLASSPATH_EXTRA);
+    private static final String CLASSPATH = "." + PATH_SEPARATOR + GRADER_JAR_PATH
+            + (CLASSPATH_EXTRA.isEmpty() ? "" : PATH_SEPARATOR + CLASSPATH_EXTRA)
+            + (System.getProperty("java.class.path").isEmpty() ? "" : PATH_SEPARATOR + System.getProperty("java.class.path"));
+
+    private static final String GRADER_SCRIPT_NAME = "run-grader";
+
+    private static String ONYEN = "student";
+    private static String FIRST_NAME = "me";
+    private static String LAST_NAME = "grade";
+    private static final String USER_DIRECTORY = LAST_NAME + ", " + FIRST_NAME + "(" + ONYEN + ")";
+
+    private static final String FEEDBACK_DIRECOTRY = "Feedback Attachment(s)";
+    private static final String SUBMISSION_DIRECOTRY = "Submission attachment(s)";
+
+    private static final String GRADE_SPREADSHEET = "grades.csv";
+    private static final String TIMESTAMP_FILE = "timestamp.txt";
+
+    private static final String GRADER_DIRECTORY = "graderProgram";
+    private static final String GRADER_CONFIG_FOLDER = "config";
+    private static final String GRADER_CONFIG_NAME = "config.properties";
+
+    private static final String ASSIGNMENT_DATA_FOLDER = "log/AssignmentData";
+
+    private static final String SUBMISSION_LOCATION = "submission";
+    private static final String SUBMISSION_ARCHIVE_NAME = "submission.zip";
+
+    private static final String RESULT_FILE_PROCESSOR = "GradescopeRunner.jar";
+    private static final String GRADESCOPE_RESULT_DIR = "results";
+    private static final String GRADESCOPE_JSON_FILE = "results.json";
+
+    private static final String GRADER_RESULT_DIR = FEEDBACK_DIRECOTRY;
+    private static final String GRADER_JSON_FILE = "results.json";
+
+    private static final String METADATA_FILE_LOCATION = ROOT_DIRECOTRY;
+//    private static final String METADATA_FILE_LOCATION = "metadata";
+
+    private static final String METADATA_FILE = "submission_metadata.json";
+
+    private static final String EXECUTION_SHELL = "/bin/bash";
+
+    private static final DateTimeFormatter SOURCE_DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
+    private static final DateTimeFormatter TARGET_DATE_TIME_FORMATTER = DateTimeFormatter
+            .ofPattern("yyyyMMddHHmmssSSS");
+
+    static {
+//        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER);
+        setAssignment(DEFAULT_COURSE_NAME, DEFAULT_ASSINGMENT_NUMBER_STRING);
+
+    }
+
+    public static void main(String[] args) {
+//    	System.out.println("classpath: " + System.getProperty("java.class.path"));
+//    	CLASSPATH += (System.getProperty("java.class.path").isEmpty() ? "" : PATH_SEPARATOR + System.getProperty("java.class.path"));
+        if (args.length == 2) {
+            COURSE_NAME = args[0];
+            try {
+//                int assignmentNum = Integer.parseInt(args[1]);
+//                setAssignment(args[0], assignmentNum);
+                setAssignment(args[0], args[1]);
+
+            } catch (NumberFormatException e) {
+                System.err.println("Argument 2 is not a number, defaulting to " + COURSE_NAME + " " + DEFAULT_ASSINGMENT_NUMBER);
+            }
+        }
+        Path testBase = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY, ASSIGNMENT_NO_SPACE);
+        Path graderBase = Paths.get(ROOT_DIRECOTRY, GRADER_SOURCE_DIRECTORY);
+        try {
+            purge(testBase);
+            buildDirectories(testBase);
+            buildFiles(testBase);
+
+            IGraderConfigWriter configWriter = buildConfigWriter(testBase);
+            setupGrader(graderBase, configWriter);
+            buildRunScript(graderBase, configWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void setAssignment(String name, int number) {
+        COURSE_NAME = name;
+        ASSIGNMENT = "Assignment " + number;
+        ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");
+    }
+    private static void setAssignment(String name, String number) {
+        COURSE_NAME = name;
+        ASSIGNMENT = "Assignment " + number;
+        ASSIGNMENT_NO_SPACE = ASSIGNMENT.replaceAll(" ", "");
+    }
+
+    private static IGraderConfigWriter buildConfigWriter(Path base) {
+        IGraderConfigWriter configWriter = new GraderConfigWriter();
+        configWriter.setAssignmentName(ASSIGNMENT_NO_SPACE);
+        configWriter.setController(IGraderConfigWriter.HEADLESS_GRADING_MANAGER);
+        configWriter.setPath(base.toString());
+        configWriter.setStartOnyen(ONYEN);
+        configWriter.setEndOnyen(ONYEN);
+        configWriter.setCourseName(COURSE_NAME);
+        configWriter.setLogging(IGraderConfigWriter.FEEDBACK_JSON, IGraderConfigWriter.FEEDBACK_TXT,
+                IGraderConfigWriter.LOCAL_JSON, IGraderConfigWriter.LOCAL_TXT);
+
+        return configWriter;
+    }
+
+    private static void setupGrader(Path base, IGraderConfigWriter configWriter) throws IOException {
+        Files.createDirectories(base.resolve(ASSIGNMENT_DATA_FOLDER).resolve(ASSIGNMENT_NO_SPACE));
+        Path configDir = base.resolve(GRADER_CONFIG_FOLDER);
+        Files.createDirectories(configDir);
+        Path configFilePath = configDir.resolve(GRADER_CONFIG_NAME);
+        if (Files.notExists(configFilePath)) {
+        	configWriter.write(configFilePath);
+        }
+    }
+
+    private static void buildRunScript(Path base, IGraderConfigWriter configWriter) throws IOException {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append("#! ").append(EXECUTION_SHELL).append("\n");
+//        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);
+//        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));
+//        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
+//        sb.append("cd ").append(base).append("\n");
+//        sb.append("java ").append("-cp ").append(CLASSPATH);
+//        sb.append(" ").append(GRADER_MAIN_CLASS);
+//        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));
+//        sb.append("\n");
+    	StringBuilder sb = new StringBuilder();
+        sb.append("#! ").append(EXECUTION_SHELL).append("\n");
+        Path userDir = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY);
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls \"").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\"\n");
+        sb.append("echo \"submission dir\"\n");
+        sb.append("ls \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
+        sb.append("zip -r \"").append(userDir.resolve(SUBMISSION_DIRECOTRY).resolve(SUBMISSION_ARCHIVE_NAME));
+        sb.append("\" \"").append(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION)).append("\"\n");
+        sb.append("echo \"submission attachments dir\"\n");
+        sb.append("ls \"").append(userDir.resolve(SUBMISSION_DIRECOTRY)).append("\"\n");
+        sb.append("cd ").append(base).append("\n");
+        sb.append("java ").append("-cp ").append(CLASSPATH);
+        sb.append(" ").append(GRADER_MAIN_CLASS);
+        Arrays.stream(configWriter.getCommandArgs()).forEach(arg -> sb.append(' ').append(arg));
+        sb.append("\n");
+
+        Path graderResultFile = base.resolve(ASSIGNMENT_NO_SPACE).resolve(USER_DIRECTORY).resolve(GRADER_RESULT_DIR).resolve(GRADER_JSON_FILE);
+        Path gradescopeResultFile = Paths.get(ROOT_DIRECOTRY, GRADESCOPE_RESULT_DIR, GRADESCOPE_JSON_FILE);
+
+        sb.append("java -jar ").append(RESULT_FILE_PROCESSOR)
+                .append(" \"").append(graderResultFile.toString())
+                .append("\" \"").append(gradescopeResultFile.toString()).append("\"");
+
+        Files.write(base.resolve(GRADER_SCRIPT_NAME), sb.toString().getBytes());
+    }
+
+    private static void buildDirectories(Path base) throws IOException {
+        Files.createDirectories(base);
+        Path userDir = base.resolve(USER_DIRECTORY);
+        Files.createDirectories(userDir);
+        Files.createDirectories(userDir.resolve(FEEDBACK_DIRECOTRY));
+        Files.createDirectories(userDir.resolve(SUBMISSION_DIRECOTRY));
+    }
+
+    private static void buildFiles(Path base) throws IOException {
+        Path gradeSpreadsheet = base.resolve(GRADE_SPREADSHEET);
+        Files.deleteIfExists(gradeSpreadsheet);
+        Files.createFile(gradeSpreadsheet);
+        writeGradeSpreadsheet(gradeSpreadsheet);
+        Path userDir = base.resolve(USER_DIRECTORY);
+        createTimestamp(userDir);
+//        copyAll(Paths.get(ROOT_DIRECOTRY, SUBMISSION_LOCATION), userDir.resolve(SUBMISSION_DIRECOTRY));
+    }
+
+    private static void writeGradeSpreadsheet(Path file) throws IOException {
+        List<String> lines = new ArrayList<>();
+        lines.add(ASSIGNMENT + ",Points,,,");
+        lines.add(",,,,");
+        lines.add("Display ID,ID,Last Name,First Name,grade");
+        lines.add(ONYEN + "," + ONYEN + "," + LAST_NAME + "," + FIRST_NAME + ",0.0");
+        Files.write(file, lines);
+    }
+
+    private static void createTimestamp(Path userDir) throws IOException {
+        String rawTimestamp = getRawTimestamp();
+        TemporalAccessor gradescopeTimestamp = SOURCE_DATE_TIME_FORMATTER.parse(rawTimestamp);
+        String sakaiTimestamp = TARGET_DATE_TIME_FORMATTER.format(gradescopeTimestamp);
+        Files.write(userDir.resolve(TIMESTAMP_FILE), sakaiTimestamp.getBytes());
+    }
+
+    private static String getRawTimestamp() throws IOException {
+        Path metadataFile = Paths.get(METADATA_FILE_LOCATION, METADATA_FILE);
+
+        StringBuilder sb = new StringBuilder();
+        Files.readAllLines(metadataFile).forEach(line -> sb.append(line).append("\n"));
+
+        JSONObject metadata = new JSONObject(sb.toString());
+        return metadata.getString("created_at");
+    }
+
+    private static void purge(Path root) throws IOException {
+        Files.walkFileTree(root, new FileVisitor<Path>() {
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Files.deleteIfExists(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                return FileVisitResult.TERMINATE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                Files.deleteIfExists(dir);
+                return FileVisitResult.CONTINUE;
+            }
+
+        });
+    }
+
+    private static void copyAll(Path source, Path dest) throws IOException {
+    	System.out.println("COPY FROM: " + source.toString() + " TO: " + dest.toString());
+        Files.walkFileTree(source, new FileVisitor<Path>() {
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                System.out.println("DIR START: " + dir.toString());
+            	Path relative = source.relativize(dir);
+                Files.createDirectories(dest.resolve(relative));
+                System.out.println("    save as " + dest.resolve(relative));
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+            	System.out.println("FILE: " + file.toString());
+                Path relative = source.relativize(file);
+                Files.copy(file, dest.resolve(relative));
+                System.out.println("    save as " + dest.resolve(relative));
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+            	System.out.println("FILE ERR: " + file.toString());
+                return FileVisitResult.TERMINATE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+            	System.out.println("DIR END: " + dir.toString());
+                return FileVisitResult.CONTINUE;
+            }
+
+        });
+    }
+}
+]]></snapshot>
+  </Command>
+  <DocumentChange __id="1826" _type="Insert" date="Tue Aug 25 20:02:14 EDT 2020" docASTNodeCount="1674" docActiveCodeLength="12909" docExpressionCount="1083" docLength="14740" length="6" offset="4330" starttimestamp="1598391145740" timestamp="8988763">
+    <text><![CDATA[
+    ]]></text>
+  </DocumentChange>
+  <Command __id="1824" _type="MoveCaretCommand" caretOffset="3883" date="Tue Aug 25 20:02:13 EDT 2020" docOffset="4330" starttimestamp="1598391145740" timestamp="8988195" />
+  <Command __id="1825" _type="MoveCaretCommand" caretOffset="3883" date="Tue Aug 25 20:02:13 EDT 2020" docOffset="4330" starttimestamp="1598391145740" timestamp="8988196" />
+  <Command __id="1827" _type="InsertStringCommand" date="Tue Aug 25 20:02:14 EDT 2020" starttimestamp="1598391145740" timestamp="8988771" timestamp2="8988771">
+    <data><![CDATA[]]></data>
+  </Command>
+  <Command __id="1828" _type="InsertStringCommand" date="Tue Aug 25 20:02:14 EDT 2020" starttimestamp="1598391145740" timestamp="8988771" timestamp2="8988771">
+    <data><![CDATA[]]></data>
+  </Command>
+  <Command __id="1830" _type="PasteCommand" date="Tue Aug 25 20:02:16 EDT 2020" starttimestamp="1598391145740" timestamp="8990709" />
+  <Command __id="1831" _type="SelectTextCommand" caretOffset="3882" date="Tue Aug 25 20:02:17 EDT 2020" end="3883" start="3882" starttimestamp="1598391145740" timestamp="8992082" />
+  <Command __id="1832" _type="SelectTextCommand" caretOffset="3882" date="Tue Aug 25 20:02:17 EDT 2020" end="3883" start="3882" starttimestamp="1598391145740" timestamp="8992082" />
+  <Command __id="1838" _type="EclipseCommand" commandID="" date="Tue Aug 25 20:02:21 EDT 2020" starttimestamp="1598391145740" timestamp="8995440" />
+  <Command __id="1839" _type="EclipseCommand" commandID="org.eclipse.ui.file.save" date="Tue Aug 25 20:02:21 EDT 2020" starttimestamp="1598391145740" timestamp="8995516" />
+  <Command __id="1840" _type="EclipseCommand" commandID="" date="Tue Aug 25 20:02:21 EDT 2020" starttimestamp="1598391145740" timestamp="8995573" />
+  <Command __id="1841" _type="ShellCommand" date="Tue Aug 25 20:02:26 EDT 2020" starttimestamp="1598391145740" timestamp="9000590" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="1842" _type="ShellCommand" date="Tue Aug 25 20:02:27 EDT 2020" starttimestamp="1598391145740" timestamp="9001831" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="1843" _type="MoveCaretCommand" caretOffset="3574" date="Tue Aug 25 20:02:27 EDT 2020" docOffset="4021" starttimestamp="1598391145740" timestamp="9002164" />
+  <Command __id="1844" _type="MoveCaretCommand" caretOffset="3574" date="Tue Aug 25 20:02:27 EDT 2020" docOffset="4021" starttimestamp="1598391145740" timestamp="9002170" />
+  <Command __id="1845" _type="ShellCommand" date="Tue Aug 25 20:02:30 EDT 2020" starttimestamp="1598391145740" timestamp="9004345" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="1846" _type="ShellCommand" date="Tue Aug 25 20:02:46 EDT 2020" starttimestamp="1598391145740" timestamp="9020942" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="1847" _type="MoveCaretCommand" caretOffset="4024" date="Tue Aug 25 20:02:46 EDT 2020" docOffset="4471" starttimestamp="1598391145740" timestamp="9021049" />
+  <Command __id="1848" _type="MoveCaretCommand" caretOffset="4024" date="Tue Aug 25 20:02:46 EDT 2020" docOffset="4471" starttimestamp="1598391145740" timestamp="9021049" />
+  <Command __id="1849" _type="MoveCaretCommand" caretOffset="4039" date="Tue Aug 25 20:02:49 EDT 2020" docOffset="4486" starttimestamp="1598391145740" timestamp="9023284" />
+  <Command __id="1850" _type="MoveCaretCommand" caretOffset="4039" date="Tue Aug 25 20:02:49 EDT 2020" docOffset="4486" starttimestamp="1598391145740" timestamp="9023284" />
+  <Command __id="1852" _type="EclipseCommand" commandID="eventLogger.styledTextCommand.DELETE_PREVIOUS" date="Tue Aug 25 20:02:49 EDT 2020" starttimestamp="1598391145740" timestamp="9023866" />
+  <Command __id="1853" _type="EclipseCommand" commandID="eventLogger.styledTextCommand.DELETE_PREVIOUS" date="Tue Aug 25 20:02:49 EDT 2020" starttimestamp="1598391145740" timestamp="9023866" />
+  <Command __id="1854" _type="AssistCommand" assist_type="CONTENT_ASSIST" auto_activated="false" date="Tue Aug 25 20:02:50 EDT 2020" start_end="START" starttimestamp="1598391145740" timestamp="9024602" />
+  <Command __id="1855" _type="EclipseCommand" commandID="org.eclipse.ui.edit.text.contentAssist.proposals" date="Tue Aug 25 20:02:50 EDT 2020" starttimestamp="1598391145740" timestamp="9024853" />
+  <Command __id="1856" _type="ShellCommand" date="Tue Aug 25 20:02:52 EDT 2020" starttimestamp="1598391145740" timestamp="9026782" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="1857" _type="ShellCommand" date="Tue Aug 25 20:02:52 EDT 2020" starttimestamp="1598391145740" timestamp="9026944" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="1858" _type="AssistCommand" assist_type="CONTENT_ASSIST" auto_activated="false" date="Tue Aug 25 20:02:52 EDT 2020" start_end="END" starttimestamp="1598391145740" timestamp="9027039" />
+  <Command __id="1862" _type="MoveCaretCommand" caretOffset="4039" date="Tue Aug 25 20:02:52 EDT 2020" docOffset="4512" starttimestamp="1598391145740" timestamp="9027095" />
+  <Command __id="1863" _type="MoveCaretCommand" caretOffset="4039" date="Tue Aug 25 20:02:52 EDT 2020" docOffset="4512" starttimestamp="1598391145740" timestamp="9027096" />
+  <Command __id="1864" _type="EclipseCommand" commandID="org.eclipse.ui.file.save" date="Tue Aug 25 20:02:54 EDT 2020" starttimestamp="1598391145740" timestamp="9029045" />
+  <Command __id="1865" _type="EclipseCommand" commandID="" date="Tue Aug 25 20:02:54 EDT 2020" starttimestamp="1598391145740" timestamp="9029138" />
+  <Command __id="1866" _type="EclipseCommand" commandID="" date="Tue Aug 25 20:02:54 EDT 2020" starttimestamp="1598391145740" timestamp="9029171" />
+  <Command __id="1867" _type="ShellCommand" date="Tue Aug 25 20:03:08 EDT 2020" starttimestamp="1598391145740" timestamp="9042291" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="1868" _type="ShellCommand" date="Tue Aug 25 20:03:09 EDT 2020" starttimestamp="1598391145740" timestamp="9044154" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="1869" _type="MoveCaretCommand" caretOffset="4063" date="Tue Aug 25 20:03:13 EDT 2020" docOffset="4536" starttimestamp="1598391145740" timestamp="9048157" />
+  <Command __id="1870" _type="MoveCaretCommand" caretOffset="4063" date="Tue Aug 25 20:03:13 EDT 2020" docOffset="4536" starttimestamp="1598391145740" timestamp="9048157" />
+  <Command __id="1872" _type="InsertStringCommand" date="Tue Aug 25 20:03:14 EDT 2020" starttimestamp="1598391145740" timestamp="9049153" timestamp2="9049153">
+    <data><![CDATA[;]]></data>
+  </Command>
+  <Command __id="1873" _type="InsertStringCommand" date="Tue Aug 25 20:03:14 EDT 2020" starttimestamp="1598391145740" timestamp="9049153" timestamp2="9049153">
+    <data><![CDATA[;]]></data>
+  </Command>
+  <Command __id="1874" _type="EclipseCommand" commandID="org.eclipse.ui.file.save" date="Tue Aug 25 20:03:16 EDT 2020" starttimestamp="1598391145740" timestamp="9050677" />
+  <Command __id="1875" _type="EclipseCommand" commandID="" date="Tue Aug 25 20:03:16 EDT 2020" starttimestamp="1598391145740" timestamp="9050815" />
+  <Command __id="1876" _type="EclipseCommand" commandID="" date="Tue Aug 25 20:03:16 EDT 2020" starttimestamp="1598391145740" timestamp="9050890" />
+  <Command __id="1877" _type="MoveCaretCommand" caretOffset="3966" date="Tue Aug 25 20:03:18 EDT 2020" docOffset="4439" starttimestamp="1598391145740" timestamp="9052689" />
+  <Command __id="1878" _type="MoveCaretCommand" caretOffset="3966" date="Tue Aug 25 20:03:18 EDT 2020" docOffset="4439" starttimestamp="1598391145740" timestamp="9052689" />
+  <Command __id="1886" _type="RunCommand" date="Tue Aug 25 20:03:33 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="9067957" type="Run" />
+  <Command __id="1887" _type="RunCommand" date="Tue Aug 25 20:03:33 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="9067957" type="Run" />
+  <Command __id="1888" _type="RunCommand" date="Tue Aug 25 20:03:34 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="9068301" type="Debug" />
+  <Command __id="1889" _type="RunCommand" date="Tue Aug 25 20:03:34 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="9068302" type="Run" />
+  <Command __id="1890" _type="RunCommand" date="Tue Aug 25 20:03:34 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1598391145740" timestamp="9068302" type="Debug" />
+  <Command __id="1891" _type="RunCommand" date="Tue Aug 25 20:03:34 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1598391145740" timestamp="9068302" type="Run" />
+  <Command __id="1892" _type="ShellCommand" date="Tue Aug 25 20:03:42 EDT 2020" starttimestamp="1598391145740" timestamp="9076576" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="1893" _type="ShellCommand" date="Tue Aug 25 20:04:09 EDT 2020" starttimestamp="1598391145740" timestamp="9103318" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="1894" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Tue Aug 25 20:04:09 EDT 2020" starttimestamp="1598391145740" timestamp="9103352" />
+  <Command __id="1895" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Tue Aug 25 20:04:09 EDT 2020" starttimestamp="1598391145740" timestamp="9103352" />
+  <Command __id="1896" _type="ShellCommand" date="Tue Aug 25 20:04:12 EDT 2020" starttimestamp="1598391145740" timestamp="9107071" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15308" _type="ShellCommand" date="Sat Aug 29 08:47:17 EDT 2020" starttimestamp="1598391145740" timestamp="314091399" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15309" _type="ShellCommand" date="Sat Aug 29 08:47:41 EDT 2020" starttimestamp="1598391145740" timestamp="314115997" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15310" _type="ShellCommand" date="Sat Aug 29 08:48:27 EDT 2020" starttimestamp="1598391145740" timestamp="314161826" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15311" _type="EclipseCommand" commandID="org.eclipse.egit.ui.team.Commit" date="Sat Aug 29 08:48:27 EDT 2020" starttimestamp="1598391145740" timestamp="314161854" />
+  <Command __id="15312" _type="ShellCommand" date="Sat Aug 29 08:48:29 EDT 2020" starttimestamp="1598391145740" timestamp="314163558" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15313" _type="ShellCommand" date="Sat Aug 29 08:48:32 EDT 2020" starttimestamp="1598391145740" timestamp="314166471" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15315" _type="EclipseCommand" commandID="" date="Sat Aug 29 08:48:41 EDT 2020" starttimestamp="1598391145740" timestamp="314175720" />
+  <Command __id="15316" _type="EclipseCommand" commandID="" date="Sat Aug 29 08:48:41 EDT 2020" starttimestamp="1598391145740" timestamp="314175725" />
+  <Command __id="15317" _type="ShellCommand" date="Sat Aug 29 08:48:41 EDT 2020" starttimestamp="1598391145740" timestamp="314175807" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15318" _type="EclipseCommand" commandID="" date="Sat Aug 29 08:48:41 EDT 2020" starttimestamp="1598391145740" timestamp="314175984" />
+  <Command __id="15319" _type="EclipseCommand" commandID="" date="Sat Aug 29 08:48:41 EDT 2020" starttimestamp="1598391145740" timestamp="314175984" />
+  <Command __id="15320" _type="ShellCommand" date="Sat Aug 29 08:48:45 EDT 2020" starttimestamp="1598391145740" timestamp="314179460" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15321" _type="ShellCommand" date="Sat Aug 29 08:48:49 EDT 2020" starttimestamp="1598391145740" timestamp="314183580" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15322" _type="ShellCommand" date="Sat Aug 29 08:49:02 EDT 2020" starttimestamp="1598391145740" timestamp="314196268" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15323" _type="EclipseCommand" commandID="org.eclipse.egit.ui.team.Commit" date="Sat Aug 29 08:49:02 EDT 2020" starttimestamp="1598391145740" timestamp="314196313" />
+  <Command __id="15324" _type="ShellCommand" date="Sat Aug 29 08:49:08 EDT 2020" starttimestamp="1598391145740" timestamp="314202636" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15325" _type="ShellCommand" date="Sat Aug 29 08:49:10 EDT 2020" starttimestamp="1598391145740" timestamp="314204956" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15326" _type="EclipseCommand" commandID="org.eclipse.egit.ui.team.Commit" date="Sat Aug 29 08:49:10 EDT 2020" starttimestamp="1598391145740" timestamp="314204982" />
+  <Command __id="15327" _type="EclipseCommand" commandID="org.eclipse.egit.ui.team.SimplePush" date="Sat Aug 29 08:49:19 EDT 2020" starttimestamp="1598391145740" timestamp="314213646" />
+  <Command __id="15328" _type="ShellCommand" date="Sat Aug 29 08:49:22 EDT 2020" starttimestamp="1598391145740" timestamp="314216895" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15329" _type="ShellCommand" date="Sat Aug 29 08:49:27 EDT 2020" starttimestamp="1598391145740" timestamp="314221265" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15330" _type="ShellCommand" date="Sat Aug 29 08:50:19 EDT 2020" starttimestamp="1598391145740" timestamp="314273522" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15331" _type="ShellCommand" date="Sat Aug 29 08:51:57 EDT 2020" starttimestamp="1598391145740" timestamp="314371298" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15332" _type="EclipseCommand" commandID="org.eclipse.egit.ui.team.Commit" date="Sat Aug 29 08:51:57 EDT 2020" starttimestamp="1598391145740" timestamp="314371357" />
+  <Command __id="15333" _type="ShellCommand" date="Sat Aug 29 08:51:57 EDT 2020" starttimestamp="1598391145740" timestamp="314371825" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="15334" _type="ShellCommand" date="Sat Aug 29 08:52:01 EDT 2020" starttimestamp="1598391145740" timestamp="314375268" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15336" _type="EclipseCommand" commandID="" date="Sat Aug 29 08:52:18 EDT 2020" starttimestamp="1598391145740" timestamp="314392495" />
+  <Command __id="15337" _type="EclipseCommand" commandID="" date="Sat Aug 29 08:52:18 EDT 2020" starttimestamp="1598391145740" timestamp="314392496" />
+  <Command __id="15338" _type="ShellCommand" date="Sat Aug 29 08:53:42 EDT 2020" starttimestamp="1598391145740" timestamp="314477186" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15339" _type="EclipseCommand" commandID="org.eclipse.egit.ui.team.Commit" date="Sat Aug 29 08:53:43 EDT 2020" starttimestamp="1598391145740" timestamp="314477271" />
+  <Command __id="15340" _type="ShellCommand" date="Sat Aug 29 08:53:51 EDT 2020" starttimestamp="1598391145740" timestamp="314485492" type="ECLIPSE_LOST_FOCUS" />
+  <DocumentChange __id="15288" _type="Insert" date="Fri Aug 28 21:22:08 EDT 2020" docASTNodeCount="607" docActiveCodeLength="4646" docExpressionCount="330" docLength="7880" length="1" offset="4960" starttimestamp="1598391145740" timestamp="272982549">
+    <text><![CDATA[U]]></text>
+  </DocumentChange>
+  <DocumentChange __id="15290" _type="Insert" date="Fri Aug 28 21:22:09 EDT 2020" docASTNodeCount="607" docActiveCodeLength="4647" docExpressionCount="330" docLength="7881" length="1" offset="4961" starttimestamp="1598391145740" timestamp="272983263">
+    <text><![CDATA[R]]></text>
+  </DocumentChange>
+  <DocumentChange __id="15292" _type="Insert" date="Fri Aug 28 21:22:09 EDT 2020" docASTNodeCount="607" docActiveCodeLength="4648" docExpressionCount="330" docLength="7882" length="1" offset="4962" starttimestamp="1598391145740" timestamp="272983412">
+    <text><![CDATA[A]]></text>
+  </DocumentChange>
+  <DocumentChange __id="15294" _type="Insert" date="Fri Aug 28 21:22:09 EDT 2020" docASTNodeCount="607" docActiveCodeLength="4649" docExpressionCount="330" docLength="7883" length="1" offset="4963" starttimestamp="1598391145740" timestamp="272983643">
+    <text><![CDATA[T]]></text>
+  </DocumentChange>
+  <DocumentChange __id="15296" _type="Insert" date="Fri Aug 28 21:22:10 EDT 2020" docASTNodeCount="607" docActiveCodeLength="4650" docExpressionCount="330" docLength="7884" length="1" offset="4964" starttimestamp="1598391145740" timestamp="272984448">
+    <text><![CDATA[I]]></text>
+  </DocumentChange>
+  <DocumentChange __id="15298" _type="Insert" date="Fri Aug 28 21:22:10 EDT 2020" docASTNodeCount="607" docActiveCodeLength="4651" docExpressionCount="330" docLength="7885" length="1" offset="4965" starttimestamp="1598391145740" timestamp="272984629">
+    <text><![CDATA[O]]></text>
+  </DocumentChange>
+  <DocumentChange __id="15300" _type="Insert" date="Fri Aug 28 21:22:10 EDT 2020" docASTNodeCount="607" docActiveCodeLength="4652" docExpressionCount="330" docLength="7886" length="1" offset="4966" starttimestamp="1598391145740" timestamp="272984863">
+    <text><![CDATA[N]]></text>
+  </DocumentChange>
+  <Command __id="15341" _type="ShellCommand" date="Sat Aug 29 08:53:53 EDT 2020" starttimestamp="1598391145740" timestamp="314487635" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="15343" _type="MoveCaretCommand" caretOffset="3966" date="Sat Aug 29 08:54:09 EDT 2020" docOffset="4439" starttimestamp="1598391145740" timestamp="314503427" />
+  <Command __id="15344" _type="ShellCommand" date="Sat Aug 29 08:56:05 EDT 2020" starttimestamp="1598391145740" timestamp="314620172" type="ECLIPSE_LOST_FOCUS" />
+</Events>

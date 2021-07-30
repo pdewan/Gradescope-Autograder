@@ -1,0 +1,180 @@
+<Events startTimestamp="1610407475207" logVersion="1.0.0.202010301544">
+  <Command __id="12283" _type="ShellCommand" date="Wed Jan 13 15:30:26 EST 2021" starttimestamp="1610407475207" timestamp="162351087" type="ECLIPSE_MAXIMIZED" />
+  <Command __id="12284" _type="ShellCommand" date="Wed Jan 13 15:30:26 EST 2021" starttimestamp="1610407475207" timestamp="162351181" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12285" _type="ShellCommand" date="Wed Jan 13 15:31:00 EST 2021" starttimestamp="1610407475207" timestamp="162385755" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12238" _type="DiffBasedFileOpenCommand" date="Wed Jan 13 14:39:24 EST 2021" docASTNodeCount="32" docActiveCodeLength="224" docExpressionCount="16" docLength="273" projectName="ExportComp533Grader" starttimestamp="1610407475207" timestamp="159288803">
+    <filePath><![CDATA[D:\dewan_backup\Java\eclipse\ExportComp533Grader\src\test\ExportMain.java]]></filePath>
+    <diff><![CDATA[[Diff(EQUAL,"package test;¶¶import gradingTools.Comp524Driver;¶"), Diff(INSERT,"import gradingTools.Comp533Driver;¶"), Diff(EQUAL,"import main.*;¶¶public class ExportMain {¶	public static void main (String[] args) {¶//		Main.main(args);¶"), Diff(INSERT,"//"), Diff(EQUAL,"		Comp524Driver.main(args);¶"), Diff(INSERT,"		Comp533Driver.main(args);¶¶"), Diff(EQUAL,"		¶	}¶}¶")]]]></diff>
+    <snapshot><![CDATA[package test;
+
+import gradingTools.Comp524Driver;
+import gradingTools.Comp533Driver;
+import main.*;
+
+public class ExportMain {
+	public static void main (String[] args) {
+//		Main.main(args);
+//		Comp524Driver.main(args);
+		Comp533Driver.main(args);
+
+		
+	}
+}
+]]></snapshot>
+  </Command>
+  <DocumentChange __id="12242" _type="Delete" date="Wed Jan 13 14:39:29 EST 2021" docASTNodeCount="37" docActiveCodeLength="251" docExpressionCount="20" docLength="271" endLine="9" length="2" offset="200" startLine="9" starttimestamp="1610407475207" timestamp="159294599">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="12245" _type="Insert" date="Wed Jan 13 14:39:32 EST 2021" docASTNodeCount="32" docActiveCodeLength="224" docExpressionCount="16" docLength="273" length="2" offset="229" starttimestamp="1610407475207" timestamp="159297306">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <Command __id="12286" _type="ShellCommand" date="Wed Jan 13 15:31:08 EST 2021" starttimestamp="1610407475207" timestamp="162393722" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12287" _type="EclipseCommand" commandID="org.eclipse.ui.project.properties" date="Wed Jan 13 15:31:08 EST 2021" starttimestamp="1610407475207" timestamp="162393753" />
+  <Command __id="12288" _type="DiffBasedFileOpenCommand" date="Wed Jan 13 15:31:16 EST 2021" docASTNodeCount="37" docActiveCodeLength="226" docExpressionCount="18" docLength="243" projectName="GradescopeAssignmentSetup" starttimestamp="1610407475207" timestamp="162401132">
+    <filePath><![CDATA[D:\dewan_backup\Java\Gradescope-Autograder\GradescopeAssignmentSetup\src\edu\unc\cs\Comp524AssignmentSetup.java]]></filePath>
+    <diff><![CDATA[null]]></diff>
+    <snapshot><![CDATA[package edu.unc.cs;
+
+public class Comp524AssignmentSetup {
+	final static String[] MY_ARGS = {
+			"Comp524F20",
+			"02",
+//			"1"
+//			"01"
+
+	};
+	public static void main (String[] args) {
+		
+		AssignmentSetup.main(MY_ARGS);
+	}
+}
+]]></snapshot>
+  </Command>
+  <Command __id="12289" _type="MoveCaretCommand" caretOffset="0" date="Wed Jan 13 15:31:16 EST 2021" docOffset="0" starttimestamp="1610407475207" timestamp="162401289" />
+  <Command __id="12291" _type="SelectTextCommand" caretOffset="1005" date="Wed Jan 13 15:31:49 EST 2021" end="1005" start="992" starttimestamp="1610407475207" timestamp="162434758" />
+  <Command __id="12292" _type="ShellCommand" date="Wed Jan 13 15:35:09 EST 2021" starttimestamp="1610407475207" timestamp="162634177" type="ECLIPSE_MINIMIZED" />
+  <Command __id="12293" _type="ShellCommand" date="Wed Jan 13 15:35:09 EST 2021" starttimestamp="1610407475207" timestamp="162634177" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12294" _type="ShellCommand" date="Wed Jan 13 15:57:33 EST 2021" starttimestamp="1610407475207" timestamp="163978444" type="ECLIPSE_MAXIMIZED" />
+  <Command __id="12295" _type="ShellCommand" date="Wed Jan 13 15:57:33 EST 2021" starttimestamp="1610407475207" timestamp="163978522" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12296" _type="ShellCommand" date="Wed Jan 13 16:05:39 EST 2021" starttimestamp="1610407475207" timestamp="164464353" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12297" _type="ShellCommand" date="Wed Jan 13 17:46:23 EST 2021" starttimestamp="1610407475207" timestamp="170508548" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12298" _type="ShellCommand" date="Wed Jan 13 17:46:26 EST 2021" starttimestamp="1610407475207" timestamp="170511697" type="ECLIPSE_MINIMIZED" />
+  <Command __id="12299" _type="ShellCommand" date="Wed Jan 13 17:46:26 EST 2021" starttimestamp="1610407475207" timestamp="170511705" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12300" _type="ShellCommand" date="Wed Jan 13 18:13:54 EST 2021" starttimestamp="1610407475207" timestamp="172159477" type="ECLIPSE_MAXIMIZED" />
+  <Command __id="12301" _type="ShellCommand" date="Wed Jan 13 18:13:54 EST 2021" starttimestamp="1610407475207" timestamp="172159602" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12302" _type="ShellCommand" date="Wed Jan 13 18:14:05 EST 2021" starttimestamp="1610407475207" timestamp="172169867" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12303" _type="ShellCommand" date="Wed Jan 13 18:31:04 EST 2021" starttimestamp="1610407475207" timestamp="173189052" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12304" _type="ShellCommand" date="Wed Jan 13 18:31:15 EST 2021" starttimestamp="1610407475207" timestamp="173200739" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12305" _type="ShellCommand" date="Wed Jan 13 18:32:15 EST 2021" starttimestamp="1610407475207" timestamp="173260457" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12306" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Wed Jan 13 18:32:15 EST 2021" starttimestamp="1610407475207" timestamp="173260473" />
+  <Command __id="12307" _type="EclipseCommand" commandID="org.eclipse.ui.file.export" date="Wed Jan 13 18:32:15 EST 2021" starttimestamp="1610407475207" timestamp="173260473" />
+  <Command __id="12308" _type="ShellCommand" date="Wed Jan 13 18:32:20 EST 2021" starttimestamp="1610407475207" timestamp="173265097" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12309" _type="ShellCommand" date="Wed Jan 13 19:17:59 EST 2021" starttimestamp="1610407475207" timestamp="176003910" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12310" _type="ShellCommand" date="Wed Jan 13 19:18:00 EST 2021" starttimestamp="1610407475207" timestamp="176005579" type="ECLIPSE_MINIMIZED" />
+  <Command __id="12311" _type="ShellCommand" date="Wed Jan 13 19:18:00 EST 2021" starttimestamp="1610407475207" timestamp="176005587" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12312" _type="ShellCommand" date="Wed Jan 13 19:18:17 EST 2021" starttimestamp="1610407475207" timestamp="176021816" type="ECLIPSE_MAXIMIZED" />
+  <Command __id="12313" _type="ShellCommand" date="Wed Jan 13 19:18:17 EST 2021" starttimestamp="1610407475207" timestamp="176021953" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12314" _type="ShellCommand" date="Wed Jan 13 19:18:26 EST 2021" starttimestamp="1610407475207" timestamp="176031607" type="ECLIPSE_MINIMIZED" />
+  <Command __id="12315" _type="ShellCommand" date="Wed Jan 13 19:18:26 EST 2021" starttimestamp="1610407475207" timestamp="176031613" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12316" _type="ShellCommand" date="Wed Jan 13 19:18:37 EST 2021" starttimestamp="1610407475207" timestamp="176042678" type="ECLIPSE_MAXIMIZED" />
+  <Command __id="12317" _type="ShellCommand" date="Wed Jan 13 19:18:38 EST 2021" starttimestamp="1610407475207" timestamp="176042801" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12318" _type="ShellCommand" date="Wed Jan 13 19:19:06 EST 2021" starttimestamp="1610407475207" timestamp="176071415" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12319" _type="ShellCommand" date="Fri Jan 15 08:28:14 EST 2021" starttimestamp="1610407475207" timestamp="309819309" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12320" _type="ShellCommand" date="Fri Jan 15 08:28:20 EST 2021" starttimestamp="1610407475207" timestamp="309825792" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="12321" _type="ShellCommand" date="Fri Jan 15 08:28:58 EST 2021" starttimestamp="1610407475207" timestamp="309863612" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="12322" _type="ShellCommand" date="Fri Jan 15 08:29:09 EST 2021" starttimestamp="1610407475207" timestamp="309874123" type="ECLIPSE_LOST_FOCUS" />
+  <DocumentChange __id="34591" _type="Replace" date="Sat Jan 16 18:33:38 EST 2021" docASTNodeCount="370" docActiveCodeLength="2516" docExpressionCount="186" docLength="4428" endLine="7" insertionLength="14" int_docASTNodeCount="13" int_docActiveCodeLength="2502" int_docExpressionCount="10" int_docLength="4414" length="1" offset="170" startLine="7" starttimestamp="1610407475207" timestamp="432543636">
+    <deletedText><![CDATA[g]]></deletedText>
+    <insertedText><![CDATA[TestCaseResult]]></insertedText>
+  </DocumentChange>
+  <Command __id="34595" _type="ShellCommand" date="Sat Jan 16 18:35:26 EST 2021" starttimestamp="1610407475207" timestamp="432651734" type="ECLIPSE_MAXIMIZED" />
+  <Command __id="34596" _type="ShellCommand" date="Sat Jan 16 18:35:27 EST 2021" starttimestamp="1610407475207" timestamp="432651821" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="34598" _type="MoveCaretCommand" caretOffset="0" date="Sat Jan 16 18:35:41 EST 2021" docOffset="0" starttimestamp="1610407475207" timestamp="432666773" />
+  <Command __id="34599" _type="MoveCaretCommand" caretOffset="110" date="Sat Jan 16 18:35:58 EST 2021" docOffset="110" starttimestamp="1610407475207" timestamp="432683516" />
+  <Command __id="34600" _type="SelectTextCommand" caretOffset="112" date="Sat Jan 16 18:35:58 EST 2021" end="112" start="102" starttimestamp="1610407475207" timestamp="432683730" />
+  <Command __id="34601" _type="SelectTextCommand" caretOffset="116" date="Sat Jan 16 18:35:59 EST 2021" end="116" start="98" starttimestamp="1610407475207" timestamp="432683970" />
+  <Command __id="34602" _type="CopyCommand" date="Sat Jan 16 18:36:00 EST 2021" starttimestamp="1610407475207" timestamp="432685202" />
+  <Command __id="34603" _type="MoveCaretCommand" caretOffset="114" date="Sat Jan 16 18:36:02 EST 2021" docOffset="114" starttimestamp="1610407475207" timestamp="432686964" />
+  <Command __id="34604" _type="SelectTextCommand" caretOffset="101" date="Sat Jan 16 18:36:04 EST 2021" end="124" start="101" starttimestamp="1610407475207" timestamp="432689249" />
+  <Command __id="34605" _type="CopyCommand" date="Sat Jan 16 18:36:05 EST 2021" starttimestamp="1610407475207" timestamp="432689794" />
+  <Command __id="34606" _type="MoveCaretCommand" caretOffset="124" date="Sat Jan 16 18:36:06 EST 2021" docOffset="124" starttimestamp="1610407475207" timestamp="432690841" />
+  <Command __id="34608" _type="InsertStringCommand" date="Sat Jan 16 18:36:06 EST 2021" starttimestamp="1610407475207" timestamp="432691388" timestamp2="432691388">
+    <data><![CDATA[]]></data>
+  </Command>
+  <Command __id="34610" _type="PasteCommand" date="Sat Jan 16 18:36:07 EST 2021" starttimestamp="1610407475207" timestamp="432692105" />
+  <Command __id="34611" _type="SelectTextCommand" caretOffset="101" date="Sat Jan 16 18:36:09 EST 2021" end="124" start="101" starttimestamp="1610407475207" timestamp="432694160" />
+  <Command __id="34614" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.toggle.comment" date="Sat Jan 16 18:36:09 EST 2021" starttimestamp="1610407475207" timestamp="432694741" />
+  <Command __id="34615" _type="MoveCaretCommand" caretOffset="141" date="Sat Jan 16 18:36:12 EST 2021" docOffset="141" starttimestamp="1610407475207" timestamp="432697133" />
+  <Command __id="34617" _type="EclipseCommand" commandID="eventLogger.styledTextCommand.DELETE_PREVIOUS" date="Sat Jan 16 18:36:13 EST 2021" starttimestamp="1610407475207" timestamp="432697830" />
+  <Command __id="34619" _type="EclipseCommand" commandID="eventLogger.styledTextCommand.DELETE_PREVIOUS" date="Sat Jan 16 18:36:13 EST 2021" starttimestamp="1610407475207" timestamp="432697943" />
+  <Command __id="34621" _type="EclipseCommand" commandID="eventLogger.styledTextCommand.DELETE_PREVIOUS" date="Sat Jan 16 18:36:13 EST 2021" starttimestamp="1610407475207" timestamp="432698157" />
+  <Command __id="34623" _type="InsertStringCommand" date="Sat Jan 16 18:36:14 EST 2021" starttimestamp="1610407475207" timestamp="432699085" timestamp2="432699085">
+    <data><![CDATA[3]]></data>
+  </Command>
+  <Command __id="34625" _type="InsertStringCommand" date="Sat Jan 16 18:36:14 EST 2021" starttimestamp="1610407475207" timestamp="432699237" timestamp2="432699237">
+    <data><![CDATA[3]]></data>
+  </Command>
+  <Command __id="34626" _type="MoveCaretCommand" caretOffset="141" date="Sat Jan 16 18:36:15 EST 2021" docOffset="141" starttimestamp="1610407475207" timestamp="432700755" />
+  <Command __id="34628" _type="EclipseCommand" commandID="eventLogger.styledTextCommand.DELETE_PREVIOUS" date="Sat Jan 16 18:36:16 EST 2021" starttimestamp="1610407475207" timestamp="432701065" />
+  <Command __id="34630" _type="InsertStringCommand" date="Sat Jan 16 18:36:16 EST 2021" starttimestamp="1610407475207" timestamp="432701595" timestamp2="432701595">
+    <data><![CDATA[S]]></data>
+  </Command>
+  <Command __id="34631" _type="MoveCaretCommand" caretOffset="143" date="Sat Jan 16 18:36:17 EST 2021" docOffset="143" starttimestamp="1610407475207" timestamp="432702742" />
+  <Command __id="34633" _type="EclipseCommand" commandID="eventLogger.styledTextCommand.DELETE_PREVIOUS" date="Sat Jan 16 18:36:18 EST 2021" starttimestamp="1610407475207" timestamp="432703159" />
+  <Command __id="34635" _type="InsertStringCommand" date="Sat Jan 16 18:36:18 EST 2021" starttimestamp="1610407475207" timestamp="432703469" timestamp2="432703469">
+    <data><![CDATA[1]]></data>
+  </Command>
+  <Command __id="34597" _type="DiffBasedFileOpenCommand" date="Sat Jan 16 18:35:41 EST 2021" docASTNodeCount="37" docActiveCodeLength="226" docExpressionCount="18" docLength="243" projectName="GradescopeAssignmentSetup" starttimestamp="1610407475207" timestamp="432666580">
+    <filePath><![CDATA[D:\dewan_backup\Java\Gradescope-Autograder\GradescopeAssignmentSetup\src\edu\unc\cs\Comp524AssignmentSetup.java]]></filePath>
+    <diff><![CDATA[[Diff(EQUAL,"package edu.unc.cs;¶¶public class Comp524AssignmentSetup {¶	final static String[] MY_ARGS = {¶			"Comp524F20",¶			"02",¶//			"1"¶//			"01"¶¶	};¶	public static void main (String[] args) {¶		¶		AssignmentSetup.main(MY_ARGS);¶	}¶}¶")]]]></diff>
+  </Command>
+  <DocumentChange __id="34607" _type="Insert" date="Sat Jan 16 18:36:06 EST 2021" docASTNodeCount="37" docActiveCodeLength="231" docExpressionCount="18" docLength="248" length="5" offset="124" starttimestamp="1610407475207" timestamp="432691384">
+    <text><![CDATA[
+			]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34609" _type="Replace" date="Sat Jan 16 18:36:07 EST 2021" docASTNodeCount="39" docActiveCodeLength="254" docExpressionCount="20" docLength="271" endLine="6" insertionLength="26" int_docASTNodeCount="37" int_docActiveCodeLength="228" int_docExpressionCount="18" int_docLength="245" length="3" offset="126" startLine="6" starttimestamp="1610407475207" timestamp="432692092">
+    <deletedText><![CDATA[			]]></deletedText>
+    <insertedText><![CDATA[			"Comp524F20",
+			"02",]]></insertedText>
+  </DocumentChange>
+  <DocumentChange __id="34612" _type="Insert" date="Sat Jan 16 18:36:09 EST 2021" docASTNodeCount="38" docActiveCodeLength="238" docExpressionCount="19" docLength="273" length="2" offset="98" starttimestamp="1610407475207" timestamp="432694724">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34613" _type="Insert" date="Sat Jan 16 18:36:09 EST 2021" docASTNodeCount="37" docActiveCodeLength="230" docExpressionCount="18" docLength="275" length="2" offset="118" starttimestamp="1610407475207" timestamp="432694725">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34616" _type="Delete" date="Sat Jan 16 18:36:13 EST 2021" docASTNodeCount="37" docActiveCodeLength="227" docExpressionCount="18" docLength="272" endLine="6" length="3" offset="138" repeat="3" startLine="6" starttimestamp="1610407475207" timestamp="432697827" timestamp2="432698154">
+    <text><![CDATA[524]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34622" _type="Insert" date="Sat Jan 16 18:36:14 EST 2021" docASTNodeCount="37" docActiveCodeLength="229" docExpressionCount="18" docLength="274" length="2" offset="138" repeat="2" starttimestamp="1610407475207" timestamp="432699081" timestamp2="432699234">
+    <text><![CDATA[33]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34627" _type="Delete" date="Sat Jan 16 18:36:16 EST 2021" docASTNodeCount="37" docActiveCodeLength="228" docExpressionCount="18" docLength="273" endLine="6" length="1" offset="140" startLine="6" starttimestamp="1610407475207" timestamp="432701063">
+    <text><![CDATA[F]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34629" _type="Insert" date="Sat Jan 16 18:36:16 EST 2021" docASTNodeCount="37" docActiveCodeLength="229" docExpressionCount="18" docLength="274" length="1" offset="140" starttimestamp="1610407475207" timestamp="432701593">
+    <text><![CDATA[S]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34632" _type="Delete" date="Sat Jan 16 18:36:18 EST 2021" docASTNodeCount="37" docActiveCodeLength="228" docExpressionCount="18" docLength="273" endLine="6" length="1" offset="142" startLine="6" starttimestamp="1610407475207" timestamp="432703157">
+    <text><![CDATA[0]]></text>
+  </DocumentChange>
+  <DocumentChange __id="34634" _type="Insert" date="Sat Jan 16 18:36:18 EST 2021" docASTNodeCount="37" docActiveCodeLength="229" docExpressionCount="18" docLength="274" length="1" offset="142" starttimestamp="1610407475207" timestamp="432703467">
+    <text><![CDATA[1]]></text>
+  </DocumentChange>
+  <Command __id="34636" _type="SelectTextCommand" caretOffset="151" date="Sat Jan 16 18:36:21 EST 2021" end="153" start="151" starttimestamp="1610407475207" timestamp="432705882" />
+  <Command __id="34638" _type="InsertStringCommand" date="Sat Jan 16 18:36:22 EST 2021" starttimestamp="1610407475207" timestamp="432706937" timestamp2="432706937">
+    <data><![CDATA[7]]></data>
+  </Command>
+  <Command __id="34642" _type="EclipseCommand" commandID="" date="Sat Jan 16 18:36:24 EST 2021" starttimestamp="1610407475207" timestamp="432709270" />
+  <Command __id="34643" _type="EclipseCommand" commandID="" date="Sat Jan 16 18:36:24 EST 2021" starttimestamp="1610407475207" timestamp="432709271" />
+  <Command __id="34644" _type="ShellCommand" date="Sat Jan 16 18:36:28 EST 2021" starttimestamp="1610407475207" timestamp="432713136" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="34645" _type="ShellCommand" date="Sat Jan 16 18:36:28 EST 2021" starttimestamp="1610407475207" timestamp="432713543" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="34646" _type="EclipseCommand" commandID="org.eclipse.jdt.debug.ui.localJavaShortcut.run" date="Sat Jan 16 18:36:35 EST 2021" starttimestamp="1610407475207" timestamp="432720059" />
+  <Command __id="34647" _type="RunCommand" date="Sat Jan 16 18:36:35 EST 2021" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1610407475207" timestamp="432720166" type="Run" />
+  <Command __id="34648" _type="RunCommand" date="Sat Jan 16 18:36:35 EST 2021" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1610407475207" timestamp="432720167" type="Run" />
+  <Command __id="34649" _type="RunCommand" date="Sat Jan 16 18:36:35 EST 2021" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1610407475207" timestamp="432720482" type="Debug" />
+  <Command __id="34650" _type="RunCommand" date="Sat Jan 16 18:36:35 EST 2021" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1610407475207" timestamp="432720482" type="Run" />
+  <Command __id="34651" _type="RunCommand" date="Sat Jan 16 18:36:35 EST 2021" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1610407475207" timestamp="432720482" type="Debug" />
+  <Command __id="34652" _type="RunCommand" date="Sat Jan 16 18:36:35 EST 2021" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1610407475207" timestamp="432720482" type="Run" />
+  <Command __id="34653" _type="ShellCommand" date="Sat Jan 16 18:36:52 EST 2021" starttimestamp="1610407475207" timestamp="432737240" type="ECLIPSE_LOST_FOCUS" />
+</Events>

@@ -1,0 +1,100 @@
+<Events startTimestamp="1601039150178" logVersion="1.0.0.202009141527">
+  <DocumentChange __id="22468" _type="Insert" date="Thu Oct 01 10:10:19 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8800" docExpressionCount="0" docLength="8800" length="1" offset="7592" starttimestamp="1601039150178" timestamp="522269305">
+    <text><![CDATA[e]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22472" _type="Replace" date="Thu Oct 01 10:10:21 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8793" docExpressionCount="0" docLength="8793" endLine="174" insertionLength="1" int_docASTNodeCount="1" int_docActiveCodeLength="8792" int_docExpressionCount="0" int_docLength="8792" length="8" offset="7630" startLine="174" starttimestamp="1601039150178" timestamp="522271642">
+    <deletedText><![CDATA[Distance]]></deletedText>
+    <insertedText><![CDATA[D]]></insertedText>
+  </DocumentChange>
+  <DocumentChange __id="22474" _type="Insert" date="Thu Oct 01 10:10:22 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8794" docExpressionCount="0" docLength="8794" length="1" offset="7631" starttimestamp="1601039150178" timestamp="522271826">
+    <text><![CDATA[u]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22476" _type="Insert" date="Thu Oct 01 10:10:22 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8795" docExpressionCount="0" docLength="8795" length="1" offset="7632" starttimestamp="1601039150178" timestamp="522272080">
+    <text><![CDATA[r]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22478" _type="Insert" date="Thu Oct 01 10:10:22 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8796" docExpressionCount="0" docLength="8796" length="1" offset="7633" starttimestamp="1601039150178" timestamp="522272154">
+    <text><![CDATA[a]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22480" _type="Insert" date="Thu Oct 01 10:10:22 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8797" docExpressionCount="0" docLength="8797" length="1" offset="7634" starttimestamp="1601039150178" timestamp="522272461">
+    <text><![CDATA[t]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22482" _type="Insert" date="Thu Oct 01 10:10:22 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8798" docExpressionCount="0" docLength="8798" length="1" offset="7635" starttimestamp="1601039150178" timestamp="522272619">
+    <text><![CDATA[i]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22484" _type="Insert" date="Thu Oct 01 10:10:23 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8799" docExpressionCount="0" docLength="8799" length="1" offset="7636" starttimestamp="1601039150178" timestamp="522272841">
+    <text><![CDATA[o]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22486" _type="Insert" date="Thu Oct 01 10:10:23 EDT 2020" docASTNodeCount="1" docActiveCodeLength="8800" docExpressionCount="0" docLength="8800" length="1" offset="7637" starttimestamp="1601039150178" timestamp="522273159">
+    <text><![CDATA[n]]></text>
+  </DocumentChange>
+  <Command __id="22603" _type="ShellCommand" date="Thu Oct 01 10:55:29 EDT 2020" starttimestamp="1601039150178" timestamp="524978859" type="ECLIPSE_LOST_FOCUS" />
+  <Command __id="22604" _type="ShellCommand" date="Thu Oct 01 10:55:29 EDT 2020" starttimestamp="1601039150178" timestamp="524979033" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="22606" _type="MoveCaretCommand" caretOffset="154" date="Thu Oct 01 10:55:47 EDT 2020" docOffset="154" starttimestamp="1601039150178" timestamp="524997712" />
+  <Command __id="22605" _type="DiffBasedFileOpenCommand" date="Thu Oct 01 10:55:47 EDT 2020" docASTNodeCount="37" docActiveCodeLength="222" docExpressionCount="18" docLength="231" projectName="GradescopeAssignmentSetup" starttimestamp="1601039150178" timestamp="524997470">
+    <filePath><![CDATA[D:\dewan_backup\Java\Gradescope-Autograder\GradescopeAssignmentSetup\src\edu\unc\cs\Comp524AssignmentSetup.java]]></filePath>
+    <diff><![CDATA[null]]></diff>
+    <snapshot><![CDATA[package edu.unc.cs;
+
+public class Comp524AssignmentSetup {
+	final static String[] MY_ARGS = {
+			"Comp524F20",
+			"1"
+//			"01"
+
+	};
+	public static void main (String[] args) {
+		
+		AssignmentSetup.main(MY_ARGS);
+	}
+}
+]]></snapshot>
+  </Command>
+  <Command __id="22607" _type="MoveCaretCommand" caretOffset="116" date="Thu Oct 01 10:55:50 EDT 2020" docOffset="116" starttimestamp="1601039150178" timestamp="525000797" />
+  <DocumentChange __id="22608" _type="Insert" date="Thu Oct 01 10:55:52 EDT 2020" docASTNodeCount="36" docActiveCodeLength="216" docExpressionCount="17" docLength="233" length="2" offset="116" starttimestamp="1601039150178" timestamp="525002330">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <Command __id="22609" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.toggle.comment" date="Thu Oct 01 10:55:52 EDT 2020" starttimestamp="1601039150178" timestamp="525002344" />
+  <DocumentChange __id="22610" _type="Delete" date="Thu Oct 01 10:55:52 EDT 2020" docASTNodeCount="37" docActiveCodeLength="222" docExpressionCount="18" docLength="231" endLine="5" length="2" offset="116" startLine="5" starttimestamp="1601039150178" timestamp="525002450">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <Command __id="22611" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.toggle.comment" date="Thu Oct 01 10:55:52 EDT 2020" starttimestamp="1601039150178" timestamp="525002463" />
+  <Command __id="22613" _type="EclipseCommand" commandID="org.eclipse.jdt.ui.edit.text.java.toggle.comment" date="Thu Oct 01 10:55:56 EDT 2020" starttimestamp="1601039150178" timestamp="525005843" />
+  <DocumentChange __id="22612" _type="Insert" date="Thu Oct 01 10:55:55 EDT 2020" docASTNodeCount="36" docActiveCodeLength="216" docExpressionCount="17" docLength="233" length="2" offset="116" starttimestamp="1601039150178" timestamp="525005810">
+    <text><![CDATA[//]]></text>
+  </DocumentChange>
+  <DocumentChange __id="22615" _type="Insert" date="Thu Oct 01 10:55:59 EDT 2020" docASTNodeCount="36" docActiveCodeLength="221" docExpressionCount="17" docLength="238" length="5" offset="114" starttimestamp="1601039150178" timestamp="525009624">
+    <text><![CDATA[
+			]]></text>
+  </DocumentChange>
+  <Command __id="22614" _type="MoveCaretCommand" caretOffset="114" date="Thu Oct 01 10:55:59 EDT 2020" docOffset="114" starttimestamp="1601039150178" timestamp="525009043" />
+  <Command __id="22616" _type="InsertStringCommand" date="Thu Oct 01 10:55:59 EDT 2020" starttimestamp="1601039150178" timestamp="525009626" timestamp2="525009626">
+    <data><![CDATA[]]></data>
+  </Command>
+  <Command __id="22618" _type="InsertStringCommand" date="Thu Oct 01 10:56:01 EDT 2020" starttimestamp="1601039150178" timestamp="525010861" timestamp2="525010861">
+    <data><![CDATA["]]></data>
+  </Command>
+  <Command __id="22620" _type="InsertStringCommand" date="Thu Oct 01 10:56:01 EDT 2020" starttimestamp="1601039150178" timestamp="525011415" timestamp2="525011415">
+    <data><![CDATA[0]]></data>
+  </Command>
+  <Command __id="22622" _type="InsertStringCommand" date="Thu Oct 01 10:56:01 EDT 2020" starttimestamp="1601039150178" timestamp="525011627" timestamp2="525011627">
+    <data><![CDATA[2]]></data>
+  </Command>
+  <Command __id="22623" _type="MoveCaretCommand" caretOffset="123" date="Thu Oct 01 10:56:04 EDT 2020" docOffset="123" starttimestamp="1601039150178" timestamp="525014309" />
+  <Command __id="22625" _type="InsertStringCommand" date="Thu Oct 01 10:56:05 EDT 2020" starttimestamp="1601039150178" timestamp="525015052" timestamp2="525015052">
+    <data><![CDATA[,]]></data>
+  </Command>
+  <Command __id="22629" _type="EclipseCommand" commandID="" date="Thu Oct 01 10:56:08 EDT 2020" starttimestamp="1601039150178" timestamp="525017870" />
+  <Command __id="22630" _type="EclipseCommand" commandID="" date="Thu Oct 01 10:56:08 EDT 2020" starttimestamp="1601039150178" timestamp="525017909" />
+  <Command __id="22631" _type="EclipseCommand" commandID="" date="Thu Oct 01 10:56:08 EDT 2020" starttimestamp="1601039150178" timestamp="525017914" />
+  <Command __id="22632" _type="EclipseCommand" commandID="" date="Thu Oct 01 10:56:08 EDT 2020" starttimestamp="1601039150178" timestamp="525018027" />
+  <Command __id="22633" _type="EclipseCommand" commandID="org.eclipse.jdt.debug.ui.localJavaShortcut.debug" date="Thu Oct 01 10:56:15 EDT 2020" starttimestamp="1601039150178" timestamp="525025370" />
+  <Command __id="22634" _type="RunCommand" date="Thu Oct 01 10:56:15 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1601039150178" timestamp="525025655" type="Run" />
+  <Command __id="22635" _type="RunCommand" date="Thu Oct 01 10:56:15 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1601039150178" timestamp="525025656" type="Run" />
+  <Command __id="22636" _type="RunCommand" date="Thu Oct 01 10:56:16 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1601039150178" timestamp="525025863" type="Run" />
+  <Command __id="22637" _type="RunCommand" date="Thu Oct 01 10:56:16 EDT 2020" kind="StepInto" projectName="(Unknown)" starttimestamp="1601039150178" timestamp="525025993" type="Run" />
+  <Command __id="22638" _type="RunCommand" date="Thu Oct 01 10:56:16 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1601039150178" timestamp="525026143" type="Run" />
+  <Command __id="22639" _type="RunCommand" date="Thu Oct 01 10:56:16 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1601039150178" timestamp="525026330" type="Debug" />
+  <Command __id="22640" _type="RunCommand" date="Thu Oct 01 10:56:16 EDT 2020" kind="HitBreakPoint" projectName="(Unknown)" starttimestamp="1601039150178" timestamp="525026330" type="Debug" />
+  <Command __id="22641" _type="RunCommand" date="Thu Oct 01 10:56:16 EDT 2020" kind="HitBreakPoint" projectName="GradescopeAssignmentSetup" starttimestamp="1601039150178" timestamp="525026330" type="Run" />
+  <Command __id="22642" _type="ShellCommand" date="Thu Oct 01 10:56:22 EDT 2020" starttimestamp="1601039150178" timestamp="525032044" type="ECLIPSE_LOST_FOCUS" />
+</Events>

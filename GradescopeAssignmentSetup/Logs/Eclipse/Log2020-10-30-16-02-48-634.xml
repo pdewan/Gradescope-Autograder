@@ -1,0 +1,5 @@
+<Events startTimestamp="1604088168634" logVersion="1.0.0.202010301544">
+  <Command __id="9277" _type="ShellCommand" date="Mon Nov 09 16:21:20 EST 2020" starttimestamp="1604088168634" timestamp="868711782" type="ECLIPSE_GAINED_FOCUS" />
+  <Command __id="9278" _type="EclipseCommand" commandID="org.eclipse.search.ui.openFileSearchPage" date="Mon Nov 09 16:21:20 EST 2020" starttimestamp="1604088168634" timestamp="868711860" />
+  <Command __id="9279" _type="ShellCommand" date="Mon Nov 09 16:21:44 EST 2020" starttimestamp="1604088168634" timestamp="868735500" type="ECLIPSE_LOST_FOCUS" />
+</Events>
